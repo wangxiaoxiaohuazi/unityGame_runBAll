@@ -81,4 +81,8 @@ public class MainCondition : MonoBehaviour
         _gameData.player.defaultVigourNumber += 3;
         DataManager.Instance.SaveData();
     }
+    public void OnAddVigourNumber()
+    {
+        PlayerInfo.Instance.AddVigourNumber(10);
+    }
 }

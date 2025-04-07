@@ -23,20 +23,14 @@ public class FragmentMove : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-    }
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
+        if (gameObject.GetComponent<EnemyStateCondition>() != null && gameObject.GetComponent<EnemyStateCondition>().hp < 1)
         {
-            ActiveReward(collision);
-
+            ActiveReward();
         }
-
     }
-    void ActiveReward(Collision collision)
+    void ActiveReward()
     {
         Debug.Log("奖励碰撞");
         if (rewardList.Count > 0)

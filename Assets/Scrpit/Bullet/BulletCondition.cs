@@ -45,12 +45,16 @@ public class BulletCondition : MonoBehaviour
         {
             bulletExplodeEffect.SetActive(false);
         }
+        Transform player = GameObject.FindGameObjectWithTag("Player")?.transform;
+        if (player != null)
+        {
+            bulletDamage = player.GetComponent<player>().attack * bulletDamage;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
     public void OnPlayBulletTrail()
     {

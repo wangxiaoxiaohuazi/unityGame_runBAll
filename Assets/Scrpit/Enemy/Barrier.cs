@@ -7,11 +7,7 @@ public class Barrier : MonoBehaviour
     // Start is called before the first frame update
     public int damage = 1;
     public float energy = 0.01f;
-
-    public float collisionProbability = 0.8f;
-
-    public float forceMagnitude = 35f;
-
+    public int HP = 1;
     private Rigidbody rb;
     // 在游戏开始时调用
     void Start()
@@ -35,6 +31,7 @@ public class Barrier : MonoBehaviour
             {
                 // 将isInvincible设置为player脚本的isInvincible属性
                 isInvincible = other.GetComponent<player>().isInvincible;
+                HP -= other.GetComponent<player>().attack;
             }
             // 如果没有找到GameDataManager脚本
             if (!FindObjectOfType<GameDataManager>())
@@ -52,8 +49,6 @@ public class Barrier : MonoBehaviour
             // 如果能量值大于0
             if (energy > 0)
             {
-                // 销毁当前游戏对象
-                Destroy(gameObject);
                 // 调用GameDataManager脚本的ChangePlayerEnergy方法，参数为能量值
                 GameDataManager.Instance.ChangePlayerEnergy(energy);
             }

@@ -155,12 +155,24 @@ public class DataManager : MonoBehaviour
                 Debug.Log("没有找到保存的数据，创建新的数据");
                 CreateNewData();
             }
+            // 添加时间校验
+            CheckDailyRefresh();
         }
         catch (Exception e)
         {
             Debug.LogError($"数据加载失败: {e.Message}");
             CreateNewData();
         }
+    }
+    public void CheckDailyRefresh()
+    {
+        // 检查是否需要刷新每日数据
+        // if (DateTime.Now >= todayVigour.reflashTime)
+        // {
+        //     todayVigour.num = defaultVigourNumber;
+        //     todayVigour.reflashTime = DateTime.Today.AddDays(1);
+        //     Debug.Log($"执行每日刷新 | 当前时间：{DateTime.Now} | 刷新时间：{todayVigour.reflashTime}");
+        // }
     }
     private void NotifyDataChanged()
     {

@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -60,11 +58,13 @@ public class EnemyStateCondition : MonoBehaviour
         }
         BloodMax = hp;
     }
-
-    // Update is called once per frame
     void Update()
     {
-        changeBloodScrollbar(); // 更新血条
+        if (BloodScrollbar != null)
+        {
+            changeBloodScrollbar(); // 更新血条
+
+        }
     }
     //被子弹碰到则扣血，血量小于等于0则销毁
     // 被子弹碰到时调用
@@ -80,6 +80,31 @@ public class EnemyStateCondition : MonoBehaviour
                 TakeDamage(other.GetComponent<BulletCondition>().bulletDamage); // 假设每次被子弹碰到扣1点血
             }
             Destroy(other.gameObject); // 销毁子弹
+        }
+        if (other.CompareTag("Player"))
+        {
+            TakeDamage(other.GetComponent<player>().attack);
+            // 定义一个布尔变量isInvincible，初始值为false
+            bool isInvincible = false;
+            // 如果碰撞体上挂载了player脚本
+            if (other.GetComponent<player>())
+            {
+                // 将isInvincible设置为player脚本的isInvincible属性
+                isInvincible = other.GetComponent<player>().isInvincible;
+            }
+            // 如果没有找到GameDataManager脚本
+            if (!FindObjectOfType<GameDataManager>())
+            {
+                // 输出警告信息
+                Debug.LogWarning("GameDataManager 未找到！");
+                return;
+            }
+            // 如果伤害值大于0且玩家不是无敌状态
+            if (attack > 0 && !isInvincible)
+            {
+                // 调用GameDataManager脚本的ChangePlayerLives方法，参数为伤害值
+                GameDataManager.Instance.ChangePlayerLives(-attack);
+            }
         }
     }
 
@@ -107,6 +132,11 @@ public class EnemyStateCondition : MonoBehaviour
     private void Die()
     {
         Debug.Log("敌人死亡");
+        if (gameObject.GetComponent<BreakOnCollision>() != null || gameObject.GetComponent<PublicItem>() != null)
+        {
+            return;
+        }
+        Debug.Log("敌人销毁");
         Destroy(gameObject); // 销毁敌人对象
     }
     private void changeBloodScrollbar()

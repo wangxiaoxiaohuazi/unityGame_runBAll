@@ -73,7 +73,7 @@ public class RoundInfoData
          new LevelList
         {
             id = 10,
-            name = "level-0010",
+            name = "level-010",
             scenePath = "Level1",
             score = 0
         },

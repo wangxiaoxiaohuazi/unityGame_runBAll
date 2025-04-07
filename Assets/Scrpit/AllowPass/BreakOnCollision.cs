@@ -29,16 +29,18 @@ public class BreakOnCollision : MonoBehaviour
     {
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "Player")
-        {
-            ActiveBrothers(collision);
-        }
 
-    }
-    public void ActiveBrothers(Collision collision)
+    void FixedUpdate()
     {
+        if (gameObject.GetComponent<EnemyStateCondition>() != null && gameObject.GetComponent<EnemyStateCondition>().hp < 1)
+        {
+            ActiveBrothers();
+        }
+    }
+
+    public void ActiveBrothers()
+    {
+        Debug.Log("ActiveBrothers");
         if (IsRuning || Time.time - lastActiveTime < debounceDelay) return; // 添加防抖处理
         lastActiveTime = Time.time; // 更新上次激活时间
         if (!breakOnTrigger) return; // 如果不是在触发器碰撞时破碎，则不执行以下代码
@@ -84,13 +86,13 @@ public class BreakOnCollision : MonoBehaviour
                 brokenObject.AddComponent<Rigidbody>();
             }
             Rigidbody rb = brokenObject.GetComponent<Rigidbody>();
-            ResetRigidbody(rb, collision);
+            ResetRigidbody(rb);
         }
         else
         {
             foreach (Rigidbody rb in fragments)
             {
-                ResetRigidbody(rb, collision);
+                ResetRigidbody(rb);
             }
 
         }
@@ -102,14 +104,13 @@ public class BreakOnCollision : MonoBehaviour
         Destroy(gameObject.transform.parent.gameObject);
         IsRuning = false;
     }
-    private void ResetRigidbody(Rigidbody rb, Collision collision)
+    private void ResetRigidbody(Rigidbody rb)
     {
-        if( rb.tag == "Wall" ) return;
+        if (rb.tag == "Wall") return;
         rb.useGravity = true;
         rb.isKinematic = false;
         // 添加爆炸力（带随机旋转）
-        Vector3 explosionPoint = collision.contacts.Length > 0 ?
-            collision.contacts[0].point : transform.position;
+        Vector3 explosionPoint = rb.transform.position;
 
         rb.AddExplosionForce(
             breakForce,

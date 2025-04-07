@@ -16,7 +16,8 @@ public class player : MonoBehaviour
     // public float jumpTime = 0.5f; //跳跃时间
     public float power = 0; //能量
     public int levelNumber = 0; //等级
-    public float scoreNumber = 0; //分数
+    public float scoreNumber = 0; //分数                                 
+    public int attack = 1;//攻击力
 
     // private VibrationManager vibrationManager;
     [Header("默认角色")]

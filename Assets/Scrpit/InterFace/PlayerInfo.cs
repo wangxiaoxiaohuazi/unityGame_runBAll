@@ -44,14 +44,15 @@ public class PlayerInfo : MonoBehaviour
             return 0;
         }
 
-        if (Instance.gameData.player.todayVigour.reflashTime == null || Instance.gameData.player.todayVigour.reflashTime < DateTime.Now)
+        var vigour = Instance.gameData.player.todayVigour;
+        if (vigour.reflashTime.Date < DateTime.Today)
         {
-            Instance.gameData.player.todayVigour.num = Instance.gameData.player.defaultVigourNumber;
-            Instance.gameData.player.todayVigour.reflashTime = DateTime.Now.AddHours(1);
-            Debug.Log("体力已刷新");
+            vigour.num = Instance.gameData.player.defaultVigourNumber;
+            vigour.reflashTime = DateTime.Today.AddDays(1);
+            Debug.Log($"跨天刷新体力，当前时间：{DateTime.Now}");
             DataManager.Instance.SaveData();
         }
-        return Instance.gameData.player.todayVigour.num;
+        return vigour.num;
     }
     public void AddVigourNumber(int num)
     {
@@ -59,7 +60,8 @@ public class PlayerInfo : MonoBehaviour
         {
             Debug.LogError("PlayerInfo 数据未初始化!");
         }
-        DataManager.Instance.gameInfo.player.todayVigour.num += num;
+        //临时暂停体力扣除
+        // DataManager.Instance.gameInfo.player.todayVigour.num += num;
         Debug.Log("体力增加：" + DataManager.Instance.gameInfo.player.todayVigour.num);
         DataManager.Instance.SaveData();
     }
