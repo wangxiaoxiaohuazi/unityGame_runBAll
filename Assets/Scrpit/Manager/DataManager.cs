@@ -1,14 +1,15 @@
-using UnityEngine;
 using System;
 using System.Collections;
-using System.IO;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement; // 添加DateTime需要
+using System.IO;
 using System.Text;
 using TTSDK;
+using UnityEngine;
+using UnityEngine.SceneManagement; // 添加DateTime需要
+
 /**
  * 数据管理器
- *控制需要留存的数据  
+ *控制需要留存的数据
  */
 public class DataManager : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class DataManager : MonoBehaviour
     #endregion
     public SceneInfo[] scenesList;
     private const string SAVE_FILE = "game_data.dat";
+
     // 当前游戏数据实例
     private PublicGameData _gameData;
     public PublicGameData gameInfo => _gameData;
@@ -79,12 +81,14 @@ public class DataManager : MonoBehaviour
 
     private void OnApplicationPause(bool pauseStatus)
     {
-        if (pauseStatus) ForceSave();
+        if (pauseStatus)
+            ForceSave();
     }
     #endregion
 
     #region 增强保存系统
-    [SerializeField] private float _autoSaveInterval = 300f;
+    [SerializeField]
+    private float _autoSaveInterval = 300f;
     private Coroutine _autoSaveCoroutine;
 
     private void Initialize()
@@ -142,7 +146,7 @@ public class DataManager : MonoBehaviour
             if (PlayerPrefs.HasKey("GameData"))
             {
 #if UNITY_WEBGL && !UNITY_EDITOR
-                          string json = TT.PlayerPrefs.GetString("GameData");
+                string json = TT.PlayerPrefs.GetString("GameData");
 #else
                 string json = PlayerPrefs.GetString("GameData");
 
@@ -164,6 +168,7 @@ public class DataManager : MonoBehaviour
             CreateNewData();
         }
     }
+
     public void CheckDailyRefresh()
     {
         // 检查是否需要刷新每日数据
@@ -174,6 +179,7 @@ public class DataManager : MonoBehaviour
         //     Debug.Log($"执行每日刷新 | 当前时间：{DateTime.Now} | 刷新时间：{todayVigour.reflashTime}");
         // }
     }
+
     private void NotifyDataChanged()
     {
         OnDataChanged?.Invoke();
@@ -184,6 +190,7 @@ public class DataManager : MonoBehaviour
         _gameData = new PublicGameData();
         SaveData();
     }
+
     private void MigrateDataIfNeeded()
     {
         // 数据版本迁移示例
@@ -203,7 +210,7 @@ public class DataManager : MonoBehaviour
 #if UNITY_WEBGL && !UNITY_EDITOR
             TT.PlayerPrefs.SetString("GameData", json);
             TT.PlayerPrefs.Save(); // 确保立即写入
-             Debug.Log("webgl保存成功");
+            Debug.Log("webgl保存成功");
 #else
             PlayerPrefs.SetString("GameData", json);
             PlayerPrefs.Save(); // 确保立即写入
@@ -228,15 +235,18 @@ public class DataManager : MonoBehaviour
             string path = SceneUtility.GetScenePathByBuildIndex(i);
             string sceneName = System.IO.Path.GetFileNameWithoutExtension(path);
 
-            scenes.Add(new SceneInfo
-            {
-                BuildIndex = i,
-                SceneName = sceneName,
-                ScenePath = path
-            });
+            scenes.Add(
+                new SceneInfo
+                {
+                    BuildIndex = i,
+                    SceneName = sceneName,
+                    ScenePath = path,
+                }
+            );
         }
         scenesList = scenes.ToArray();
     }
+
     // 场景信息结构
     public struct SceneInfo
     {
@@ -244,5 +254,4 @@ public class DataManager : MonoBehaviour
         public string SceneName;
         public string ScenePath;
     }
-
 }

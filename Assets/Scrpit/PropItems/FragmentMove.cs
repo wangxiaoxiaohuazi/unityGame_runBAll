@@ -8,12 +8,13 @@ public class FragmentMove : MonoBehaviour
     public GameObject Target;//移动目标
     public List<GameObject> rewardList;//奖励列表
     public List<int> rewardNumList; //奖励数量列表
-    public float speed = 50f;//移动速度
+    // public float speed = 50f;//移动速度
     public float delayTime = 2.5f;//延迟时间
     public float explosionForce = 1f;//爆炸力
     public float Rbmass = 1f;//刚体质量
     public bool IsExplosion = false;//是否爆炸(能被子弹炸飞)
 
+    private bool IsRuning = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +33,8 @@ public class FragmentMove : MonoBehaviour
     }
     void ActiveReward()
     {
+        if (IsRuning) return;
+        IsRuning = true;
         Debug.Log("奖励碰撞");
         if (rewardList.Count > 0)
         {
@@ -55,19 +58,20 @@ public class FragmentMove : MonoBehaviour
                 }
             }
         }
-        Destroy(gameObject);
     }
     private void ResetRigidbody(Rigidbody rb)
     {
-        Debug.Log("ResetRigidbody: " + rb.gameObject.name);
         rb.useGravity = true;
         rb.isKinematic = false;
 
         // 使用当前物体的位置作为爆炸中心
-        Vector3 explosionPoint = rb.transform.position; // 当前物体自身的位置
-        // float explosionForce = 1f; // 爆炸力
+        Vector3 randomOffset = new Vector3(
+        Random.Range(-0.5f, 0.5f),
+        Random.Range(-0.2f, 0.5f),  // Y轴偏移较小避免过度下沉
+        Random.Range(-0.5f, 0.5f)
+    );
+        Vector3 explosionPoint = rb.transform.position+randomOffset;
         float explosionRadius = 5f; // 爆炸半径
-
         // 添加爆炸力
         rb.AddExplosionForce(
             explosionForce,          // 爆炸力的大小
@@ -91,7 +95,7 @@ public class FragmentMove : MonoBehaviour
         // 初始化追踪
         var follower = reward.AddComponent<TargetFollower>();
         follower.delayTime = delayTime; // 设置延迟时间
-        follower.moveSpeed = speed;
+        follower.moveSpeed = Target.GetComponent<SphereController>().forwardSpeed * 1.7f;
         follower.rotationSpeed = 8f;
         follower.SetTarget(Target.transform);
     }

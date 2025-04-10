@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 4783570389257192676}
   - component: {fileID: 1228164251207782379}
   - component: {fileID: 6663550928080450252}
-  - component: {fileID: 4300705834860562693}
   - component: {fileID: 7350758554923907322}
   - component: {fileID: 1383756055587053460}
   - component: {fileID: 2338252619546761879}
   - component: {fileID: 3557926845235821661}
+  - component: {fileID: 544840293638446643}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -128,23 +128,7 @@ MonoBehaviour:
   Scale: {x: 0, y: 0, z: 0}
   breakForce: 0.1
   breakOnTrigger: 1
-  DistoryTime: 1
---- !u!114 &4300705834860562693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5152414495986896654}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  energy: 0
-  collisionProbability: 0.8
-  forceMagnitude: 35
+  DistoryTime: 0.6
 --- !u!54 &7350758554923907322
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -219,7 +203,8 @@ MonoBehaviour:
   Power: 0.01
   IsScoreNumberChange: 1
   ScoreNumber: 10
-  IsDestroy: 1
+  IsDestroy: 0
+  IsExplosion: 1
 --- !u!135 &3557926845235821661
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -241,6 +226,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &544840293638446643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5152414495986896654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00c52688cefc984da7f763e0f7653ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  attack: 0
+  defense: 0
+  BloodScroll: {fileID: 0}
 --- !u!1001 &5417154700805161556
 PrefabInstance:
   m_ObjectHideFlags: 0

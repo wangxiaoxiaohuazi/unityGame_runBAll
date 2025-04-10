@@ -276,6 +276,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tower-Kuai-03-R (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2170017204098273581, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342963889341294529, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725352542344237345, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
@@ -315,6 +327,26 @@ PrefabInstance:
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020532645596399641, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314078727199802942, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5664374895265907605, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793715439834803162, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621196587731249188, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -399,9 +431,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2079286926807884972}
     m_Modifications:
+    - target: {fileID: 162772682539504889, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2093702256626827006, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_Name
       value: Tower-Kuai-03-R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170017204098273581, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -443,6 +483,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4020532645596399641, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621196587731249188, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -461,9 +509,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4447404010010171550}
     m_Modifications:
+    - target: {fileID: 104795881616042237, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 162772682539504889, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2093702256626827006, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_Name
       value: Tower-Kuai-03-R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170017204098273581, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342963889341294529, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725352542344237345, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -504,6 +572,34 @@ PrefabInstance:
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3692008849465778929, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020532645596399641, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4313764839129126025, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314078727199802942, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5664374895265907605, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793715439834803162, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621196587731249188, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -601,9 +697,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2079286926807884972}
     m_Modifications:
+    - target: {fileID: 162772682539504889, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2093702256626827006, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_Name
       value: Tower-Kuai-03-R (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170017204098273581, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342963889341294529, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725352542344237345, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -644,6 +756,26 @@ PrefabInstance:
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020532645596399641, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314078727199802942, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5664374895265907605, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793715439834803162, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621196587731249188, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -728,9 +860,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2591770921064310944}
     m_Modifications:
+    - target: {fileID: 162772682539504889, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2093702256626827006, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_Name
       value: Tower-Kuai-03-R
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170017204098273581, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342963889341294529, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725352542344237345, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -771,6 +919,26 @@ PrefabInstance:
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020532645596399641, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314078727199802942, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5664374895265907605, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793715439834803162, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621196587731249188, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -914,9 +1082,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4447404010010171550}
     m_Modifications:
+    - target: {fileID: 162772682539504889, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2093702256626827006, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_Name
       value: Tower-Kuai-03-R (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170017204098273581, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2342963889341294529, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2725352542344237345, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -957,6 +1141,26 @@ PrefabInstance:
     - target: {fileID: 2846704763809762300, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4020532645596399641, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314078727199802942, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5664374895265907605, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7793715439834803162, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8621196587731249188, guid: 2bd542ac485e16c4e86003a1ff32737d, type: 3}
+      propertyPath: hp
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:

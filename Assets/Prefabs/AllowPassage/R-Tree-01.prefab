@@ -96,9 +96,6 @@ PrefabInstance:
       addedObject: {fileID: 4806987517159277935}
     - targetCorrespondingSourceObject: {fileID: 3550202116985048312, guid: ec03d129f7140a24ab70251a892b412a, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 921260417435872629}
-    - targetCorrespondingSourceObject: {fileID: 3550202116985048312, guid: ec03d129f7140a24ab70251a892b412a, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 4856386066267269944}
     - targetCorrespondingSourceObject: {fileID: 3550202116985048312, guid: ec03d129f7140a24ab70251a892b412a, type: 3}
       insertIndex: -1
@@ -109,6 +106,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3550202116985048312, guid: ec03d129f7140a24ab70251a892b412a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 3262631149893041696}
+    - targetCorrespondingSourceObject: {fileID: 3550202116985048312, guid: ec03d129f7140a24ab70251a892b412a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6752154202881542744}
   m_SourcePrefab: {fileID: 100100000, guid: ec03d129f7140a24ab70251a892b412a, type: 3}
 --- !u!1 &4281585468822020534 stripped
 GameObject:
@@ -164,22 +164,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 5939586658697994304, guid: ec03d129f7140a24ab70251a892b412a, type: 3}
---- !u!114 &921260417435872629
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4281585468822020534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  energy: 0
-  collisionProbability: 0.8
-  forceMagnitude: 35
 --- !u!114 &4856386066267269944
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,7 +176,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92bca59584cc4b443bd19ac35556b5b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BreakPrefab: {fileID: 499491221252247583, guid: e01317cac731d5a4aa02b8b251f12695, type: 3}
+  BreakPrefab: {fileID: 499491221252247583, guid: 4d8a622c801b005439aa591e0db93a77, type: 3}
   breakPrefabSize: 0
   Scale: {x: 0, y: 0, z: 0}
   breakForce: 0.1
@@ -244,7 +228,8 @@ MonoBehaviour:
   Power: 0.01
   IsScoreNumberChange: 1
   ScoreNumber: 10
-  IsDestroy: 1
+  IsDestroy: 0
+  IsExplosion: 1
 --- !u!114 &3262631149893041696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -261,7 +246,23 @@ MonoBehaviour:
   rewardList:
   - {fileID: 2924959207231863310, guid: 05ca6b5bf8b24914683625be83c761fe, type: 3}
   rewardNumList: 01000000
-  speed: 100
   delayTime: 0.8
   explosionForce: 30
   Rbmass: 1
+  IsExplosion: 0
+--- !u!114 &6752154202881542744
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4281585468822020534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00c52688cefc984da7f763e0f7653ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  attack: 1
+  defense: 0
+  BloodScroll: {fileID: 0}

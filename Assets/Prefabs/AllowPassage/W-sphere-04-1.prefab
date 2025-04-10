@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4700728936543946217}
   - component: {fileID: 7431197112001821124}
   - component: {fileID: 1700446904255269156}
-  - component: {fileID: 6277989745642712471}
   - component: {fileID: 740999222296851417}
   - component: {fileID: 8636966085961308444}
   - component: {fileID: 5485808748271838555}
@@ -111,22 +110,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6277989745642712471
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5780946865227291139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  energy: 0
-  collisionProbability: 0.8
-  forceMagnitude: 35
 --- !u!54 &740999222296851417
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -136,7 +119,7 @@ Rigidbody:
   m_GameObject: {fileID: 5780946865227291139}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0.05
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -202,6 +185,7 @@ MonoBehaviour:
   IsScoreNumberChange: 1
   ScoreNumber: 10
   IsDestroy: 0
+  IsExplosion: 1
 --- !u!135 &5352349118920911234
 SphereCollider:
   m_ObjectHideFlags: 0

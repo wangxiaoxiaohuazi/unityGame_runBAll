@@ -10,13 +10,8 @@ public class weaponCondition : MonoBehaviour
     public float detectionDistance = 5f; // 检测范围的距离
     public float detectionWidth = 1f; // 检测范围的宽度
     public float projectileSpeed = 50f; // 子弹速度
-    public float explosionForce = 500f; // 爆炸作用力
-    public float explosionRadius = 5f; // 爆炸半径
-    public float projectileLifetime = 5f; // 投射物的生存时间
     public bool showDetectionRange = true; // 控制是否显示检测范围
-
     public bool isActive = false; // 武器是否处于激活状态
-
     public bool isRunning = false; // 武器是否正在运行
 
     public GameObject bulletPrefab; // 子弹预制体
@@ -44,15 +39,12 @@ public class weaponCondition : MonoBehaviour
         isActive = false;
     }
     //修改参数
-    public void SetParameters(float detectionDistance, float detectionWidth, float projectileSpeed, float explosionForce, float explosionRadius, float projectileLifetime, bool showDetectionRange, GameObject bulletPrefab)
+    public void SetParameters(float detectionDistance, float detectionWidth, float projectileSpeed,  bool showDetectionRange, GameObject bulletPrefab)
     {
 
         this.detectionDistance = detectionDistance;
         this.detectionWidth = detectionWidth;
         this.projectileSpeed = projectileSpeed;
-        this.explosionForce = explosionForce;
-        this.explosionRadius = explosionRadius;
-        this.projectileLifetime = projectileLifetime;
         this.showDetectionRange = showDetectionRange;
         this.bulletPrefab = bulletPrefab;
         isActive = true;

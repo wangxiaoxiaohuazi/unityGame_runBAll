@@ -931,9 +931,6 @@ PrefabInstance:
       addedObject: {fileID: 6284739190559965602}
     - targetCorrespondingSourceObject: {fileID: -949536338034983398, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1085940492728425605}
-    - targetCorrespondingSourceObject: {fileID: -949536338034983398, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 5667681985372739226}
     - targetCorrespondingSourceObject: {fileID: -949536338034983398, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
@@ -941,6 +938,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -949536338034983398, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8764680920946156245}
+    - targetCorrespondingSourceObject: {fileID: -949536338034983398, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3587337044209090678}
   m_SourcePrefab: {fileID: 100100000, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
 --- !u!1 &455652940397623673 stripped
 GameObject:
@@ -977,9 +977,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 455652940397623673}
   serializedVersion: 4
-  m_Mass: 5
-  m_Drag: 0.05
-  m_AngularDrag: 0.05
+  m_Mass: 10
+  m_Drag: 2
+  m_AngularDrag: 2
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1008,28 +1008,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92bca59584cc4b443bd19ac35556b5b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BreakPrefab: {fileID: 8665266006594648626, guid: 76361c9cb6629094180f095e8af70a3c, type: 3}
+  BreakPrefab: {fileID: 8665266006594648626, guid: ffb0f3e49974dc14c81d46e4efa70e33, type: 3}
   breakPrefabSize: 0
   Scale: {x: 0, y: 0, z: 0}
   breakForce: 0.1
   breakOnTrigger: 1
   DistoryTime: 1
---- !u!114 &1085940492728425605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 455652940397623673}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  energy: 0
-  collisionProbability: 0.8
-  forceMagnitude: 35
 --- !u!65 &5667681985372739226
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1077,6 +1061,7 @@ MonoBehaviour:
   IsScoreNumberChange: 1
   ScoreNumber: 10
   IsDestroy: 0
+  IsExplosion: 1
 --- !u!114 &8764680920946156245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1093,7 +1078,23 @@ MonoBehaviour:
   rewardList:
   - {fileID: 2924959207231863310, guid: 05ca6b5bf8b24914683625be83c761fe, type: 3}
   rewardNumList: 01000000
-  speed: 100
   delayTime: 0.8
   explosionForce: 30
   Rbmass: 1
+  IsExplosion: 0
+--- !u!114 &3587337044209090678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 455652940397623673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00c52688cefc984da7f763e0f7653ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  attack: 1
+  defense: 0
+  BloodScroll: {fileID: 0}

@@ -14,14 +14,18 @@ public class MainCondition : MonoBehaviour
 
     public Text coinNum = null;
     public Text VigourNumber = null;
+    public TextMeshProUGUI levelText = null;
     private PublicGameData _gameData;
+
     // Start is called before the first frame update
     void Start()
     {
         _gameData = DataManager.Instance.gameInfo;
-        coinNum.text = "金币数量：" + _gameData.player.coin.ToString();
-        VigourNumber.text = "体力值：" + PlayerInfo.Instance.GetVigourNumber() + "/" + _gameData.player.defaultVigourNumber;
+        coinNum.text = _gameData.player.coin.ToString();
+        VigourNumber.text =
+            PlayerInfo.Instance.GetVigourNumber() + "/" + _gameData.player.defaultVigourNumber;
         InitScrollviewNode();
+        levelText.text = "第" + DataManager.Instance.gameInfo.roundInfo.currentLevel + "关";
     }
 
     // Update is called once per frame
@@ -29,13 +33,15 @@ public class MainCondition : MonoBehaviour
     {
         InitSideNode();
     }
+
     private void InitScrollviewNode()
     {
         //获取Scenes文件下的所有场景文件 将其添加到scrollview中
         scenesList = DataManager.Instance.scenesList;
         Debug.Log(scenesList[0]);
-        //scrollviewNode中展示的节点为选中的场景 
+        //scrollviewNode中展示的节点为选中的场景
     }
+
     private void InitSideNode()
     {
         // Debug.Log("体力值" + _gameData.player.DefaultvigourNumber);
@@ -58,6 +64,7 @@ public class MainCondition : MonoBehaviour
             sideView.transform.Find("GetReward").gameObject.SetActive(false);
         }
     }
+
     public void OnStartGameClick(string sceneName)
     {
         if (PlayerInfo.Instance.GetVigourNumber() < 2)
@@ -68,19 +75,22 @@ public class MainCondition : MonoBehaviour
         //跳转到对应场景
         string path;
         Debug.Log("当前关卡" + PlayerInfo.Instance.GetVigourNumber());
-        path = _gameData.roundInfo.levelSceneList[_gameData.roundInfo.currentLevel - 1].name; //跳转到当前关卡场景
-        PlayerInfo.Instance.AddVigourNumber(-3);                                                                                      // }
+        path = _gameData.roundInfo.levelSceneList[_gameData.roundInfo.currentLevel - 1].scenePath; //跳转到当前关卡场景
+        PlayerInfo.Instance.AddVigourNumber(-3); // }
         UnityEngine.SceneManagement.SceneManager.LoadScene(path);
     }
+
     public void OnSideViewVisible()
     {
         sideView.SetActive(!sideView.activeSelf);
     }
+
     public void OnGetRwardClick()
     {
         _gameData.player.defaultVigourNumber += 3;
         DataManager.Instance.SaveData();
     }
+
     public void OnAddVigourNumber()
     {
         PlayerInfo.Instance.AddVigourNumber(10);

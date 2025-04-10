@@ -1164,9 +1164,6 @@ PrefabInstance:
       addedObject: {fileID: 8277149320474634018}
     - targetCorrespondingSourceObject: {fileID: 8901372248823894973, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6824340769831068435}
-    - targetCorrespondingSourceObject: {fileID: 8901372248823894973, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 3113461528965748927}
     - targetCorrespondingSourceObject: {fileID: 8901372248823894973, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
@@ -1174,6 +1171,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8901372248823894973, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
       addedObject: {fileID: 126146367373032764}
+    - targetCorrespondingSourceObject: {fileID: 8901372248823894973, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2383564387275566329}
   m_SourcePrefab: {fileID: 100100000, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
 --- !u!1 &1083215432073172190 stripped
 GameObject:
@@ -1211,8 +1211,8 @@ Rigidbody:
   m_GameObject: {fileID: 1083215432073172190}
   serializedVersion: 4
   m_Mass: 5
-  m_Drag: 0.05
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 1
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
@@ -1229,22 +1229,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &6824340769831068435
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1083215432073172190}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  energy: 0
-  collisionProbability: 0.8
-  forceMagnitude: 35
 --- !u!114 &3113461528965748927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1257,7 +1241,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92bca59584cc4b443bd19ac35556b5b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BreakPrefab: {fileID: 8665266006594648626, guid: b748c9f6fa171e040a76d1b356352a89, type: 3}
+  BreakPrefab: {fileID: 8665266006594648626, guid: 6e10f0223ba73b44793c3f08ea8d8c3a, type: 3}
   breakPrefabSize: 0
   Scale: {x: 0, y: 0, z: 0}
   breakForce: 0.1
@@ -1309,4 +1293,21 @@ MonoBehaviour:
   Power: 0.01
   IsScoreNumberChange: 1
   ScoreNumber: 10
-  IsDestroy: 1
+  IsDestroy: 0
+  IsExplosion: 1
+--- !u!114 &2383564387275566329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1083215432073172190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00c52688cefc984da7f763e0f7653ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  attack: 1
+  defense: 0
+  BloodScroll: {fileID: 0}

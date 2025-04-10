@@ -962,6 +962,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4021030564725382336, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
       addedObject: {fileID: 720462710584705009}
+    - targetCorrespondingSourceObject: {fileID: 4021030564725382336, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4409805084721298759}
+    - targetCorrespondingSourceObject: {fileID: 4021030564725382336, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 976686049968073305}
   m_SourcePrefab: {fileID: 100100000, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
 --- !u!1 &4849758507302099875 stripped
 GameObject:
@@ -1034,7 +1040,7 @@ MonoBehaviour:
   Scale: {x: 0, y: 0, z: 0}
   breakForce: 0.1
   breakOnTrigger: 1
-  DistoryTime: 1
+  DistoryTime: 0.6
 --- !u!114 &6396910111136352266
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1060,7 +1066,8 @@ MonoBehaviour:
   Power: 0.01
   IsScoreNumberChange: 1
   ScoreNumber: 10
-  IsDestroy: 1
+  IsDestroy: 0
+  IsExplosion: 1
 --- !u!135 &8102821496299016127
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1098,7 +1105,42 @@ MonoBehaviour:
   rewardList:
   - {fileID: 2924959207231863310, guid: 05ca6b5bf8b24914683625be83c761fe, type: 3}
   rewardNumList: 01000000
-  speed: 100
   delayTime: 0.8
   explosionForce: 30
   Rbmass: 1
+  IsExplosion: 0
+--- !u!114 &4409805084721298759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4849758507302099875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00c52688cefc984da7f763e0f7653ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  attack: 0
+  defense: 0
+  BloodScroll: {fileID: 0}
+--- !u!114 &976686049968073305
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4849758507302099875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e656ee3be2aff3d4a9c28f267655ef90, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Target: {fileID: 0}
+  rewardList: []
+  rewardNumList: 
+  delayTime: 2.5
+  explosionForce: 1
+  Rbmass: 1
+  IsExplosion: 0

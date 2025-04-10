@@ -90,9 +90,6 @@ PrefabInstance:
       addedObject: {fileID: 8983254387713800259}
     - targetCorrespondingSourceObject: {fileID: -5538985522780130180, guid: 0195d7843aed5344aa749bad64655c27, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 691332279201670822}
-    - targetCorrespondingSourceObject: {fileID: -5538985522780130180, guid: 0195d7843aed5344aa749bad64655c27, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7209038702787462264}
     - targetCorrespondingSourceObject: {fileID: -5538985522780130180, guid: 0195d7843aed5344aa749bad64655c27, type: 3}
       insertIndex: -1
@@ -114,8 +111,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1732362803015497026}
   serializedVersion: 4
-  m_Mass: 2
-  m_Drag: 0.05
+  m_Mass: 1
+  m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -167,22 +164,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 833bf00650741724f98e507374a4b447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &691332279201670822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1732362803015497026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  energy: 0
-  collisionProbability: 0.8
-  forceMagnitude: 35
 --- !u!114 &7209038702787462264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,6 +203,7 @@ MonoBehaviour:
   IsScoreNumberChange: 1
   ScoreNumber: 10
   IsDestroy: 0
+  IsExplosion: 1
 --- !u!135 &3652892623565157274
 SphereCollider:
   m_ObjectHideFlags: 0

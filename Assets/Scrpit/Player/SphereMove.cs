@@ -1,58 +1,62 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
+// [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Rigidbody))]
 public class SphereController : MonoBehaviour
 {
-    private Animator animator;
+    // private Animator animator;
     private Rigidbody rb;
-    [Header("Move Settings")]
 
+    [Header("移动设置")]
     public float forwardSpeed = 20f; // 前进速度
-    public float sideSpeed = 20f;    // 左右移动速度
-    public bool autoRun = true;      // 是否自动行走
+    public float sideSpeed = 20f; // 左右移动速度
+    public bool autoRun = true; // 是否自动行走
 
-    public float detectionDistance = 2f;  // 设置一个固定的禁止通过检测距离，例如 1.0f
-    [Header("冲刺设置")]
-    [SerializeField] private float defaultForwardSpeed = 10f; // 默认前进速度
+    private float detectionDistance = 2f; // 设置一个固定的禁止通过检测距离，例如 1.0f
+
+    // [Header("冲刺设置")]
+    private float defaultForwardSpeed = 10f; // 默认前进速度
     private Coroutine dashCoroutine; // 冲刺协程引用
+    private float defaultPositionY = 0f; // 默认位置Y值
 
-    [Header("Collision Settings")]
-    public float impactForce = 10f;     // 撞击力度
-    public float upwardForce = 2f;      // 向上的力（让物体被撞飞时有一定高度）
-    [Header("Impact Settings")]
-    public float minImpactSpeed = 5f;   // 最小撞击速度才会产生效果
-    public float maxForceDistance = 2f;  // 最大力的影响距离
-    public bool addRandomRotation = true; // 是否添加随机旋转
+    [Header("撞击设置")]
+    public float impactForce = 10f; // 撞击力度
+    public float upwardForce = 2f; // 向上的力（让物体被撞飞时有一定高度）
 
-    [Header("镜头效果")]
-    [SerializeField] private Material blurMaterial;  // 磨砂材质（需提前创建）
-    [SerializeField] private float maxBlurIntensity = 0.8f; // 最大模糊强度
-    [SerializeField] private float blurFadeSpeed = 2f; // 模糊渐变速度
-
-    private Coroutine blurCoroutine;
-    private float currentBlur;
+    // [Header("撞击影响设置")]
+    private float minImpactSpeed = 5f; // 最小撞击速度才会产生效果
+    private float maxForceDistance = 2f; // 最大力的影响距离
+    private bool addRandomRotation = true; // 是否添加随机旋转
     private float startVolume; // 获取当前体积
     private Coroutine volumeCoroutine; // 体积缩放协程引用
+
     void Start()
     {
-
         _initState();
         defaultForwardSpeed = forwardSpeed;
         startVolume = transform.localScale.x;
+        // 启动协程以在一秒后赋值
+        StartCoroutine(AssignDefaultPositionY());
+    }
+
+    private IEnumerator AssignDefaultPositionY()
+    {
+        // 等待一秒
+        yield return new WaitForSeconds(1f);
+
+        // 赋值
+        defaultPositionY = transform.position.y;
     }
 
     void FixedUpdate()
     {
         HandleMovement();
-
     }
-
 
     private void _initState()
     {
-        animator = GetComponent<Animator>();
+        // animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
 
         // 添加空引用检查
@@ -69,15 +73,21 @@ public class SphereController : MonoBehaviour
             boxCollider.center = new Vector3(boxCollider.center.x, 0.5f, boxCollider.center.z);
         }
         // 配置Rigidbody
-        rb.freezeRotation = true;  // 防止球体滚动
-        rb.useGravity = false;  // 禁用重力
+        rb.freezeRotation = true; // 防止球体滚动
+        rb.useGravity = false; // 禁用重力
         rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous; // 改善碰撞检测
         rb.constraints = RigidbodyConstraints.FreezeRotation;
-        rb.velocity = Vector3.zero;  // 确保初始速度为零
+        rb.velocity = Vector3.zero; // 确保初始速度为零
     }
+
     //冲刺
-    public void Dash(float speed, float durationTime, GameObject TrailingEffect, GameObject ProtectiveEffect)
+    public void Dash(
+        float speed,
+        float durationTime,
+        GameObject TrailingEffect,
+        GameObject ProtectiveEffect
+    )
     {
         // 如果已有冲刺在进行，先停止
         if (dashCoroutine != null)
@@ -85,10 +95,17 @@ public class SphereController : MonoBehaviour
             StopCoroutine(dashCoroutine);
         }
         // 启动新的冲刺协程
-        dashCoroutine = StartCoroutine(DashRoutine(speed + forwardSpeed, durationTime, TrailingEffect, ProtectiveEffect));
+        dashCoroutine = StartCoroutine(
+            DashRoutine(speed + forwardSpeed, durationTime, TrailingEffect, ProtectiveEffect)
+        );
     }
 
-    private IEnumerator DashRoutine(float targetSpeed, float duration, GameObject TrailingEffectPrefab, GameObject ProtectiveEffectPrefab)
+    private IEnumerator DashRoutine(
+        float targetSpeed,
+        float duration,
+        GameObject TrailingEffectPrefab,
+        GameObject ProtectiveEffectPrefab
+    )
     {
         // 查找或创建挂载点
         Transform Trailing = CreateMountPoint("Trailing");
@@ -100,13 +117,6 @@ public class SphereController : MonoBehaviour
 
         float originalSpeed = forwardSpeed;
         float elapsedTime = 0f;
-        //摄像头出现玻璃模糊效果让加速更明显
-        // 启动模糊效果
-        if (blurMaterial != null)
-        {
-            if (blurCoroutine != null) StopCoroutine(blurCoroutine);
-            blurCoroutine = StartCoroutine(BlurEffect(true));
-        }
 
         // 冲刺阶段：加速到目标速度
         while (elapsedTime < duration * 0.3f) // 前30%时间加速
@@ -114,29 +124,22 @@ public class SphereController : MonoBehaviour
             forwardSpeed = Mathf.Lerp(originalSpeed, targetSpeed, elapsedTime / (duration * 0.3f));
             elapsedTime += Time.deltaTime;
 
-            // 动态调整模糊强度
-            if (blurMaterial != null)
-                blurMaterial.SetFloat("_BlurAmount", currentBlur);
-
             yield return null;
         }
         // 保持阶段：维持最高速度
         forwardSpeed = targetSpeed;
         yield return new WaitForSeconds(duration * 0.4f); // 中间40%时间保持
 
-        // 开始淡出模糊效果
-        if (blurMaterial != null)
-        {
-            if (blurCoroutine != null) StopCoroutine(blurCoroutine);
-            blurCoroutine = StartCoroutine(BlurEffect(false));
-        }
-
         // 减速阶段：回到默认速度
         float remainingTime = duration * 0.3f; // 后30%时间减速
         elapsedTime = 0f;
         while (elapsedTime < remainingTime)
         {
-            forwardSpeed = Mathf.Lerp(targetSpeed, defaultForwardSpeed, elapsedTime / remainingTime);
+            forwardSpeed = Mathf.Lerp(
+                targetSpeed,
+                defaultForwardSpeed,
+                elapsedTime / remainingTime
+            );
             elapsedTime += Time.deltaTime;
             yield return null;
         }
@@ -167,7 +170,8 @@ public class SphereController : MonoBehaviour
 
     GameObject InstantiateEffect(GameObject prefab, Transform parent)
     {
-        if (prefab == null) return null;
+        if (prefab == null)
+            return null;
         ClearEffects(parent);
         GameObject instance = Instantiate(prefab);
         instance.transform.SetParent(parent);
@@ -184,34 +188,20 @@ public class SphereController : MonoBehaviour
         }
     }
 
-    // 模糊效果协程
-    private IEnumerator BlurEffect(bool isFadeIn)
-    {
-        float targetValue = isFadeIn ? maxBlurIntensity : 0f;
-        float startValue = currentBlur;
-
-        while (Mathf.Abs(currentBlur - targetValue) > 0.01f)
-        {
-            currentBlur = Mathf.Lerp(currentBlur, targetValue, blurFadeSpeed * Time.deltaTime);
-            yield return null;
-        }
-        currentBlur = targetValue;
-    }
     //移动
     private void HandleMovement()
     {
         Vector3 movement = Vector3.zero; // 初始化 movement 变量
-                                         // 在编辑器中使用鼠标输入
+        // 在编辑器中使用鼠标输入
         if (Input.touchCount > 0 || Input.GetMouseButton(0))
         {
-
             float moveX;
             if (Input.GetMouseButton(0))
-            {//鼠标移动
+            { //鼠标移动
                 moveX = Input.GetAxis("Mouse X") * 0.3f;
             }
             else
-            {//屏幕移动
+            { //屏幕移动
                 Debug.Log(Input.touchCount + "触摸输入");
                 Touch touch = Input.GetTouch(0);
                 moveX = touch.deltaPosition.x * 0.3f;
@@ -247,13 +237,19 @@ public class SphereController : MonoBehaviour
                 return;
             }
         }
+        Debug.Log("移动" + defaultPositionY);
+        Vector3 newPosition = rb.position + movement * Time.fixedDeltaTime;
+        if (defaultPositionY > 0)
+        {
+            newPosition.y = defaultPositionY;
+        }
         // 使用 Rigidbody 移动
-        rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
+        rb.MovePosition(newPosition);
     }
+
     //体积调整
     public void ChangeVolume(float volumeMultiplier, float durationTime)
     {
-        Vector3 startPosition = transform.position; // 获取当前位置
         // 立即调整到目标体积
         float targetVolume = startVolume * volumeMultiplier; // 计算目标体积
         transform.localScale = new Vector3(targetVolume, targetVolume, targetVolume); // 立即调整到目标体积
@@ -262,10 +258,10 @@ public class SphereController : MonoBehaviour
             StopCoroutine(volumeCoroutine);
         }
         // 启用协程来平滑恢复体积
-        volumeCoroutine = StartCoroutine(ChangeVolumeOverTime(startVolume, durationTime, startPosition));
+        volumeCoroutine = StartCoroutine(ChangeVolumeOverTime(startVolume, durationTime));
     }
 
-    public IEnumerator ChangeVolumeOverTime(float originalVolume, float durationTime, Vector3 startPosition)
+    public IEnumerator ChangeVolumeOverTime(float originalVolume, float durationTime)
     {
         float elapsedTime = 0f;
         float targetVolume = transform.localScale.x; // 当前体积（即目标体积）
@@ -281,21 +277,18 @@ public class SphereController : MonoBehaviour
             float t = elapsedTime / remainingTime;
             float newScale = Mathf.Lerp(targetVolume, originalVolume, Mathf.SmoothStep(0, 1, t));
             transform.localScale = new Vector3(newScale, newScale, newScale);
-            transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
-
             elapsedTime += Time.deltaTime; // 增加经过的时间
             yield return null; // 等待下一帧
         }
 
         // 确保最终体积恢复到原始体积
         transform.localScale = new Vector3(originalVolume, originalVolume, originalVolume);
-        transform.position = new Vector3(transform.position.x, startPosition.y, transform.position.z);
         volumeCoroutine = null;
     }
+
     //碰撞事件处理
     private void OnCollisionEnter(Collision collision)
     {
-
         //垂直速度设置为零
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null)

@@ -4,12 +4,13 @@ using UnityEngine.SceneManagement;
 
 /**
  * 游戏内数据管理器
- *控制游戏内发生的临时数据  
+ *控制游戏内发生的临时数据
  */
 public class GameDataManager : MonoBehaviour
 {
     // 单例实例
     public static GameDataManager Instance { get; private set; }
+
     [Header("游戏属性变量")]
     // 游戏属性变量
     public int playerScore; // 玩家得分
@@ -20,15 +21,18 @@ public class GameDataManager : MonoBehaviour
     public int goldenCoin = 0; // 金币数量
     private float lastDamageTime = 0f; // 上次处理伤害的时间
     public float damageDebounceTime = 1f; // 防抖时间，单位为秒
-    public bool endGameVisible = false;// 游戏是否结束
+    public bool endGameVisible = false; // 游戏是否结束
+
     //公共变色色值
     public Color32 BaseColor;
+
     //禁止碰撞变色色值
     public Color32 NoCollisionColor;
+
     //可碰撞变色色值
     public Color32 CollisionColor;
 
-    public GameObject _player;// 玩家对象
+    public GameObject _player; // 玩家对象
 
     // 在游戏中常驻
     private void Awake()
@@ -66,6 +70,7 @@ public class GameDataManager : MonoBehaviour
         if (_player == null)
             Debug.LogError("Player对象未找到，请检查标签设置");
     }
+
     void Start()
     {
         if (_player == null)
@@ -83,6 +88,7 @@ public class GameDataManager : MonoBehaviour
         // 设置目标帧率为30
         Application.targetFrameRate = 30;
     }
+
     // Update is called once per frame
     void Update()
     {
@@ -108,10 +114,12 @@ public class GameDataManager : MonoBehaviour
         currentLevel = PlayerPrefs.GetString("CurrentLevel", "Level1"); // 默认值为 "Level1"
         goldenCoin = PlayerPrefs.GetInt("goldenCoin", 0); // 默认值为 0
     }
+
     public void ChangePlayerLives(float change)
     {
         // 如果玩家处于无敌状态，则不改变生命值
-        if (isInvincible) return;
+        if (isInvincible)
+            return;
         if (_player == null)
         {
             Debug.LogWarning("玩家对象已被销毁，无法更改生命值。");
@@ -130,7 +138,6 @@ public class GameDataManager : MonoBehaviour
         // 检查是否超过防抖时间
         if (currentTime - lastDamageTime >= damageDebounceTime)
         {
-
             if (change < 0)
             {
                 // 处理伤害逻辑
@@ -140,15 +147,17 @@ public class GameDataManager : MonoBehaviour
                 PanelManager panelManager = FindObjectOfType<PanelManager>();
                 panelManager.ShowPanel(panelManager.panels[2]);
                 //减少level
-                _player.GetComponent<player>().levelNumber = Mathf.RoundToInt(_player.GetComponent<player>().levelNumber / 2f); // 四舍五入取整
+                _player.GetComponent<player>().levelNumber = Mathf.RoundToInt(
+                    _player.GetComponent<player>().levelNumber / 2f
+                ); // 四舍五入取整
                 //减少积分
-                _player.GetComponent<player>().scoreNumber = Mathf.Round(_player.GetComponent<player>().scoreNumber * 0.8f * 100) / 100; // 保留两位小数
+                _player.GetComponent<player>().scoreNumber =
+                    Mathf.Round(_player.GetComponent<player>().scoreNumber * 0.8f * 100) / 100; // 保留两位小数
                 // 启动协程
                 StartCoroutine(HidePanelCoroutine());
                 // 震动手机
                 // Handheld.Vibrate();
             }
-
 
             // 更新上次处理伤害的时间
             lastDamageTime = currentTime;
@@ -171,6 +180,7 @@ public class GameDataManager : MonoBehaviour
             }
         }
     }
+
     public void ChangePlayerEnergy(float change)
     {
         energy += change;
@@ -182,8 +192,8 @@ public class GameDataManager : MonoBehaviour
         {
             panel.UpdatePlayerPower(energy);
         }
-
     }
+
     // 调用此方法以在 0.5 秒后隐藏面板
     private IEnumerator HidePanelCoroutine()
     {
@@ -191,7 +201,4 @@ public class GameDataManager : MonoBehaviour
         PanelManager panelManager = FindObjectOfType<PanelManager>();
         panelManager.HidePanel(panelManager.panels[2]);
     }
-
 }
-
-

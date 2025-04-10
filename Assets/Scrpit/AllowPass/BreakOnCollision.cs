@@ -100,32 +100,31 @@ public class BreakOnCollision : MonoBehaviour
         // 设置自动销毁（DistoryTime秒后清理碎块）
         Destroy(brokenObject, DistoryTime);
         // 销毁当前物体
-        Debug.Log("销毁当前物体");
-        Destroy(gameObject.transform.parent.gameObject);
-        IsRuning = false;
     }
     private void ResetRigidbody(Rigidbody rb)
     {
         if (rb.tag == "Wall") return;
         rb.useGravity = true;
         rb.isKinematic = false;
-        // 添加爆炸力（带随机旋转）
-        Vector3 explosionPoint = rb.transform.position;
-
+        // 修改后的爆炸参数
         rb.AddExplosionForce(
-            breakForce,
-            explosionPoint,
-            5f,
-            0.5f,
-            ForceMode.Impulse
+            breakForce,          // 增大爆炸强度
+            explosionPosition: transform.position + Random.insideUnitSphere * 0.5f, // 添加随机中心偏移
+            explosionRadius: 5f,          // 增大影响半径
+            upwardsModifier: 0.3f,         // 降低垂直修正
+            mode: ForceMode.Impulse
         );
 
-        // 添加随机旋转力
-        rb.AddTorque(new Vector3(
-            Random.Range(-10f, 10f),
-            Random.Range(-10f, 10f),
-            Random.Range(-10f, 10f)
-        ));
+        // 添加水平随机力
+        Vector3 horizontalForce = new Vector3(
+            Random.Range(-1f, 1f),
+            0,
+            Random.Range(-1f, 1f)
+        ) * 200f;
+        rb.AddForce(horizontalForce, ForceMode.Impulse);
+
+        // 修改旋转力参数
+        rb.AddTorque(Random.insideUnitSphere * 50, ForceMode.Impulse); // 增大扭矩值
         //变色
         // 创建 ColorChanger 实例并调用 SetColor 方法
         if (rb.gameObject.GetComponent<ColorChanger>() == null)

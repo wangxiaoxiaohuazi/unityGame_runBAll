@@ -34,7 +34,9 @@ public class PlayerInfo : MonoBehaviour
         _instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
     public PublicGameData gameData => DataManager.Instance.gameInfo;
+
     //获取体力数量
     public int GetVigourNumber()
     {
@@ -54,6 +56,7 @@ public class PlayerInfo : MonoBehaviour
         }
         return vigour.num;
     }
+
     public void AddVigourNumber(int num)
     {
         if (Instance == null || Instance.gameData?.player?.todayVigour == null)

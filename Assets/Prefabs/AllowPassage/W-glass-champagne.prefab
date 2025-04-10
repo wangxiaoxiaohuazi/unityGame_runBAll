@@ -1160,9 +1160,6 @@ PrefabInstance:
       addedObject: {fileID: 7279575609776674103}
     - targetCorrespondingSourceObject: {fileID: 2819526419519617127, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1890790461910413254}
-    - targetCorrespondingSourceObject: {fileID: 2819526419519617127, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 6776004814978269554}
     - targetCorrespondingSourceObject: {fileID: 2819526419519617127, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
@@ -1170,6 +1167,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2819526419519617127, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7835281262350744722}
+    - targetCorrespondingSourceObject: {fileID: 2819526419519617127, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8886633587326373315}
   m_SourcePrefab: {fileID: 100100000, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
 --- !u!1 &6025996635640823556 stripped
 GameObject:
@@ -1225,22 +1225,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1890790461910413254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6025996635640823556}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  energy: 0
-  collisionProbability: 0.8
-  forceMagnitude: 35
 --- !u!114 &6776004814978269554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1284,7 +1268,8 @@ MonoBehaviour:
   Power: 0.01
   IsScoreNumberChange: 1
   ScoreNumber: 10
-  IsDestroy: 1
+  IsDestroy: 0
+  IsExplosion: 1
 --- !u!65 &7835281262350744722
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1306,3 +1291,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.00059818267, y: 0.0023020483, z: 0.0005981825}
   m_Center: {x: -4.3655746e-11, y: 0.0011510241, z: 0}
+--- !u!114 &8886633587326373315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6025996635640823556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00c52688cefc984da7f763e0f7653ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  attack: 0
+  defense: 0
+  BloodScrollbar: {fileID: 0}

@@ -1,13 +1,16 @@
 using System.Collections.Generic;
+using System.Linq; // 添加此行以引入LINQ命名空间
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI; // 如果使用的是 UI.Text
+
 // using TMPro; // 如果使用的是 TextMeshPro
 
 public class PanelGameCondition : MonoBehaviour
 {
     public GameObject bloodBar; // 血条
     public Sprite heartSprite; // 血量图标
+    public Sprite DisheartSprite; // 血量图标
     public Text FrowardSpeedText; // 如果使用的是 UI.Text
     public Text HorizontalSpeedText; // 如果使用的是 UI.Text
     public Text FpsText; // 如果使用的是 UI.Text
@@ -19,6 +22,7 @@ public class PanelGameCondition : MonoBehaviour
     public Text ScoreText; // 如果使用的是 UI.Text
     public Text RoundNameText; // 如果使用的是 UI.Text
     public Text GoldenText; // 如果使用的是 UI.Text
+
     void Start()
     {
         // 初始化显示玩家生命值
@@ -65,7 +69,8 @@ public class PanelGameCondition : MonoBehaviour
         player _player = sphere.GetComponent<player>();
         HorizontalSpeedText.text = "水平速度：" + sphereMove.sideSpeed.ToString();
         // FrowardSpeedText.text = "前进速度：" + sphereMove.forwardSpeed.ToString();
-        FrowardSpeedText.text = "皮肤数量：" + DataManager.Instance.gameInfo.collections.skins.Count;
+        FrowardSpeedText.text =
+            "皮肤数量：" + DataManager.Instance.gameInfo.collections.skins.Count;
         ScoreText.text = "得分：" + _player.scoreNumber.ToString();
         GoldenText.text = "金币：" + GameDataManager.Instance.goldenCoin.ToString();
         // 更新计时器
@@ -81,7 +86,6 @@ public class PanelGameCondition : MonoBehaviour
 
     public void UpdatePlayerLives(float lives)
     {
-
         // 获取当前血条中的心形数量
         int currentHearts = bloodBar.transform.childCount;
 
@@ -107,16 +111,17 @@ public class PanelGameCondition : MonoBehaviour
             // 从最后一个开始销毁
             for (int i = currentHearts - 1; i >= lives; i--)
             {
-                Destroy(bloodBar.transform.GetChild(i).gameObject);
+                bloodBar.transform.GetChild(i).GetComponent<Image>().sprite = DisheartSprite;
             }
         }
     }
+
     public void UpdatePlayerPower(float lives)
     {
         // playerPowerBar.size = (float)lives / 10f;
         // playerPowerText.text = "能量值：" + (float)lives / 10f; ;
-
     }
+
     public void UpdateFrowardSpeed(float forwardSpeed)
     {
         SphereController sphereMove = sphere.GetComponent<SphereController>();
@@ -126,6 +131,7 @@ public class PanelGameCondition : MonoBehaviour
         PlayerPrefs.SetFloat("ForwardSpeed", sphereMove.forwardSpeed);
         PlayerPrefs.Save(); // 确保保存
     }
+
     public void UpdateHorizontalSpeed(float horizontalSpeed)
     {
         SphereController sphereMove = sphere.GetComponent<SphereController>();
@@ -135,10 +141,12 @@ public class PanelGameCondition : MonoBehaviour
         PlayerPrefs.SetFloat("HorizontalSpeed", sphereMove.sideSpeed);
         PlayerPrefs.Save(); // 确保保存
     }
+
     public void roundChangeVisible()
     {
         roundView.SetActive(!roundView.activeSelf);
     }
+
     public void ResetGame()
     {
         if (sphere)
@@ -146,6 +154,7 @@ public class PanelGameCondition : MonoBehaviour
             sphere.GetComponent<player>().OnResetGame();
         }
     }
+
     public void NextScene()
     {
         if (PlayerInfo.Instance.GetVigourNumber() < 2)
@@ -157,7 +166,15 @@ public class PanelGameCondition : MonoBehaviour
         RoundInfo.Instance.OnNextRound(() =>
         {
             PublicGameData gameData = DataManager.Instance.gameInfo;
-            SceneManager.LoadScene(gameData.roundInfo.levelSceneList[gameData.roundInfo.currentLevel].name);
+            string scenePath = gameData
+                .roundInfo.levelSceneList.FirstOrDefault(x =>
+                    x.id - 1 == RoundInfo.Instance.OnGetCurrentLevel()
+                ) // 使用FirstOrDefault
+                ?.scenePath; // 使用空条件运算符以防止空引用异常
+            if (scenePath != null)
+            {
+                SceneManager.LoadScene(scenePath);
+            }
         });
     }
 }

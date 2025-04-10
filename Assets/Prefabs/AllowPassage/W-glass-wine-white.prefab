@@ -1087,13 +1087,13 @@ PrefabInstance:
       addedObject: {fileID: 7073258813601496162}
     - targetCorrespondingSourceObject: {fileID: -6261701047631560179, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5381551060018636722}
-    - targetCorrespondingSourceObject: {fileID: -6261701047631560179, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 7756613928836244422}
     - targetCorrespondingSourceObject: {fileID: -6261701047631560179, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1480942705091223574}
+    - targetCorrespondingSourceObject: {fileID: -6261701047631560179, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6862777878145090456}
   m_SourcePrefab: {fileID: 100100000, guid: 326dc93601e52fe4ba69d2195de18770, type: 3}
 --- !u!1 &6744602541501220206 stripped
 GameObject:
@@ -1167,22 +1167,6 @@ MonoBehaviour:
   breakForce: 0.1
   breakOnTrigger: 1
   DistoryTime: 1
---- !u!114 &5381551060018636722
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6744602541501220206}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  energy: 0
-  collisionProbability: 0.8
-  forceMagnitude: 35
 --- !u!114 &7756613928836244422
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1208,7 +1192,8 @@ MonoBehaviour:
   Power: 0.01
   IsScoreNumberChange: 1
   ScoreNumber: 10
-  IsDestroy: 1
+  IsDestroy: 0
+  IsExplosion: 1
 --- !u!65 &1480942705091223574
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1230,3 +1215,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.0008, y: 0.0022, z: 0.0008}
   m_Center: {x: 1.0186341e-10, y: 0.0011492224, z: -4.3655763e-11}
+--- !u!114 &6862777878145090456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6744602541501220206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00c52688cefc984da7f763e0f7653ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  attack: 0
+  defense: 0
+  BloodScrollbar: {fileID: 0}

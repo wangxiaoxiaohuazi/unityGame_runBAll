@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class ItemPickup : MonoBehaviour
 {
-    [Header("攻击参数")]
+
+    // [Header("攻击参数")]
+    public float projectileSpeed = 70f; // 子弹速度
+    private float projectileLifetime = 5f; // 投射物的生存时间
+    public GameObject BulletPrefab;//子弹预制体
+    [Header("子弹范围检测参数")]
     public float detectionDistance = 69f; // 检测范围的距离
     public float detectionWidth = 17f; // 检测范围的宽度
-    public float projectileSpeed = 70f; // 子弹速度
-    public float explosionForce = 500f; // 爆炸作用力
-    public float explosionRadius = 20f; // 爆炸半径
-    public float projectileLifetime = 5f; // 投射物的生存时间
     public bool showDetectionRange = true; // 控制是否显示检测范围
-    public GameObject BulletPrefab;//子弹预制体
     void Start()
     {
         //如果没有collider，则添加一个,并且将isTrigger设置为true
@@ -55,9 +55,6 @@ public class ItemPickup : MonoBehaviour
                     detectionDistance,
                     detectionWidth,
                     projectileSpeed,
-                    explosionForce,
-                    explosionRadius,
-                    projectileLifetime,
                     showDetectionRange,
                     BulletPrefab
                 );

@@ -72,6 +72,8 @@ public class BulletCondition : MonoBehaviour
             explosionEffect.SetActive(true);
             // 可选：设置爆炸效果的生命周期
             Destroy(explosionEffect, 2f); // 2秒后销毁爆炸效果
+            //销毁子弹
+            Destroy(gameObject);
         }
         else
         {
@@ -99,16 +101,32 @@ public class BulletCondition : MonoBehaviour
                     // 启用重力并取消 Kinematic
                     rb.isKinematic = false;
                     rb.useGravity = true;
-                    // Debug.Log("Player:" + collision.gameObject.name);
-                    // 计算击飞方向
-                    Vector3 forceDirection = other.transform.position - transform.position;
-                    forceDirection.y = 1; // 确保力有一个向上的分量
-                    forceDirection.Normalize();
+                    // 修改后的爆炸参数
+                    rb.AddExplosionForce(
+                        forceMagnitude,          // 增大爆炸强度
+                        explosionPosition: transform.position + Random.insideUnitSphere * 0.5f, // 添加随机中心偏移
+                        explosionRadius: 15f,          // 增大影响半径
+                        upwardsModifier: 0.3f,         // 降低垂直修正
+                        mode: ForceMode.Impulse
+                    );
 
-                    // 应用力
-                    // 力的大小可以根据需要调整
-                    rb.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+                    // 添加水平随机力
+                    Vector3 horizontalForce = new Vector3(
+                        Random.Range(-1f, 1f),
+                        0,
+                        Random.Range(-1f, 1f)
+                    ) * 200f;
+                    rb.AddForce(horizontalForce, ForceMode.Impulse);
+
+                    // 修改旋转力参数
+                    rb.AddTorque(Random.insideUnitSphere * 50, ForceMode.Impulse); // 增大扭矩值
+                    //范围内扣血
+                    if (rb.GetComponent<EnemyStateCondition>() != null)
+                    {
+                        rb.GetComponent<EnemyStateCondition>().hp -= bulletDamage;
+                    }
                 }
+
             }
             Destroy(gameObject, 2f);
         }

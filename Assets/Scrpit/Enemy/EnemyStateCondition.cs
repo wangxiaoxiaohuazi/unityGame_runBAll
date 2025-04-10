@@ -1,4 +1,5 @@
 
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,7 +14,7 @@ public class EnemyStateCondition : MonoBehaviour
     public float attack = 1f;
     //怪物防御力
     public float defense = 0f;
-    public Scrollbar BloodScrollbar;//怪物血条
+    public GameObject BloodScroll;//怪物血条
     private float BloodMax = 1f;//怪物最大血量
     // //怪物速度
     // public float speed;
@@ -41,29 +42,37 @@ public class EnemyStateCondition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        bool flag = gameObject.tag == "Enemy";//判断是否为敌人
+
+        //敌人不发生直接碰撞，仅做触发判断
         if (!GetComponent<Collider>())
         {
             gameObject.AddComponent<BoxCollider>();
-            GetComponent<Collider>().isTrigger = true;
+            GetComponent<Collider>().isTrigger = flag;
         }
         else if (GetComponent<Collider>().isTrigger == false)
         {
-            GetComponent<Collider>().isTrigger = true;
+            GetComponent<Collider>().isTrigger = flag;
         }
         //如果物体没有刚体和碰撞器，则添加
         if (GetComponent<Rigidbody>() == null)
         {
             gameObject.AddComponent<Rigidbody>();
-            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().useGravity = flag;
         }
+
+
         BloodMax = hp;
     }
     void Update()
     {
-        if (BloodScrollbar != null)
+        if (BloodScroll != null)
         {
-            changeBloodScrollbar(); // 更新血条
-
+            changeBloodScroll(); // 更新血条
+        }
+        if (hp <= 0)
+        {
+            Die(); // 调用死亡方法
         }
     }
     //被子弹碰到则扣血，血量小于等于0则销毁
@@ -79,7 +88,7 @@ public class EnemyStateCondition : MonoBehaviour
                 // 扣血
                 TakeDamage(other.GetComponent<BulletCondition>().bulletDamage); // 假设每次被子弹碰到扣1点血
             }
-            Destroy(other.gameObject); // 销毁子弹
+            // Destroy(other.gameObject); // 销毁子弹
         }
         if (other.CompareTag("Player"))
         {
@@ -131,16 +140,32 @@ public class EnemyStateCondition : MonoBehaviour
     // 死亡方法
     private void Die()
     {
+        // 先禁用自身组件
+        if (TryGetComponent<Renderer>(out var selfRenderer))
+            selfRenderer.enabled = false;
+        if (TryGetComponent<Collider>(out var selfCollider))
+            selfCollider.enabled = false;
+        // 禁用所有渲染器和碰撞器
+        foreach (var renderer in GetComponentsInChildren<Renderer>())
+            renderer.enabled = false;
+        foreach (var collider in GetComponentsInChildren<Collider>())
+            collider.enabled = false;
         Debug.Log("敌人死亡");
-        if (gameObject.GetComponent<BreakOnCollision>() != null || gameObject.GetComponent<PublicItem>() != null)
-        {
-            return;
-        }
+        // 延迟销毁
+        StartCoroutine(DelayedDestroy());
+    }
+    private IEnumerator DelayedDestroy()
+    {
+        yield return new WaitForSeconds(2f);
+
         Debug.Log("敌人销毁");
         Destroy(gameObject); // 销毁敌人对象
+
+        // 可选：播放消失特效
+        // Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
     }
-    private void changeBloodScrollbar()
+    private void changeBloodScroll()
     {
-        BloodScrollbar.size = Mathf.Clamp(hp / BloodMax, 0f, 1f);
+        BloodScroll.GetComponent<BloodUICondition>().ChangeBloodUI();
     }
 }

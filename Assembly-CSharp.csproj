@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scrpit\Player\Move.cs" />
     <Compile Include="Assets\ImportModel\EffectCore\packs\StylizedExplosionPack1\WebDemo\scripts\projectileActorExplosion1.cs" />
     <Compile Include="Assets\ImportModel\DrollRobots\Scripts\CamHolder.cs" />
+    <Compile Include="Assets\Suriyun\Scripts\Swapper.cs" />
     <Compile Include="Assets\Scrpit\Player\CharacterCarousel.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -89,6 +90,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\KUBIKOS - Cube Mini Animals\Animals1_!Demo\Animals1_Scripts\MathFx.cs" />
+    <Compile Include="Assets\Scrpit\UI\RoundProportionUICondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Scrpit\PropItems\FragmentMove.cs" />
     <Compile Include="Assets\Scrpit\Manager\PanelManager.cs" />
@@ -119,6 +121,7 @@
     <Compile Include="Assets\ImportModel\Engine Particle\Script\ExtendedFlycam.cs" />
     <Compile Include="Assets\Scrpit\Enemy\EnemAttackCondition.cs" />
     <Compile Include="Assets\KUBIKOS - Cube Mini Animals\Animals1_!Demo\Animals1_Scripts\AssetsObject.cs" />
+    <Compile Include="Assets\Suriyun\Scripts\AnimatorController.cs" />
     <Compile Include="Assets\ImportModel\HYPEPOLY - Runner Pack Standart\Scripts\HYPEPOLY_Dispenser.cs" />
     <Compile Include="Assets\Scrpit\PropItems\Single Function\PowerChange.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\ImportModel\Unluck Software\Scripts\AnimatedLight.cs" />
     <Compile Include="Assets\ImportModel\Unluck Software\Demo Resources\Scripts\SmoothCameraOrbit.cs" />
+    <Compile Include="Assets\Scrpit\UI\BloodUICondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\Scrpit\InterFace\DataModels\RoundInfoData.cs" />
@@ -153,6 +157,7 @@
     <Compile Include="Assets\ImportModel\Engine Particle\Script\Exit.cs" />
     <Compile Include="Assets\ImportModel\EffectCore\scripts\ECdestroyMe.cs" />
     <Compile Include="Assets\ImportModel\Layer Lab\Scripts\PanelControl.cs" />
+    <Compile Include="Assets\Hovl Studio\HSFiles\Scripts\For demo scenes\HS_RaycastInstance.cs" />
     <Compile Include="Assets\Scrpit\ThirdPath\TTFunction.cs" />
     <Compile Include="Assets\ImportModel\DrollRobots\Scripts\TextureScroller.cs" />
     <Compile Include="Assets\ImportModel\Polygon Arsenal\Demo\Scripts\PolygonFireProjectile.cs" />
@@ -166,6 +171,7 @@
     <Compile Include="Assets\Scrpit\InterFace\RoundInfo.cs" />
     <Compile Include="Assets\ImportModel\DrollRobots\Scripts\PushObjects.cs" />
     <Compile Include="Assets\Scrpit\PropItems\Single Function\BodyChange.cs" />
+    <Compile Include="Assets\Scrpit\UI\RoundTitleUICondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\ImportModel\EffectCore\packs\WebDemoAssets\scripts\ECExplodingProjectile.cs" />
@@ -175,6 +181,7 @@
     <Compile Include="Assets\Scrpit\Player\TouchHandler.cs" />
     <Compile Include="Assets\ImportModel\ithappy\Platformer_11_Space\Scripts\OscillateScale.cs" />
     <Compile Include="Assets\Scrpit\Enemy\EnemySpawner.cs" />
+    <Compile Include="Assets\Suriyun\Scripts\Camera Scripts\MouseOrbitImproved.cs" />
     <Compile Include="Assets\ImportModel\EffectCore\packs\WebDemoAssets\scripts\ECCameraShakeProjectile.cs" />
     <Compile Include="Assets\Scrpit\Manager\GameDataManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
@@ -210,21 +217,29 @@
     <Compile Include="Assets\ImportModel\DrollRobots\Scripts\Rob11Ctrl.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\Hovl Studio\Glowing orbs Vol 2\Demo scene\Readme.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_akarami_blend.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\Hovl Studio\Glowing orbs Vol 3\Demo scene\Readme.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaOutline.cginc" />
     <None Include="Assets\ImportModel\EffectCore\packs\StylizedExplosionPack1\Tips &amp; Documentations StylizedExplosionPack1.txt" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Oswald-Bold - OFL.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair_ds.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\ImportModel\Sci-Fi Ball Robot\Shader\Flow (Legacy).shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
     <None Include="Assets\ImportModel\Polygon Arsenal\Shaders\Standard\PolyIntense.Shader" />
     <None Include="Assets\ImportModel\Polygon Arsenal\Shaders\Standard\PolyRimLightSelective.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\ImportModel\Polygon Arsenal\Shaders\Standard\PolyRimLightSolid.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_fuku_ds.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eyelash_blend.shader" />
+    <None Include="Assets\Suriyun\README.txt" />
     <None Include="Assets\Shaders\MotionBlur.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
@@ -236,10 +251,15 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaMain.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\Hovl Studio\Glowing orbs Vol 4\Demo scene\Readme.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hada_blend.shader" />
     <None Include="Assets\KUBIKOS - Cube Mini Animals\ReadMe.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\CharaSkin.cginc" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
     <None Include="Assets\ImportModel\Polygon Arsenal\Shaders\Standard\PolyRimLightTransparent.shader" />
     <None Include="Assets\ImportModel\Customizable Skybox\Stylized Sky\Shaders\Stylized Sky.shader" />
     <None Include="Assets\ImportModel\Polygon Arsenal\Shaders\Standard\PolyLitSurface.shader" />
@@ -250,7 +270,10 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
     <None Include="Assets\ImportModel\ithappy\Platformer_11_Space\Render_Pipeline_Convert\Documentation.txt" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_hair.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Shaders\Self Illumin Diffuse.shader" />
+    <None Include="Assets\Suriyun\UnityChanShader\Shader\Unitychan_chara_eye_blend.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
     <None Include="Assets\ImportModel\Sci-Fi Ball Robot\Shader\Animation_Image (Legacy).shader" />

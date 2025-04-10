@@ -239,13 +239,13 @@ PrefabInstance:
       addedObject: {fileID: 8336948813609346979}
     - targetCorrespondingSourceObject: {fileID: -1784625408149770118, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8609699885967141675}
-    - targetCorrespondingSourceObject: {fileID: -1784625408149770118, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 19529652980999843}
     - targetCorrespondingSourceObject: {fileID: -1784625408149770118, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
       insertIndex: -1
       addedObject: {fileID: 671487059298813819}
+    - targetCorrespondingSourceObject: {fileID: -1784625408149770118, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 849809054720561453}
   m_SourcePrefab: {fileID: 100100000, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
 --- !u!1 &5944956355097472100 stripped
 GameObject:
@@ -301,22 +301,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2654819141648991420, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
---- !u!114 &8609699885967141675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5944956355097472100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 1
-  energy: 0
-  collisionProbability: 0.8
-  forceMagnitude: 35
 --- !u!65 &19529652980999843
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -364,3 +348,20 @@ MonoBehaviour:
   IsScoreNumberChange: 1
   ScoreNumber: 10
   IsDestroy: 0
+  IsExplosion: 1
+--- !u!114 &849809054720561453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5944956355097472100}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00c52688cefc984da7f763e0f7653ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  attack: 1
+  defense: 0
+  BloodScrollbar: {fileID: 0}

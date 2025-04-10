@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class projectileActorExplosion1 : MonoBehaviour {
-
+public class projectileActorExplosion1 : MonoBehaviour
+{
     public Transform spawnLocator;
 
     [System.Serializable]
@@ -12,6 +12,7 @@ public class projectileActorExplosion1 : MonoBehaviour {
         public string name;
         public Rigidbody bombPrefab;
     }
+
     public projectile[] bombList;
 
     string FauxName;
@@ -21,49 +22,48 @@ public class projectileActorExplosion1 : MonoBehaviour {
 
     public ParticleSystem muzzleflare;
 
-    public float min, max;
+    public float min,
+        max;
 
     public bool swarmMissileLauncher = false;
     int projectileSimFire = 1;
 
-
     public bool Torque = false;
-    public float Tor_min, Tor_max;
+    public float Tor_min,
+        Tor_max;
 
     public bool MinorRotate;
     public bool MajorRotate = false;
     int seq = 0;
 
-
-	// Use this for initialization
-	void Start ()
+    // Use this for initialization
+    void Start()
     {
         UiText.text = bombList[bombType].name.ToString();
         if (swarmMissileLauncher)
         {
             projectileSimFire = 5;
         }
-	}
-	
-	// Update is called once per frame
-	void Update ()
+    }
+
+    // Update is called once per frame
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
         {
             Switch(-1);
         }
 
-
         if (Input.GetButtonDown("Fire2") || Input.GetKeyDown(KeyCode.D))
         {
             Switch(1);
         }
 
-	    if(Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1"))
         {
             Fire();
         }
-	}
+    }
 
     public void Switch(int value)
     {
@@ -78,7 +78,6 @@ public class projectileActorExplosion1 : MonoBehaviour {
         }
 
         UiText.text = bombList[bombType].name.ToString();
-
     }
 
     public void Fire()
@@ -86,9 +85,10 @@ public class projectileActorExplosion1 : MonoBehaviour {
         muzzleflare.Play();
 
         Rigidbody rocketInstance;
-        rocketInstance = Instantiate(bombList[bombType].bombPrefab, spawnLocator.position, Quaternion.identity) as Rigidbody;
+        rocketInstance =
+            Instantiate(bombList[bombType].bombPrefab, spawnLocator.position, Quaternion.identity)
+            as Rigidbody;
         rocketInstance.AddForce(spawnLocator.forward * Random.Range(min, max));
-
 
         if (Torque)
         {
@@ -104,7 +104,6 @@ public class projectileActorExplosion1 : MonoBehaviour {
         }
     }
 
-
     void RandomizeRotation()
     {
         if (seq == 0)
@@ -112,27 +111,27 @@ public class projectileActorExplosion1 : MonoBehaviour {
             seq++;
             transform.Rotate(0, 1, 0);
         }
-      else if (seq == 1)
+        else if (seq == 1)
         {
             seq++;
             transform.Rotate(1, 1, 0);
         }
-      else if (seq == 2)
+        else if (seq == 2)
         {
             seq++;
             transform.Rotate(1, -3, 0);
         }
-      else if (seq == 3)
+        else if (seq == 3)
         {
             seq++;
             transform.Rotate(-2, 1, 0);
         }
-       else if (seq == 4)
+        else if (seq == 4)
         {
             seq++;
             transform.Rotate(1, 1, 1);
         }
-       else if (seq == 5)
+        else if (seq == 5)
         {
             seq = 0;
             transform.Rotate(-1, -1, -1);

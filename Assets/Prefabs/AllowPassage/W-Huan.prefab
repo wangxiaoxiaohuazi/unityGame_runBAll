@@ -351,9 +351,6 @@ PrefabInstance:
       addedObject: {fileID: 1410852109432401015}
     - targetCorrespondingSourceObject: {fileID: -6547958433140016059, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1730017283311126988}
-    - targetCorrespondingSourceObject: {fileID: -6547958433140016059, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
-      insertIndex: -1
       addedObject: {fileID: 1646785357710901147}
     - targetCorrespondingSourceObject: {fileID: -6547958433140016059, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
       insertIndex: -1
@@ -364,6 +361,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -6547958433140016059, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
       insertIndex: -1
       addedObject: {fileID: 9029227039631711180}
+    - targetCorrespondingSourceObject: {fileID: -6547958433140016059, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1781866406447315371}
   m_SourcePrefab: {fileID: 100100000, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
 --- !u!1 &1196827839798435931 stripped
 GameObject:
@@ -419,22 +419,6 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 44570906572721480, guid: 307f50e51cff66445ad9124f6a926c88, type: 3}
---- !u!114 &1730017283311126988
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1196827839798435931}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a98df50eecdd79b45b307d62533115f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 0
-  energy: 0.01
-  collisionProbability: 0.8
-  forceMagnitude: 35
 --- !u!114 &1646785357710901147
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -452,7 +436,7 @@ MonoBehaviour:
   Scale: {x: 0, y: 0, z: 0}
   breakForce: 1
   breakOnTrigger: 1
-  DistoryTime: 1
+  DistoryTime: 0.6
 --- !u!114 &3585628123211796294
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -478,7 +462,8 @@ MonoBehaviour:
   Power: 0.01
   IsScoreNumberChange: 1
   ScoreNumber: 10
-  IsDestroy: 1
+  IsDestroy: 0
+  IsExplosion: 1
 --- !u!65 &8616698301020072508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -516,7 +501,23 @@ MonoBehaviour:
   rewardList:
   - {fileID: 2924959207231863310, guid: 05ca6b5bf8b24914683625be83c761fe, type: 3}
   rewardNumList: 01000000
-  speed: 100
   delayTime: 0.8
   explosionForce: 30
   Rbmass: 1
+  IsExplosion: 0
+--- !u!114 &1781866406447315371
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1196827839798435931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00c52688cefc984da7f763e0f7653ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 1
+  attack: 0
+  defense: 0
+  BloodScroll: {fileID: 0}

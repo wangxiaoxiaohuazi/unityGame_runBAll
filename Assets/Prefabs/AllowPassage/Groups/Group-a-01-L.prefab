@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2595464318404930717}
   m_Layer: 0
-  m_Name: Group-A-01-L
+  m_Name: Group-a-01-L
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -242,6 +242,14 @@ PrefabInstance:
     - target: {fileID: 4334305469389794231, guid: 11b739224afd4c1468d8f70583a6b694, type: 3}
       propertyPath: m_Name
       value: R-box_bevel 02 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752097209931347226, guid: 11b739224afd4c1468d8f70583a6b694, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752097209931347226, guid: 11b739224afd4c1468d8f70583a6b694, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -526,6 +534,14 @@ PrefabInstance:
     - target: {fileID: 4334305469389794231, guid: 11b739224afd4c1468d8f70583a6b694, type: 3}
       propertyPath: m_Name
       value: R-box_bevel 02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752097209931347226, guid: 11b739224afd4c1468d8f70583a6b694, type: 3}
+      propertyPath: m_Drag
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5752097209931347226, guid: 11b739224afd4c1468d8f70583a6b694, type: 3}
+      propertyPath: m_AngularDrag
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
