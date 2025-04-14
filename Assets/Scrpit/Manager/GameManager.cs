@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     private PanelManager panelManager;
     internal bool isInvincible;
+   
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded; // 订阅场景加载事件
@@ -43,31 +44,48 @@ public class GameManager : MonoBehaviour
     }
     public void checkInput()
     {
-        if (GameDataManager.Instance.playerLives <= 0 || GameDataManager.Instance.endGameVisible)
+        if (!GameDataManager.Instance.isPause)
         {
-            return;
-        }
-        // 检测输入
-        if (Input.anyKey || Input.touchCount > 0)
-        {
-            // 有输入，重置无输入时间
-            idleTime = 0f;
-            Time.timeScale = 1; // 恢复游戏
-            panelManager.HidePanel(panelManager.panels[1]);
-        }
-        else
-        {
-            // 没有输入，增加无输入时间
-            idleTime += Time.deltaTime;
-
-            // 检查是否超过暂停阈值
-            if (idleTime >= pauseThreshold)
+            if (GameDataManager.Instance.playerLives <= 0 || GameDataManager.Instance.endGameVisible)
             {
-                Time.timeScale = 0; // 暂停游戏
-                // panelManager.ShowPanel(panelManager.panels[1]);
+                return;
             }
+            // 检测输入
+            if (Input.anyKey || Input.touchCount > 0)
+            {
+                // 有输入，重置无输入时间
+                idleTime = 0f;
+                Time.timeScale = 1; // 恢复游戏
+                panelManager.HidePanel(panelManager.panels[1]);
+            }
+            // else
+            // {
+            //     // 没有输入，增加无输入时间
+            //     idleTime += Time.deltaTime;
+
+            //     // 检查是否超过暂停阈值
+            //     if (idleTime >= pauseThreshold)
+            //     {
+            //         Time.timeScale = 0; // 暂停游戏
+            //                             // panelManager.ShowPanel(panelManager.panels[1]);
+            //     }
+            // }
         }
+
     }
 
- 
+    public void OnResetGame()
+    {
+        // 重新加载当前场景
+        if (PlayerInfo.Instance.GetVigourNumber() > 1)
+        {
+            PlayerInfo.Instance.AddVigourNumber(-3);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // GameDataManager.Instance.a'sChangePlayerLives(blood);
+            Debug.Log("重开");
+            GameDataManager.Instance.endGameVisible = false;
+        }
+        Time.timeScale = 1;
+    }
+
 }

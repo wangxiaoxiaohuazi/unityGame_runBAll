@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
+
 using TMPro;
 using TTSDK;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.WSA;
 
 public class MainCondition : MonoBehaviour
 {

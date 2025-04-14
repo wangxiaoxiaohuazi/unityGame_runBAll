@@ -23,9 +23,11 @@ public class PanelManager : MonoBehaviour
         // 显示指定的面板
         if (panels.Contains(panelToShow))
         {
+            panelToShow.gameObject.SetActive(true);
             panelToShow.alpha = 1f; // 设置透明度为 1
             panelToShow.interactable = true; // 启用交互
             panelToShow.blocksRaycasts = true; // 启用射线检测
+
         }
         else
         {
@@ -41,10 +43,11 @@ public class PanelManager : MonoBehaviour
             panelToHide.alpha = 0f; // 设置透明度为 0
             panelToHide.interactable = false; // 禁用交互
             panelToHide.blocksRaycasts = false; // 禁用射线检测
+            panelToHide.gameObject.SetActive(false);
         }
         else
         {
-            Debug.LogWarning("面板未在队列中: "+panelToHide);
+            Debug.LogWarning("面板未在队列中: " + panelToHide);
         }
     }
 

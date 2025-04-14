@@ -15,7 +15,7 @@ public class EndGame : MonoBehaviour
     // Update is called once per frame
     void OnCollisionEnter(Collision collision)
     {
-        Debug.Log("结束："+collision.gameObject.tag);
+        Debug.Log("结束：" + collision.gameObject.tag);
         // 输出碰撞对象的名称
         if (ignoredTags.Contains(collision.gameObject.tag))
         {
@@ -31,12 +31,19 @@ public class EndGame : MonoBehaviour
     {
         // 游戏胜利逻辑
         Debug.Log("游戏胜利！");
-        Time.timeScale = 0;
+        // Time.timeScale = 0;
         PanelManager panelManager = FindObjectOfType<PanelManager>(); // 获取 PanelManager 组件
 
         if (panelManager != null)
         {
-            panelManager.ShowPanel(panelManager.panels[0]); // 显示 PanelSuccess 面板
+            if (GameDataManager.Instance.playerLives > 0)
+            {
+                panelManager.ShowPanel(panelManager.panels[0]); // 显示 PanelSuccess 面板
+            }
+            else
+            {
+                panelManager.ShowPanel(panelManager.panels[5]); // 显示 PanelFail 面板
+            }
         }
     }
 }

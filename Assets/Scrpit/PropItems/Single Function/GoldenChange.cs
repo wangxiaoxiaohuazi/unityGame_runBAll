@@ -26,8 +26,10 @@ public class GoldenChange : MonoBehaviour
         // 如果碰撞体的标签是"Player"
         if (other.tag == "Player")
         {
+            Debug.Log(_number + "金币");
             // 调用GameDataManager脚本的ChangePlayerEnergy方法，参数为能量值
-            GameDataManager.Instance.goldenCoin += num;
+            GameDataManager.Instance.goldenCoin += (int)_number;
+            Debug.Log(GameDataManager.Instance.goldenCoin + "结算金币");
             // DataManager.Instance.PlayerLevel += num;
             //   DataManager.Instance
             //销毁游戏对象

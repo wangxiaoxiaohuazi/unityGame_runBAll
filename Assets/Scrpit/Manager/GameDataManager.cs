@@ -22,7 +22,7 @@ public class GameDataManager : MonoBehaviour
     private float lastDamageTime = 0f; // 上次处理伤害的时间
     public float damageDebounceTime = 1f; // 防抖时间，单位为秒
     public bool endGameVisible = false; // 游戏是否结束
-
+    public bool isPause = true;//是否暂停 true暂停角色移动等，false不暂停
     //公共变色色值
     public Color32 BaseColor;
 
@@ -101,7 +101,7 @@ public class GameDataManager : MonoBehaviour
         PlayerPrefs.SetInt("PlayerScore", playerScore);
         PlayerPrefs.SetFloat("PlayerLives", playerLives);
         PlayerPrefs.SetString("CurrentLevel", currentLevel);
-        PlayerPrefs.SetInt("goldenCoin", goldenCoin);
+        PlayerPrefs.SetFloat("goldenCoin", goldenCoin);
         PlayerPrefs.Save(); // 保存到 PlayerPrefs
     }
 
@@ -118,14 +118,18 @@ public class GameDataManager : MonoBehaviour
     public void ChangePlayerLives(float change)
     {
         // 如果玩家处于无敌状态，则不改变生命值
-        if (isInvincible)
-            return;
+
+
         if (_player == null)
         {
             Debug.LogWarning("玩家对象已被销毁，无法更改生命值。");
             return; // 如果玩家对象为 null，直接返回
         }
         player playerComponent = _player.GetComponent<player>();
+        if (playerComponent.isInvincible)
+        {
+            return;
+        }
         // 获取当前时间
         float currentTime = Time.time;
         if (change > 0)

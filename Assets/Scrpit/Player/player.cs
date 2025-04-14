@@ -33,6 +33,7 @@ public class player : MonoBehaviour
         InitDefaultPlayer(); //初始化默认角色
         InitDefaultTraling(); //初始化默认拖尾
         Debug.Log("当前总获得金币：" + DataManager.Instance.gameInfo.player.coin);
+        GameDataManager.Instance.isPause = false;
     }
 
     void Update()
@@ -40,22 +41,11 @@ public class player : MonoBehaviour
         // 检测 R 键输入
         if (Input.GetKeyDown(KeyCode.R))
         {
-            OnResetGame(); // 调用重置游戏事件
+            GameManager manager = new GameManager();
+            manager.OnResetGame(); // 调用重置游戏事件
         }
     }
 
-    public void OnResetGame()
-    {
-        // 重新加载当前场景
-        if (PlayerInfo.Instance.GetVigourNumber() > 1)
-        {
-            PlayerInfo.Instance.AddVigourNumber(-3);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            GameDataManager.Instance.ChangePlayerLives(blood);
-            GameDataManager.Instance.endGameVisible = false;
-        }
-        Time.timeScale = 1;
-    }
 
     //初始化玩家皮肤
     public void InitDefaultPlayer()
@@ -103,7 +93,7 @@ public class player : MonoBehaviour
         if (levelNumberTransform != null)
         {
             GameObject gameObject = levelNumberTransform.gameObject; // 获取 GameObject
-            gameObject.GetComponent<TextMeshPro>().text = "Level " + levelNumber;
+            gameObject.GetComponent<TextMeshPro>().text = "LV " + levelNumber;
         }
         else
         {

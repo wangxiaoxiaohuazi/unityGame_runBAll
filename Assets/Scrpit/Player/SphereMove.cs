@@ -191,6 +191,7 @@ public class SphereController : MonoBehaviour
     //移动
     private void HandleMovement()
     {
+        if (GameDataManager.Instance.isPause) return; // 检查游戏是否处于暂停状态
         Vector3 movement = Vector3.zero; // 初始化 movement 变量
         // 在编辑器中使用鼠标输入
         if (Input.touchCount > 0 || Input.GetMouseButton(0))
