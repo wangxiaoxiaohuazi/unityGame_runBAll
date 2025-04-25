@@ -22,7 +22,8 @@ public class GameDataManager : MonoBehaviour
     private float lastDamageTime = 0f; // 上次处理伤害的时间
     public float damageDebounceTime = 1f; // 防抖时间，单位为秒
     public bool endGameVisible = false; // 游戏是否结束
-    public bool isPause = true;//是否暂停 true暂停角色移动等，false不暂停
+    public bool isPause = true; //是否暂停 true暂停角色移动等，false不暂停
+
     //公共变色色值
     public Color32 BaseColor;
 
@@ -66,22 +67,20 @@ public class GameDataManager : MonoBehaviour
         // 场景加载完成后重新绑定玩家对象
         _player = GameObject.FindGameObjectWithTag("Player");
 
-        // 可选：添加null检查
-        if (_player == null)
-            Debug.LogError("Player对象未找到，请检查标签设置");
+        // // 可选：添加null检查
+        // if (_player == null)
+        //     Debug.LogError("Player对象未找到，请检查标签设置");
     }
 
     void Start()
     {
-        if (_player == null)
-        {
-            _player = GameObject.FindGameObjectWithTag("Player");
-        }
-        Debug.Log("游戏数据初始化完成:" + _player.name);
-        player playerComponent = _player.GetComponent<player>();
         // 初始化游戏数据
         playerScore = 0; // 初始化得分
-        playerLives = playerComponent.blood; // 初始化生命值;
+        _player = GameObject.FindGameObjectWithTag("Player");
+        playerLives =
+            _player != null
+                ? _player.GetComponent<player>().blood
+                : DataManager.Instance.gameInfo.player.defaultHP; // 初始化生命值;
         currentLevel = "Level1"; // 设置初始关卡
         // 禁用垂直同步
         QualitySettings.vSyncCount = 0;
@@ -93,26 +92,6 @@ public class GameDataManager : MonoBehaviour
     void Update()
     {
         // 更新游戏数据（如果需要）
-    }
-
-    public void SaveGameData()
-    {
-        // 保存游戏数据的逻辑
-        PlayerPrefs.SetInt("PlayerScore", playerScore);
-        PlayerPrefs.SetFloat("PlayerLives", playerLives);
-        PlayerPrefs.SetString("CurrentLevel", currentLevel);
-        PlayerPrefs.SetFloat("goldenCoin", goldenCoin);
-        PlayerPrefs.Save(); // 保存到 PlayerPrefs
-    }
-
-    public void LoadGameData()
-    {
-        player playerComponent = _player.GetComponent<player>();
-        // 加载游戏数据的逻辑
-        playerScore = PlayerPrefs.GetInt("PlayerScore", 0); // 默认值为 0
-        playerLives = PlayerPrefs.GetFloat("PlayerLives", playerComponent.blood); // 默认值为 3
-        currentLevel = PlayerPrefs.GetString("CurrentLevel", "Level1"); // 默认值为 "Level1"
-        goldenCoin = PlayerPrefs.GetInt("goldenCoin", 0); // 默认值为 0
     }
 
     public void ChangePlayerLives(float change)
@@ -130,6 +109,8 @@ public class GameDataManager : MonoBehaviour
         {
             return;
         }
+        Debug.Log("玩家生命值变化：" + change);
+
         // 获取当前时间
         float currentTime = Time.time;
         if (change > 0)
@@ -147,9 +128,7 @@ public class GameDataManager : MonoBehaviour
                 // 处理伤害逻辑
                 playerLives += change; // 更新生命值
                 playerLives = Mathf.Clamp(playerLives, 0, playerComponent.blood); // 确保生命值不低于 0
-                // 显示受伤特效面板
-                PanelManager panelManager = FindObjectOfType<PanelManager>();
-                panelManager.ShowPanel(panelManager.panels[2]);
+
                 //减少level
                 _player.GetComponent<player>().levelNumber = Mathf.RoundToInt(
                     _player.GetComponent<player>().levelNumber / 2f
@@ -157,8 +136,12 @@ public class GameDataManager : MonoBehaviour
                 //减少积分
                 _player.GetComponent<player>().scoreNumber =
                     Mathf.Round(_player.GetComponent<player>().scoreNumber * 0.8f * 100) / 100; // 保留两位小数
-                // 启动协程
+
+                // 显示受伤特效面板
+                PanelManager panelManager = FindObjectOfType<PanelManager>();
+                panelManager.ShowPanel(PanelManager.PanelName.PanelHurt);
                 StartCoroutine(HidePanelCoroutine());
+                Debug.Log("玩家生命值：" + playerLives);
                 // 震动手机
                 // Handheld.Vibrate();
             }
@@ -171,7 +154,7 @@ public class GameDataManager : MonoBehaviour
         PanelGameCondition panel = FindObjectOfType<PanelGameCondition>();
         if (panel != null)
         {
-            panel.UpdatePlayerLives(playerLives);
+            panel.UpdatePlayerLives();
         }
         if (playerLives <= 0)
         {
@@ -182,6 +165,7 @@ public class GameDataManager : MonoBehaviour
                 endGame.endGame();
                 endGameVisible = true;
             }
+            return;
         }
     }
 
@@ -203,6 +187,6 @@ public class GameDataManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f); // 等待 0.5 秒
         PanelManager panelManager = FindObjectOfType<PanelManager>();
-        panelManager.HidePanel(panelManager.panels[2]);
+        panelManager.HidePanel(PanelManager.PanelName.PanelHurt);
     }
 }

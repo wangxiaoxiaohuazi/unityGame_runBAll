@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TTSDK;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -34,21 +35,96 @@ public class ADManager : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(gameObject);
+        CreatADParm();
     }
 
     public PublicGameData gameData => DataManager.Instance.gameInfo;
+    public TTRewardedVideoAd RewardedVideoAd;
+    public TTInterstitialAd m_InterAdIns = null;
+    private TTBannerStyle m_style = new TTBannerStyle();
+    private TTBannerAd m_bannerAdIns;
+    public void CreatADParm()
+    {
+        RewardADCreat();
+        InterstitialADCreate();
+        BannerADCreat();
+    }
+    public void BannerADCreat()
+    {
+        m_style.top = 10;
+        m_style.left = 30;
+        m_style.width = 120;
+        var param = new CreateBannerAdParam
+        {
+            BannerAdId = "r2gmf5ye8j6t9g6m0h",
+            Style = m_style,
+            AdIntervals = 60
+        };
+        m_bannerAdIns = TT.CreateBannerAd(param);
+        m_bannerAdIns.OnError += (errorCode, errorMessage) => Debug.Log($"Banner加载失败 errorCode: {errorCode} errorMessage: {errorMessage}");
+        m_bannerAdIns.OnClose += () => Debug.Log($"Banner关闭 ");
+        m_bannerAdIns.OnLoad += () => Debug.Log($"Banner加载成功 ");
+        Debug.Log("Banner加载中");
+    }
+
+    void InterstitialADCreate()
+    {
+        var param = new CreateInterstitialAdParam { InterstitialAdId = "fjokdmrfljdgk4kkl4" };
+        m_InterAdIns = TT.CreateInterstitialAd(param);
+        m_InterAdIns.OnClose += () => Debug.Log("插屏广告关闭");
+        m_InterAdIns.OnLoad += () => Debug.Log("插屏广告加载");
+        m_InterAdIns.OnError += (code, message) => Debug.Log($"插屏错误 ： {code}  {message}");
+    }
+    //展示
+    public void ShowBannerAd()
+    {
+        Debug.Log("展示banner");
+        m_bannerAdIns.Show();
+    }
+    public void RewardADCreat()
+    {
+        string videoAdId = "3i388l5k9n492i8gne";
+        var param = new CreateRewardedVideoAdParam { AdUnitId = videoAdId };
+        RewardedVideoAd = TT.CreateRewardedVideoAd(param);
+        RewardedVideoAd.OnClose += (ended, count) => Debug.Log($"激励视频关闭 ended: {ended}, count: {count}");
+        RewardedVideoAd.OnError += (errorCode, errorMessage) => Debug.Log($"激励视频错误 errorCode: {errorCode}");
+    }
 
     //下一关
     public void OnADShow(Action callback = null)
     {
         try
         {
-            //广告回调
-            callback?.Invoke();
+            RewardedVideoAd.Show();
+            RewardedVideoAd.OnClose += (ended, count) =>
+            {
+                if (ended)
+                {
+                    //增加观看次数
+                    DataManager.Instance.gameInfo.player.adWatchTime++;
+                    DataManager.Instance.SaveData();
+                    //广告回调
+                    callback?.Invoke();
+                }
+#if UNITY_EDITOR
+                DataManager.Instance.gameInfo.player.adWatchTime++;
+                DataManager.Instance.SaveData();
+                //广告回调
+                callback?.Invoke();
+#endif
+            };
+
         }
         catch (Exception e)
         {
             Debug.Log(e);
+        }
+    }
+    public void OnIInterstitialADShow()
+    {
+        if (m_InterAdIns != null)
+        {
+            m_InterAdIns.Show();
         }
     }
 }

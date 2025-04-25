@@ -10,7 +10,7 @@ public class TTFunction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-   
+
     }
 
 
@@ -21,6 +21,7 @@ public class TTFunction : MonoBehaviour
             Debug.Log("Unity message init sdk callback");
             Debug.Log("Unity message code: " + code);
             Debug.Log("Unity message HostEnum: " + env.m_HostEnum);
+            ADManager.Instance.CreatADParm();
         });
 
     }

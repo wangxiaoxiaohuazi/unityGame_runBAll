@@ -48,22 +48,20 @@ public class RoundInfo : MonoBehaviour
             _gameInfo.roundInfo.currentLevel++;
         }
         DataManager.Instance.SaveData();
-        PlayerInfo.Instance.AddVigourNumber(-3);
         callback?.Invoke();
     }
 
-    public int? OnGetCurrentLevel()
+    public LevelList  OnGetCurrentLevel()
     {
         //获取当前场景名
         string sceneName = SceneManager.GetActiveScene().name;
         PublicGameData _gameInfo = DataManager.Instance.gameInfo;
         for (int i = 0; i < _gameInfo.roundInfo.levelSceneList.Count; i++)
         {
-            Debug.Log("场景：===" + sceneName);
-            Debug.Log("场景：===" + _gameInfo.roundInfo.levelSceneList[i].name);
+
             if (sceneName == _gameInfo.roundInfo.levelSceneList[i].scenePath)
             {
-                return _gameInfo.roundInfo.levelSceneList[i].id;
+                return _gameInfo.roundInfo.levelSceneList[i];
             }
         }
         return null;

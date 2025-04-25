@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,21 +11,16 @@ public class player : MonoBehaviour
 
     public float blood = 4; //血量
     public bool isInvincible = false; //无敌状态
-
-    // public float speed = 5f; //速度
-    // public float jumpForce = 5f; //跳跃力
-    // public float jumpTime = 0.5f; //跳跃时间
     public float power = 0; //能量
     public int levelNumber = 0; //等级
     public float scoreNumber = 0; //分数
     public int attack = 1; //攻击力
-
-    // private VibrationManager vibrationManager;
     [Header("默认角色")]
     public GameObject _defaultPlayer;
     public GameObject _defaultTrailing;
     private int priveAttactNodeID;
 
+    public float defaultBlood = 4;
     void Start()
     {
         //初始化基础赋值
@@ -32,31 +28,29 @@ public class player : MonoBehaviour
         // vibrationManager = gameObject.AddComponent<VibrationManager>();
         InitDefaultPlayer(); //初始化默认角色
         InitDefaultTraling(); //初始化默认拖尾
+        InitDefaultArt(); //初始化默认艺术
         Debug.Log("当前总获得金币：" + DataManager.Instance.gameInfo.player.coin);
         GameDataManager.Instance.isPause = false;
+        PanelManager manager = FindObjectOfType<PanelManager>();
+        manager.showHome(); //显示主界面
+        defaultBlood = blood;
+        //随机播放背景音乐
+ 
     }
 
     void Update()
     {
-        // 检测 R 键输入
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            GameManager manager = new GameManager();
-            manager.OnResetGame(); // 调用重置游戏事件
-        }
+
+
     }
 
 
     //初始化玩家皮肤
     public void InitDefaultPlayer()
     {
-        // 获取当前player对象
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if (player == null)
-            return;
+
         // 获取body对象
-        Transform bodyComponent = player.transform.Find("Body");
-        Debug.Log(_defaultPlayer + "默认");
+        Transform bodyComponent = gameObject.transform.Find("Body");
         if (bodyComponent != null)
         {
             //移除所有子对象
@@ -65,17 +59,94 @@ public class player : MonoBehaviour
                 Destroy(child.gameObject);
             }
             // 添加默认皮肤
-            Instantiate(
+            GameObject NewPlayer = Instantiate(
                 _defaultPlayer,
                 bodyComponent.transform.position,
                 _defaultPlayer.transform.rotation,
                 bodyComponent
             );
-            Debug.Log("添加默认皮肤" + _defaultPlayer.name);
+            List<SkinItem> SkinData = DataManager.Instance.gameInfo.collections.skins;
+            // 如果皮肤数据为空或未初始化，则输出警告信息并返回
+            if (SkinData == null || SkinData.Count == 0)
+            {
+                Debug.LogWarning("SkinData 为空或未初始化");
+                return;
+            }
+            SkinItem ViewSkinItem = null;
+            // 遍历皮肤数据
+            SkinData.ForEach((SkinItem item) =>
+            {
+                //设置默认预览皮肤数据
+                if (item.id == DataManager.Instance.gameInfo.player.skinId)
+                {
+                    ViewSkinItem = item;
+                }
+            });
+            if (ViewSkinItem != null)
+            {
+                Texture2D newTexture = Resources.Load<Texture2D>($"Materials/PlayerSkin/{ViewSkinItem.name}");
+                if (newTexture != null)
+                {
+                    // 如果需要将图片应用到材质上，可以创建一个新的材质并设置其主纹理
+                    Material newMat = new Material(Shader.Find("Standard")); // 使用标准着色器
+                    newMat.mainTexture = newTexture;
+
+                    Renderer renderer = NewPlayer.GetComponent<Renderer>();
+                    if (renderer != null)
+                    {
+                        // 创建材质实例避免修改原始材质
+                        renderer.material = newMat;
+                    }
+                    else
+                    {
+                        Debug.Log("没有找到材质");
+                    }
+                }
+            }
         }
         setLevelNode(0);
-    }
 
+    }
+    public void InitDefaultArt()
+    {
+        // 获取body对象
+        Transform bodyComponent = gameObject.transform.Find("BodyArt");
+        if (bodyComponent != null)
+        {
+            //移除所有子对象
+            foreach (Transform child in bodyComponent)
+            {
+                Destroy(child.gameObject);
+            }
+            List<SkinItem> SkinData = DataManager.Instance.gameInfo.collections.bodyParts;
+            // 如果皮肤数据为空或未初始化，则输出警告信息并返回
+            if (SkinData == null || SkinData.Count == 0)
+            {
+                Debug.LogWarning("SkinData 为空或未初始化");
+                return;
+            }
+            SkinItem ViewSkinItem = null;
+            // 遍历皮肤数据
+            SkinData.ForEach((SkinItem item) =>
+            {
+                //设置默认预览皮肤数据
+                if (item.id == DataManager.Instance.gameInfo.player.artId)
+                {
+                    ViewSkinItem = item;
+                }
+            });
+            if (ViewSkinItem != null)
+            {
+                // 加载预制体
+                GameObject skinPrefab = Resources.Load<GameObject>($"VFX/{ViewSkinItem.name}");
+                if (skinPrefab != null)
+                {
+                    // 实例化预制体
+                    GameObject instantiatedSkin = Instantiate(skinPrefab, bodyComponent.transform); // parentTransform 是您希望将预制体放置的父物体
+                }
+            }
+        }
+    }
     public void setLevelNode(int num, Collider _Collider = null)
     {
         //发生碰撞增加等级

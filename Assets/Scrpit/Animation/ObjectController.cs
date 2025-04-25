@@ -113,22 +113,14 @@ public class ObjectController : MonoBehaviour
         {
             return;
         }
-// 
-      //  Debug.Log($"发生碰撞，撞击到：{collision.gameObject.name}");
 
         // 检查碰撞的物体是否有 Rigidbody
         Rigidbody otherRb = collision.gameObject.GetComponent<Rigidbody>();
         if (otherRb != null)
         {
-            // Debug.Log("效果移除");
             // 碰撞后移除所有效果
             activeMode = MovementMode.None;
         }
-        else
-        {
-            Debug.Log("碰撞物体没有 Rigidbody 组件");
-        }
-
     }
     private void CreateCollider()
     {

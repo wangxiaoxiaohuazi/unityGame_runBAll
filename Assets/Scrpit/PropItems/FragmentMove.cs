@@ -35,15 +35,13 @@ public class FragmentMove : MonoBehaviour
     {
         if (IsRuning) return;
         IsRuning = true;
-        Debug.Log("奖励碰撞");
+       
         if (rewardList.Count > 0)
         {
             for (int i = 0; i < rewardList.Count; i++)
             {
                 for (int j = 0; j < rewardNumList[i]; j++)
                 {
-                    // Debug.Log("第num：" + i + '的' + j + "rewardNumList" + rewardNumList[i]);
-                    Debug.Log("渲染：" + rewardList[i].gameObject.name);
                     Quaternion brokenRotation = rewardList[i].transform.rotation;
                     GameObject reward = Instantiate(rewardList[i], transform.position, brokenRotation);
                     reward.transform.localScale = rewardList[i].transform.localScale;

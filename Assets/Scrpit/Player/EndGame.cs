@@ -21,9 +21,7 @@ public class EndGame : MonoBehaviour
         {
             Debug.Log("碰撞对象被忽略: ");
             endGame();
-            // 你可以在这里添加胜利场景的加载或其他逻辑
-            // 例如，重新加载当前场景或加载胜利场景
-            // SceneManager.LoadScene("VictoryScene"); // 替换为你的胜利场景名称
+            
         }
 
     }
@@ -33,16 +31,15 @@ public class EndGame : MonoBehaviour
         Debug.Log("游戏胜利！");
         // Time.timeScale = 0;
         PanelManager panelManager = FindObjectOfType<PanelManager>(); // 获取 PanelManager 组件
-
         if (panelManager != null)
         {
             if (GameDataManager.Instance.playerLives > 0)
             {
-                panelManager.ShowPanel(panelManager.panels[0]); // 显示 PanelSuccess 面板
+                panelManager.ShowPanel(PanelManager.PanelName.PanelSuccess); // 显示 PanelSuccess 面板
             }
             else
             {
-                panelManager.ShowPanel(panelManager.panels[5]); // 显示 PanelFail 面板
+                panelManager.ShowPanel(PanelManager.PanelName.PanelFail); // 显示 PanelFail 面板
             }
         }
     }

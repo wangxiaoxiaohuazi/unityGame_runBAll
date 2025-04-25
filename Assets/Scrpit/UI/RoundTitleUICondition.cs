@@ -14,21 +14,19 @@ public class RoundTitleUICondition : MonoBehaviour
     {
         InitNode();
     }
-
+    
     // Update is called once per frame
     void Update() { }
 
     void InitNode()
     {
-        int currenRound = DataManager.Instance.gameInfo.roundInfo.currentLevel;
+        int currenRound = RoundInfo.Instance.OnGetCurrentLevel() != null ? RoundInfo.Instance.OnGetCurrentLevel().id : 0;
 
         // 取5的余数
         int index = currenRound % 5;
-
-      
-
-        float width = widthList[index]; // 访问widthList
-        Debug.Log("widthList[index - 1] = " + widthList[index]);
+        // float width = widthList[index]; // 访问widthList
+        float width = 90f;
+        // Debug.Log("widthList[index - 1] = " + widthList[index]);
         //修改子物体ProgressImage 的宽度
         transform.Find("ProgressImage").GetComponent<RectTransform>().sizeDelta = new Vector2(
             width,

@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
 
             // 在指定位置生成敌人
             spawnedEnemy = Instantiate(enemyPrefab, spawnPosition, spawnRotation);
-            Debug.Log($"敌人生成在位置: {spawnPosition}，旋转: {spawnRotation}");
+
             spawnedEnemy.SetActive(false); // 隐藏敌人
         }
         // 显示受伤特效面板
@@ -44,7 +44,7 @@ public class EnemySpawner : MonoBehaviour
                 Debug.Log("生成敌人");
                 if (isWarn)
                 {
-                    panelManager.ShowPanel(panelManager.panels[3]); // 执行显示面板
+                    panelManager.ShowPanel(PanelManager.PanelName.PanelWarn);
                     StartCoroutine(HideWarningPanelAfterDelay());
                 }
                 else
@@ -59,7 +59,7 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator HideWarningPanelAfterDelay()
     {
         yield return new WaitForSeconds(WarnShowTime); // 等待WarnShowTime秒
-        panelManager.HidePanel(panelManager.panels[3]);
+        panelManager.HidePanel(PanelManager.PanelName.PanelWarn);
         spawnedEnemy.SetActive(true); // 显示敌人
     }
     private void OnDrawGizmos()

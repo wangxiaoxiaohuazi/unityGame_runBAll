@@ -40,7 +40,6 @@ public class BreakOnCollision : MonoBehaviour
 
     public void ActiveBrothers()
     {
-        Debug.Log("ActiveBrothers");
         if (IsRuning || Time.time - lastActiveTime < debounceDelay) return; // 添加防抖处理
         lastActiveTime = Time.time; // 更新上次激活时间
         if (!breakOnTrigger) return; // 如果不是在触发器碰撞时破碎，则不执行以下代码

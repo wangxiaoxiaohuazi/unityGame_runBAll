@@ -79,7 +79,6 @@ public class EnemyStateCondition : MonoBehaviour
     // 被子弹碰到时调用
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"sss:{other.name}");
         // 检查碰撞的物体是否是子弹
         if (other.CompareTag("Bullet"))
         {
@@ -123,12 +122,10 @@ public class EnemyStateCondition : MonoBehaviour
         if (defense > 0)
         {
             defense -= damage; //扣除防御
-            Debug.Log($"当前防御: {defense}");
         }
         else
         {
             hp -= damage; // 扣除血量
-            Debug.Log($"当前血量: {hp}");
         }
         // 检查血量是否小于等于0
         if (hp <= 0)
@@ -150,7 +147,7 @@ public class EnemyStateCondition : MonoBehaviour
             renderer.enabled = false;
         foreach (var collider in GetComponentsInChildren<Collider>())
             collider.enabled = false;
-        Debug.Log("敌人死亡");
+
         // 延迟销毁
         StartCoroutine(DelayedDestroy());
     }
@@ -158,7 +155,7 @@ public class EnemyStateCondition : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
 
-        Debug.Log("敌人销毁");
+
         Destroy(gameObject); // 销毁敌人对象
 
         // 可选：播放消失特效

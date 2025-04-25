@@ -65,6 +65,8 @@ public class SceneChangeManager : MonoBehaviour
     public void SceneChange(string sceneName)
     {
         // 跳转到对应的场景
-        SceneManager.LoadScene(sceneName);
+        AddressablesLoaderManager.Instance.SwitchScene(
+    sceneName
+ );
     }
 }

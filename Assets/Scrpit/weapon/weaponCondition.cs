@@ -39,7 +39,7 @@ public class weaponCondition : MonoBehaviour
         isActive = false;
     }
     //修改参数
-    public void SetParameters(float detectionDistance, float detectionWidth, float projectileSpeed,  bool showDetectionRange, GameObject bulletPrefab)
+    public void SetParameters(float detectionDistance, float detectionWidth, float projectileSpeed, bool showDetectionRange, GameObject bulletPrefab)
     {
 
         this.detectionDistance = detectionDistance;
@@ -60,14 +60,12 @@ public class weaponCondition : MonoBehaviour
             Collider[] hitColliders = Physics.OverlapBox(startPoint + direction * (detectionDistance / 2),
                        new Vector3(detectionWidth / 2, detectionWidth / 2, detectionDistance / 2),
                        Quaternion.identity, LayerMask.GetMask("Enemy")); // 确保敌人有正确的Layer
-            Debug.Log("检测到敌人数量：" + hitColliders.Length);
             foreach (var hitCollider in hitColliders)
             {
                 if (hitCollider.CompareTag("Enemy"))
                 {
                     currentTarget = hitCollider.gameObject;
                     isRunning = true;
-                    Debug.Log("敌人被检测到");
                     // 找到敌人后，发射武器作为子弹
                     LaunchProjectile();
                     break; // 找到一个敌人后退出循环
@@ -85,7 +83,7 @@ public class weaponCondition : MonoBehaviour
         // 创建子弹时强制添加刚体组件
         if (bulletPrefab != null)
         {
-            bullet = Instantiate(bulletPrefab,transform.position, transform.rotation);
+            bullet = Instantiate(bulletPrefab, transform.position, transform.rotation);
             // 确保预制体包含刚体组件
             if (bullet.GetComponent<Rigidbody>() == null)
             {
@@ -119,12 +117,10 @@ public class weaponCondition : MonoBehaviour
         Collider bulletCollider = bullet.GetComponent<Collider>(); // 获取子弹的 Collider
         if (detectionCollider == null)
         {
-            Debug.LogWarning("检测范围没有 Collider，正在添加一个默认的 Collider。");
             detectionCollider = gameObject.AddComponent<SphereCollider>(); // 添加默认的 Collider
         }
         if (bulletCollider == null)
         {
-            Debug.LogWarning("子弹没有 Collider，正在添加一个默认的 Collider。");
             bulletCollider = bullet.AddComponent<SphereCollider>(); // 添加默认的 Collider
         }
         Physics.IgnoreCollision(detectionCollider, bulletCollider);

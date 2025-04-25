@@ -104,7 +104,6 @@ public class BossAttackOne : MonoBehaviour
         //cd检查
         if (Time.time - LastAttackCDTime < AttackCD)
         {
-            Debug.Log("CD中");
             return;
         }
         LastAttackCDTime = Time.time;

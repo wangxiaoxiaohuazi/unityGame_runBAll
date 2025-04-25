@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReferenceViewer", "ReferenceViewer.csproj", "{B8072875-9D9E-7D06-50E7-3164EAF1789A}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{1202A1FB-9527-1E67-F404-4CB0D0FFA917}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TTLitJson", "TTLitJson.csproj", "{667A02A8-90EB-1EDB-7935-8A935A97A0B0}"
@@ -19,6 +21,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8072875-9D9E-7D06-50E7-3164EAF1789A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8072875-9D9E-7D06-50E7-3164EAF1789A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8072875-9D9E-7D06-50E7-3164EAF1789A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8072875-9D9E-7D06-50E7-3164EAF1789A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1202A1FB-9527-1E67-F404-4CB0D0FFA917}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1202A1FB-9527-1E67-F404-4CB0D0FFA917}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1202A1FB-9527-1E67-F404-4CB0D0FFA917}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -25,8 +25,7 @@ public class PanelGameCondition : MonoBehaviour
 
     void Start()
     {
-        // 初始化显示玩家生命值
-        UpdatePlayerLives(GameDataManager.Instance.playerLives);
+
         // 添加空引用检查
         if (sphere == null)
         {
@@ -47,20 +46,11 @@ public class PanelGameCondition : MonoBehaviour
             gameObject.SetActive(false);
         }
         Debug.Log("重启场景");
-        // 加载保存的值
-        // if (PlayerPrefs.HasKey("ForwardSpeed"))
-        // {
-        //     sphereMove.forwardSpeed = PlayerPrefs.GetFloat("ForwardSpeed");
-        // }
 
-        // if (PlayerPrefs.HasKey("HorizontalSpeed"))
-        // {
-        //     sphereMove.sideSpeed = PlayerPrefs.GetFloat("HorizontalSpeed");
-        // }
         //设置当前关卡
         RoundNameText.text = SceneManager.GetActiveScene().name;
-
-
+        // 初始化显示玩家生命值
+        UpdatePlayerLives();
     }
 
     // Update is called once per frame
@@ -85,40 +75,34 @@ public class PanelGameCondition : MonoBehaviour
             FpsText.text = "帧率: " + fps.ToString("F2"); // 更新文本
             timer = 0f; // 重置计时器
         }
+
     }
     private void FixedUpdate()
     {
 
     }
-    public void UpdatePlayerLives(float lives)
+    public void UpdatePlayerLives()
     {
         // 获取当前血条中的心形数量
-        int currentHearts = bloodBar.transform.childCount;
-
-        // 当生命值增加时
-        if (lives > currentHearts)
+        float currentHearts = GameDataManager.Instance.playerLives;
+        // 初始化显示玩家生命值
+        float totalHearts = sphere.GetComponent<player>().defaultBlood;
+        //清除所有子对象
+        foreach (Transform child in bloodBar.transform)
         {
-            for (int i = currentHearts; i < lives; i++)
-            {
-                // 创建新的心形图标
-                GameObject heart = new GameObject("Heart_" + (i + 1));
-                Image heartImage = heart.AddComponent<Image>();
-                heartImage.sprite = heartSprite;
-                heartImage.preserveAspect = true;
-                // 设置父对象并重置变换
-                heart.transform.SetParent(bloodBar.transform);
-                heart.transform.localScale = Vector3.one;
-                heart.transform.localPosition = Vector3.zero;
-            }
+            Destroy(child.gameObject);
         }
-        // 当生命值减少时
-        else if (lives < currentHearts)
+        // 根据新的生命值创建新的心形图标
+        for (int i = 0; i < totalHearts; i++)
         {
-            // 从最后一个开始销毁
-            for (int i = currentHearts - 1; i >= lives; i--)
-            {
-                bloodBar.transform.GetChild(i).GetComponent<Image>().sprite = DisheartSprite;
-            }
+            GameObject heart = new GameObject("Heart_" + (i + 1));
+            Image heartImage = heart.AddComponent<Image>();
+            heartImage.sprite = currentHearts > i ? heartSprite : DisheartSprite;
+            heartImage.preserveAspect = true;
+            // 设置父对象并重置变换
+            heart.transform.SetParent(bloodBar.transform);
+            heart.transform.localScale = Vector3.one;
+            heart.transform.localPosition = Vector3.zero;
         }
     }
 
@@ -153,6 +137,13 @@ public class PanelGameCondition : MonoBehaviour
 
         Debug.Log("roundChangeVisible");
         PanelManager panelManager = FindObjectOfType<PanelManager>();
-        panelManager.ShowPanel(panelManager.panels[4]);
+        panelManager.ShowPanel(PanelManager.PanelName.PanelRound);
+    }
+    public void BackToHome()
+    {
+        PanelManager panelManager = FindObjectOfType<PanelManager>();
+        panelManager.showHome();
+        GameManager manager = new GameManager();
+        manager.OnResetGame(); // 调用重置游戏事件
     }
 }

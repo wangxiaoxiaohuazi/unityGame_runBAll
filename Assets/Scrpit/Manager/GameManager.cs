@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     private PanelManager panelManager;
     internal bool isInvincible;
-   
+
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded; // 订阅场景加载事件
@@ -25,8 +25,8 @@ public class GameManager : MonoBehaviour
         // 场景加载完成后重新绑定玩家对象
         panelManager = FindObjectOfType<PanelManager>();
         // 可选：添加null检查
-        if (panelManager == null)
-            Debug.LogError("Player对象未找到，请检查标签设置");
+        // if (panelManager == null)
+        //     Debug.LogError("Player对象未找到，请检查标签设置");
     }
     // Start is called before the first frame update
     void Start()
@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        checkInput();
+        // checkInput();
     }
     public void checkInput()
     {
@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
                 // 有输入，重置无输入时间
                 idleTime = 0f;
                 Time.timeScale = 1; // 恢复游戏
-                panelManager.HidePanel(panelManager.panels[1]);
             }
             // else
             // {
@@ -67,25 +66,48 @@ public class GameManager : MonoBehaviour
             //     if (idleTime >= pauseThreshold)
             //     {
             //         Time.timeScale = 0; // 暂停游戏
-            //                             // panelManager.ShowPanel(panelManager.panels[1]);
             //     }
             // }
         }
+        // 检测 R 键输入
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            OnResetGame(); // 调用重置游戏事件
+        }
 
     }
 
+    // 在GameManager类中修改OnResetGame方法
     public void OnResetGame()
     {
-        // 重新加载当前场景
-        if (PlayerInfo.Instance.GetVigourNumber() > 1)
+        GameDataManager.Instance.endGameVisible = false;
+        
+        // 在场景加载完成后执行重置逻辑
+        AddressablesLoaderManager.Instance.ReloadCurrentScene(progress =>
         {
-            PlayerInfo.Instance.AddVigourNumber(-3);
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            // GameDataManager.Instance.a'sChangePlayerLives(blood);
-            Debug.Log("重开");
-            GameDataManager.Instance.endGameVisible = false;
-        }
-        Time.timeScale = 1;
+            if (progress >= 1f)  // 场景加载完成
+            {
+                // 通过场景加载事件来处理重置逻辑
+                SceneManager.sceneLoaded += OnResetSceneLoaded;
+            }
+            Debug.Log($"重载进度: {progress:P0}");
+        });
+
+        Debug.Log("重开场景");
     }
 
+    private void OnResetSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        // 确保只执行一次
+        SceneManager.sceneLoaded -= OnResetSceneLoaded;
+        
+        // 重置玩家数据
+        var playerObj = GameObject.Find("Player");
+        if (playerObj != null && playerObj.TryGetComponent<player>(out var playerComponent))
+        {
+            GameDataManager.Instance.ChangePlayerLives(playerComponent.blood);
+        }
+        GameDataManager.Instance.goldenCoin = 0;
+        Time.timeScale = 1;
+    }
 }

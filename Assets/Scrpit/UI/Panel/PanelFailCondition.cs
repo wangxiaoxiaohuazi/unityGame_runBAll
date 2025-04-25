@@ -1,13 +1,19 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PanelFailCondition : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public Text ProgressNum;
+    public Text CoinNum;
+    public GameObject ProgressBar;
+
+    void OnEnable()
     {
-        ToFadeInChildren(gameObject, 1f); // 直接调用静态方法
+        float proportion = ProgressBar.GetComponent<RoundProportionUICondition>().RoundProportion;
+        ProgressNum.text = "已完成" + proportion + "%";
+        ToFadeInChildren(gameObject, 0.2f); // 直接调用静态方法
         GameDataManager.Instance.isPause = true;
     }
     void OnDisable()
@@ -19,13 +25,29 @@ public class PanelFailCondition : MonoBehaviour
     {
         GameDataManager.Instance.isPause = false;
     }
-    public void ToFadeInChildren(GameObject parentObject, float duration, float waitTime = 0.1f, Action callback = null)
+    void Update()
+    {
+        CoinNum.text = '*' + (GameDataManager.Instance.goldenCoin + 100).ToString();
+    }
+    public void ToFadeInChildren(
+        GameObject parentObject,
+        float duration,
+        float waitTime = 0.1f,
+        Action callback = null
+    )
     {
         // 启动协程
-        StartCoroutine(FadeInChildrenCoroutine(parentObject.transform, duration, waitTime, callback));
+        StartCoroutine(
+            FadeInChildrenCoroutine(parentObject.transform, duration, waitTime, callback)
+        );
     }
 
-    private IEnumerator FadeInChildrenCoroutine(Transform parentTransform, float duration, float waitTime = 0.5f, Action callback = null)
+    private IEnumerator FadeInChildrenCoroutine(
+        Transform parentTransform,
+        float duration,
+        float waitTime,
+        Action callback
+    )
     {
         // 获取所有子物体
         foreach (Transform child in parentTransform)
@@ -66,4 +88,22 @@ public class PanelFailCondition : MonoBehaviour
         callback?.Invoke();
     }
 
+    //复活
+    public void OnRevive()
+    {
+        //多倍奖励
+        ADManager.Instance.OnADShow(() =>
+        {
+            GameDataManager.Instance.goldenCoin += 100;
+            Transform player = GameObject.FindGameObjectWithTag("Player")?.transform;
+            GameDataManager.Instance.ChangePlayerLives(player.GetComponent<player>().defaultBlood);
+            gameObject.SetActive(false);
+        });
+    }
+
+    public void OnExit()
+    {
+        GameManager manager = new GameManager();
+        manager.OnResetGame(); // 调用重置游戏事件
+    }
 }
