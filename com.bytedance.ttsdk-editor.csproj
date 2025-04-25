@@ -63,9 +63,15 @@
     <Analyzer Include="D:\software\Unity\2022.3.40f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\Extras\Providers\TTMiniGameSupportProvider.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\TTEditorTools.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\TTAPIUpdate.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\Extras\TTEditorSupportProviderRegister.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\Extras\Integration\DouYinMiniGameSettingsEditor.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\Extras\Integration\DouYinSubplatformInterface.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\Extras\Providers\TTAndroidSupportProvider.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\TTUnityToolMergeTips.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\Extras\Integration\DouYinMiniGameSettings.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\Editor\Tool\ttsdk_tools.dll" />
