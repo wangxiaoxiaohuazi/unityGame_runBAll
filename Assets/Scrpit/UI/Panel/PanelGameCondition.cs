@@ -86,7 +86,17 @@ public class PanelGameCondition : MonoBehaviour
         // 获取当前血条中的心形数量
         float currentHearts = GameDataManager.Instance.playerLives;
         // 初始化显示玩家生命值
-        float totalHearts = sphere.GetComponent<player>().defaultBlood;
+        float totalHearts = 0;
+        if (sphere != null)
+        {
+            var playerComponent = sphere.GetComponent<player>();
+            if (playerComponent != null)
+            {
+                totalHearts = playerComponent.defaultBlood;
+            }
+
+        }
+
         //清除所有子对象
         foreach (Transform child in bloodBar.transform)
         {

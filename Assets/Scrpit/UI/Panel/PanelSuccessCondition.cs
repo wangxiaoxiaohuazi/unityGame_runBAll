@@ -137,16 +137,18 @@ public class PanelSuccessCondition : MonoBehaviour
                 ?.scenePath; // 使用空条件运算符以防止空引用异常
             if (scenePath != null)
             {
-                AddressablesLoaderManager.Instance.SwitchScene(scenePath);
+                // AddressablesLoaderManager.Instance.SwitchScene(scenePath);
+                SceneManager.LoadScene(scenePath);
             }
             else
             {
-                AddressablesLoaderManager.Instance.ReloadCurrentScene(
-                    progress =>
-                    {
-                        Debug.Log($"重载进度: {progress:P0}");
-                        // 这里可以更新UI进度条
-                    });
+                // AddressablesLoaderManager.Instance.ReloadCurrentScene(
+                //     progress =>
+                //     {
+                //         Debug.Log($"重载进度: {progress:P0}");
+                //         // 这里可以更新UI进度条
+                //     });
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
         });
     }

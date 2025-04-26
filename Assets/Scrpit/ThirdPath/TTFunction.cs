@@ -26,7 +26,7 @@ public class TTFunction : MonoBehaviour
 
     }
     // Start is called before the first frame update
-    public void TestSidebar()
+    public void NavigateToTTSidebar()
     {
         var data = new JsonData
         {

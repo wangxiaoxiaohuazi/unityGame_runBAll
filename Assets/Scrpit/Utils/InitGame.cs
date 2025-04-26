@@ -63,7 +63,7 @@ public class InitGame : MonoBehaviour
 
 
         // 第二阶段：场景加载
-        yield return StartCoroutine(LoadAddressableSceneWithProgress(sceneKey, progress =>
+        yield return StartCoroutine(LoadSceneWithProgress(sceneKey, progress =>
         {
             totalProgress = audioLoadWeight + progress * sceneLoadWeight;
             UpdateProgress(totalProgress);
@@ -115,32 +115,73 @@ public class InitGame : MonoBehaviour
             }
         }
     }
-    private IEnumerator LoadAddressableSceneWithProgress(string sceneKey, System.Action<float> onProgress)
+    private IEnumerator LoadSceneWithProgress(string scenePath, System.Action<float> onProgress)
     {
-        // 开始加载场景
-        AddressablesLoaderManager.Instance.SwitchScene(sceneKey);
-
-        // 设置播放列表
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenePath);
         List<string> myPlaylist = new List<string>();
+
         foreach (var path in musicPaths)
         {
-            var match = System.Text.RegularExpressions.Regex.Match(path, @"[^/]+$");
+            var match = System.Text.RegularExpressions.Regex.Match(path, @"[^/]+$"); // 使用正则表达式提取最后一个斜杠后的字符串
             if (match.Success)
             {
-                myPlaylist.Add(match.Value);
+                myPlaylist.Add(match.Value); // 添加到 myPlaylist
             }
         }
-
         if (myPlaylist.Count > 0)
         {
             AudioManager.Instance.SetPlayList(myPlaylist, myPlaylist[0]);
-            System.Random random = new System.Random();
-            int randomIndex = random.Next(myPlaylist.Count);
-            string randomSong = myPlaylist[randomIndex];
-            AudioManager.Instance.StartPlaylist(randomSong);
+            if (DataManager.Instance.gameInfo.player.musicVisible)
+            {
+                System.Random random = new System.Random();
+                int randomIndex = random.Next(myPlaylist.Count); // 生成随机索引
+                string randomSong = myPlaylist[randomIndex]; // 获取随机歌曲
+                AudioManager.Instance.StartPlaylist(randomSong);
+            }
         }
-        yield return null;  // 添加这行代码，确保协程在加载场景后继续执行
+        asyncLoad.allowSceneActivation = false;
+        // 第一阶段：0-0.9的加载
+        while (asyncLoad.progress < 0.9f)
+        {
+            onProgress?.Invoke(asyncLoad.progress);
+            yield return null;
+        }
+        // 第二阶段：等待用户允许激活
+        asyncLoad.allowSceneActivation = true;
+
+        // 确保加载完成
+        while (!asyncLoad.isDone)
+        {
+            onProgress?.Invoke(1f);
+            yield return null;
+        }
     }
+    // private IEnumerator LoadAddressableSceneWithProgress(string sceneKey, System.Action<float> onProgress)
+    // {
+    //     // 开始加载场景
+    //     // AddressablesLoaderManager.Instance.SwitchScene(sceneKey);
+    //     SceneManager.LoadScene(sceneKey);
+    //     // 设置播放列表
+    //     List<string> myPlaylist = new List<string>();
+    //     foreach (var path in musicPaths)
+    //     {
+    //         var match = System.Text.RegularExpressions.Regex.Match(path, @"[^/]+$");
+    //         if (match.Success)
+    //         {
+    //             myPlaylist.Add(match.Value);
+    //         }
+    //     }
+
+    //     if (myPlaylist.Count > 0)
+    //     {
+    //         AudioManager.Instance.SetPlayList(myPlaylist, myPlaylist[0]);
+    //         System.Random random = new System.Random();
+    //         int randomIndex = random.Next(myPlaylist.Count);
+    //         string randomSong = myPlaylist[randomIndex];
+    //         AudioManager.Instance.StartPlaylist(randomSong);
+    //     }
+    //     yield return null;  // 添加这行代码，确保协程在加载场景后继续执行
+    // }
 
     private void UpdateProgress(float progress)
     {

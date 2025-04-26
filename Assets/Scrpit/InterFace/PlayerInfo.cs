@@ -103,20 +103,27 @@ public class PlayerInfo : MonoBehaviour
         DataManager.Instance.SaveData();
         callback?.Invoke();
     }
+    // 保存金币
     public void SaveCoin(int num, Action callback = null)
     {
+        // 打印金币增加的日志
         Debug.Log("金币增加：" + DataManager.Instance.gameInfo.player.coin);
+        // 如果实例为空或者游戏数据中的玩家信息为空，则打印错误日志
         if (Instance == null || Instance.gameData?.player?.todayVigour == null)
         {
             Debug.LogError("PlayerInfo 数据未初始化!");
         }
+        // 如果减少的金币数量小于0且减少后的金币数量小于0，则打印错误日志
         if (num < 0 && num + DataManager.Instance.gameInfo.player.coin < 0)
         {
             Debug.LogError("金币不足");
             return;
         }
+        // 增加金币数量
         DataManager.Instance.gameInfo.player.coin += num;
+        // 保存数据
         DataManager.Instance.SaveData();
+        // 如果有回调函数，则调用回调函数
         callback?.Invoke();
     }
     public void rSetDefaultSkin(int id, Action callback = null)

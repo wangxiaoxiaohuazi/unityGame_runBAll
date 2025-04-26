@@ -18,7 +18,7 @@ public class PanelRoundCondition : MonoBehaviour
         panelManager = FindObjectOfType<PanelManager>();
         itemPrefab.SetActive(false);
         scenesList = new List<LevelList>(DataManager.Instance.gameInfo.roundInfo.levelSceneList);
-        Debug.Log("场景列表"+scenesList.Count);
+        Debug.Log("场景列表" + scenesList.Count);
         currentLevel = DataManager.Instance.gameInfo.roundInfo.currentLevel;
         initNode();
         GameDataManager.Instance.isPause = true;
@@ -35,7 +35,7 @@ public class PanelRoundCondition : MonoBehaviour
         {
             scenesList = new List<LevelList>(DataManager.Instance.gameInfo.roundInfo.levelSceneList);
         }
-        
+
         if (content == null)
         {
             Debug.LogError("content Transform未赋值!");
@@ -129,10 +129,10 @@ public class PanelRoundCondition : MonoBehaviour
         Debug.Log("切换场景" + sceneName == null);
 
         // 跳转到对应的场景
-        AddressablesLoaderManager.Instance.SwitchScene(
-    sceneName
- );
-
+        //         AddressablesLoaderManager.Instance.SwitchScene(
+        //     sceneName
+        //  );
+        SceneManager.LoadScene(sceneName);
     }
 
     public void OnClickBack()

@@ -9,7 +9,7 @@ public class PlayerData
     {
         public int num;
         public DateTime lastRecoveryTime; // 改为最后恢复时间
-        public const int MaxVigour = 5;   // 最大体力值
+        public const int MaxVigour = 8;   // 最大体力值
         public const int RecoveryIntervalHours = 2; // 恢复间隔
 
         public TodayVigour(int defaultNum)
@@ -37,9 +37,9 @@ public class PlayerData
     public int skinId = 1;
     public int artId = 0; // 玩家形象ID
     public int defaultHP = 4;
-    public int defaultVigourNumber = 5;
+    public int defaultVigourNumber = 8;
     public int adWatchTime = 0;
-    public TodayVigour todayVigour = new TodayVigour(5);
+    public TodayVigour todayVigour = new TodayVigour(8);
     public int coin = 0; // 金币
     public bool isGuide = false; // 是否完成新手引导
 

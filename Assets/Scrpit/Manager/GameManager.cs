@@ -81,18 +81,11 @@ public class GameManager : MonoBehaviour
     public void OnResetGame()
     {
         GameDataManager.Instance.endGameVisible = false;
-        
-        // 在场景加载完成后执行重置逻辑
-        AddressablesLoaderManager.Instance.ReloadCurrentScene(progress =>
-        {
-            if (progress >= 1f)  // 场景加载完成
-            {
-                // 通过场景加载事件来处理重置逻辑
-                SceneManager.sceneLoaded += OnResetSceneLoaded;
-            }
-            Debug.Log($"重载进度: {progress:P0}");
-        });
 
+        // 先订阅事件
+        SceneManager.sceneLoaded += OnResetSceneLoaded;
+        // 再加载场景
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log("重开场景");
     }
 
@@ -100,7 +93,7 @@ public class GameManager : MonoBehaviour
     {
         // 确保只执行一次
         SceneManager.sceneLoaded -= OnResetSceneLoaded;
-        
+
         // 重置玩家数据
         var playerObj = GameObject.Find("Player");
         if (playerObj != null && playerObj.TryGetComponent<player>(out var playerComponent))

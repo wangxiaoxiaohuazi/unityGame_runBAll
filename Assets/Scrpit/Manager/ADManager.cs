@@ -95,6 +95,7 @@ public class ADManager : MonoBehaviour
     {
         try
         {
+#if UNITY_WEBGL && !UNITY_EDITOR
             RewardedVideoAd.Show();
             RewardedVideoAd.OnClose += (ended, count) =>
             {
@@ -106,13 +107,14 @@ public class ADManager : MonoBehaviour
                     //广告回调
                     callback?.Invoke();
                 }
-#if UNITY_EDITOR
-                DataManager.Instance.gameInfo.player.adWatchTime++;
-                DataManager.Instance.SaveData();
-                //广告回调
-                callback?.Invoke();
-#endif
             };
+#else
+            //非抖音小游戏环境直接执行回调
+            DataManager.Instance.gameInfo.player.adWatchTime++;
+            DataManager.Instance.SaveData();
+            callback?.Invoke();
+#endif
+
 
         }
         catch (Exception e)

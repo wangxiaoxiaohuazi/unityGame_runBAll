@@ -24,11 +24,11 @@ public class MainCondition : MonoBehaviour
         {
             levelText.text = "第" + RoundInfo.Instance.OnGetCurrentLevel().id + "关";
         }
-         ADManager.Instance.ShowBannerAd();  
+        ADManager.Instance.ShowBannerAd();
     }
     void OnEnable()
     {
-     ADManager.Instance.ShowBannerAd();   
+        ADManager.Instance.ShowBannerAd();
     }
     // Update is called once per frame
     void Update()
@@ -87,8 +87,11 @@ public class MainCondition : MonoBehaviour
 
     public void OnGetRwardClick()
     {
-        _gameData.player.defaultVigourNumber += 3;
-        DataManager.Instance.SaveData();
+        //获取300金币
+        PlayerInfo.Instance.SaveCoin(300, () =>
+        {
+            coinNum.text = _gameData.player.coin.ToString();
+        });
     }
 
     public void OnAddVigourNumber()
@@ -129,5 +132,10 @@ public class MainCondition : MonoBehaviour
             });
             manager.HidePanel(PanelManager.PanelName.PanelPop);
         }, null);
+    }
+    public void OnShowTTSide()
+    {
+        TTFunction ttFunction = new TTFunction();
+        ttFunction.NavigateToTTSidebar();
     }
 }
