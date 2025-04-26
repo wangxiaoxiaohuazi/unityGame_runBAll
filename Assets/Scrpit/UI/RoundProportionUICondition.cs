@@ -39,7 +39,7 @@ public class RoundProportionUICondition : MonoBehaviour
                 float proportion = 1 - distance / DefaultDistance;
                 float ProprotionWidth = Mathf.Round(600 * proportion * 10) / 10f;
                 GameObject.Find("ProgressImage").GetComponent<RectTransform>().sizeDelta =
-                    new Vector2(ProprotionWidth, 60f);
+                    new Vector2(ProprotionWidth, 45f);
                 RoundProportion = Mathf.Round(100 * proportion);
                 ProportionText.text = RoundProportion + "%";
             }
