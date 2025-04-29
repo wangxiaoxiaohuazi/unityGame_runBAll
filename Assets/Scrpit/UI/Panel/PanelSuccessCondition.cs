@@ -115,7 +115,7 @@ public class PanelSuccessCondition : MonoBehaviour
                 for (int index = 0; index < childTransforms.Length; index++)
                 {
                     GameObject item = childTransforms[index].gameObject; // 获取 GameObject
-                    if (index >= _player.GetComponent<player>().blood)
+                    if (_player.GetComponent<player>().blood >= index)
                     {
                         item.SetActive(true); // 根据需要处理 item
                     }

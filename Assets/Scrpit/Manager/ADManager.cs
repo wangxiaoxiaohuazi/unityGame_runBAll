@@ -8,6 +8,14 @@ using UnityEngine.SceneManagement;
 public class ADManager : MonoBehaviour
 {
     private static ADManager _instance;
+    //糖果
+    private string BannerAdId = "57jm2c8nd5nd80nj36";
+    private string InterstitialAdId = "5g5lic64666h50f5fh";
+    private string RewardedAdId = "1hlk2c7emm4e3el75i";
+    //球球
+    //   private string BannerAdId = "";
+    //     private string InterstitialAdId = "5g5lic64666h50f5fh";
+    //     private string RewardedAdId = "";
     public static ADManager Instance
     {
         get
@@ -56,7 +64,7 @@ public class ADManager : MonoBehaviour
         m_style.width = 120;
         var param = new CreateBannerAdParam
         {
-            BannerAdId = "r2gmf5ye8j6t9g6m0h",
+            BannerAdId = BannerAdId,
             Style = m_style,
             AdIntervals = 60
         };
@@ -69,7 +77,7 @@ public class ADManager : MonoBehaviour
 
     void InterstitialADCreate()
     {
-        var param = new CreateInterstitialAdParam { InterstitialAdId = "fjokdmrfljdgk4kkl4" };
+        var param = new CreateInterstitialAdParam { InterstitialAdId = InterstitialAdId };
         m_InterAdIns = TT.CreateInterstitialAd(param);
         m_InterAdIns.OnClose += () => Debug.Log("插屏广告关闭");
         m_InterAdIns.OnLoad += () => Debug.Log("插屏广告加载");
@@ -83,7 +91,7 @@ public class ADManager : MonoBehaviour
     }
     public void RewardADCreat()
     {
-        string videoAdId = "3i388l5k9n492i8gne";
+        string videoAdId = RewardedAdId;
         var param = new CreateRewardedVideoAdParam { AdUnitId = videoAdId };
         RewardedVideoAd = TT.CreateRewardedVideoAd(param);
         RewardedVideoAd.OnClose += (ended, count) => Debug.Log($"激励视频关闭 ended: {ended}, count: {count}");

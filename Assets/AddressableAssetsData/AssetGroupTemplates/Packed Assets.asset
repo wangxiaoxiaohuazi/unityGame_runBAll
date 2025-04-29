@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8435347207244831064
+--- !u!114 &-8290613762226661979
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
@@ -22,8 +22,8 @@ MonoBehaviour:
   m_CacheClearBehavior: 0
   m_IncludeInBuild: 1
   m_BundledAssetProviderType:
-    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.BundledAssetProvider
+    m_AssemblyName: 
+    m_ClassName: 
   m_ForceUniqueProvider: 0
   m_UseAssetBundleCache: 1
   m_UseAssetBundleCrc: 1
@@ -34,13 +34,13 @@ MonoBehaviour:
   m_RedirectLimit: -1
   m_RetryCount: 0
   m_BuildPath:
-    m_Id: 220e80b0d0a6d7849857793135a9b692
+    m_Id: 
   m_LoadPath:
-    m_Id: 7cd822af84df4e243b7307f27fd52749
+    m_Id: 
   m_BundleMode: 0
   m_AssetBundleProviderType:
-    m_AssemblyName: Unity.ResourceManager, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
-    m_ClassName: UnityEngine.ResourceManagement.ResourceProviders.AssetBundleProvider
+    m_AssemblyName: 
+    m_ClassName: 
   m_BundleNaming: 0
   m_AssetLoadMode: 0
 --- !u!114 &11400000
@@ -56,11 +56,11 @@ MonoBehaviour:
   m_Name: Packed Assets
   m_EditorClassIdentifier: 
   m_SchemaObjects:
-  - {fileID: -8435347207244831064}
-  - {fileID: 1838505113685508076}
+  - {fileID: -8290613762226661979}
+  - {fileID: 3412919793501801620}
   m_Description: Pack assets into asset bundles.
-  m_Settings: {fileID: 11400000, guid: 3825933cdcf072f479eb36f7e8decc94, type: 2}
---- !u!114 &1838505113685508076
+  m_Settings: {fileID: 11400000, guid: c8e6e503e0b943d418e5658e7f2397cb, type: 2}
+--- !u!114 &3412919793501801620
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}

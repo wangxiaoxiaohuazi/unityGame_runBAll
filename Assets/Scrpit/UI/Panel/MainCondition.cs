@@ -14,6 +14,7 @@ public class MainCondition : MonoBehaviour
     public Text VigourNumber = null;
     public TextMeshProUGUI levelText = null;
     private PublicGameData _gameData;
+    public Transform StartGame = null;
 
     // Start is called before the first frame update
     void Start()
@@ -39,6 +40,8 @@ public class MainCondition : MonoBehaviour
         coinNum.text = _gameData.player.coin.ToString();
         VigourNumber.text =
             PlayerInfo.Instance.GetVigourNumber() + "/" + _gameData.player.defaultVigourNumber;
+        StartGame.Find("Start").gameObject.SetActive(PlayerInfo.Instance.GetVigourNumber() > 0);
+        StartGame.Find("End").gameObject.SetActive(PlayerInfo.Instance.GetVigourNumber() < 1);
     }
 
     private void InitScrollviewNode()
@@ -49,25 +52,17 @@ public class MainCondition : MonoBehaviour
 
     private void InitSideNode()
     {
-        // Debug.Log("体力值" + _gameData.player.DefaultvigourNumber);
-        if (_gameData.player.defaultVigourNumber > 5)
+
+        LaunchOption launchOption = TT.GetLaunchOptionsSync();
+        // Debug.Log("场景值" + launchOption.Scene);
+        if (launchOption?.Scene == "021001")
         {
+            sideView.transform.Find("GetReward").gameObject.SetActive(true);
             sideView.transform.Find("NavigateSideButton").gameObject.SetActive(false);
-            sideView.transform.Find("GetReward").gameObject.SetActive(false);
+            return;
         }
-        else if (_gameData.player.defaultVigourNumber == 5)
-        {
-            LaunchOption launchOption = TT.GetLaunchOptionsSync();
-            // Debug.Log("场景值" + launchOption.Scene);
-            if (launchOption?.Scene == "021001")
-            {
-                sideView.transform.Find("GetReward").gameObject.SetActive(true);
-                sideView.transform.Find("NavigateSideButton").gameObject.SetActive(false);
-                return;
-            }
-            sideView.transform.Find("NavigateSideButton").gameObject.SetActive(true);
-            sideView.transform.Find("GetReward").gameObject.SetActive(false);
-        }
+        sideView.transform.Find("NavigateSideButton").gameObject.SetActive(true);
+        sideView.transform.Find("GetReward").gameObject.SetActive(false);
     }
 
     public void OnStartGameClick(string sceneName)

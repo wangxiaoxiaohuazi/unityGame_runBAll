@@ -11,8 +11,9 @@ public class InitGame : MonoBehaviour
     public GameObject Progress;
     public Text ProgressText; // 进度文本引用
     [Header("加载配置")]
-    [SerializeField][Range(0, 1)] private float audioLoadWeight = 0.4f;  // 音频加载权重
-    [SerializeField][Range(0, 1)] private float sceneLoadWeight = 0.6f;  // 场景加载权重
+    [SerializeField][Range(0, 1)] private float addressableLoadWeight = 0.6f;  // Addressable加载权重
+    [SerializeField][Range(0, 1)] private float audioLoadWeight = 0.3f;  // 音频加载权重
+    [SerializeField][Range(0, 1)] private float sceneLoadWeight = 0.3f;  // 场景加载权重
                                                                          // 存储加载句柄
     private AsyncOperationHandle<SceneInstance> _sceneLoadHandle;
     // 需要加载的音频路径配置
@@ -53,21 +54,27 @@ public class InitGame : MonoBehaviour
     {
         float totalProgress = 0f;
 
-        // 第一阶段：音频加载
+        // 第一阶段：Addressable资源加载
+        yield return StartCoroutine(LoadAddressableResources(progress =>
+        {
+            totalProgress = progress * addressableLoadWeight;
+            UpdateProgress(totalProgress);
+        }));
+
+        // 第二阶段：音频加载
         yield return StartCoroutine(LoadAudioResources(progress =>
         {
-            totalProgress = progress * audioLoadWeight;
+            totalProgress = addressableLoadWeight + progress * audioLoadWeight;
             UpdateProgress(totalProgress);
         }));
-        //可拓展加载其他内容
 
-
-        // 第二阶段：场景加载
+        // 第三阶段：场景加载
         yield return StartCoroutine(LoadSceneWithProgress(sceneKey, progress =>
         {
-            totalProgress = audioLoadWeight + progress * sceneLoadWeight;
+            totalProgress = addressableLoadWeight + audioLoadWeight + progress * sceneLoadWeight;
             UpdateProgress(totalProgress);
         }));
+
         // 可选：加载完成后的延迟
         yield return new WaitForSeconds(0.5f);
     }
@@ -115,6 +122,7 @@ public class InitGame : MonoBehaviour
             }
         }
     }
+
     private IEnumerator LoadSceneWithProgress(string scenePath, System.Action<float> onProgress)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenePath);
@@ -156,32 +164,49 @@ public class InitGame : MonoBehaviour
             yield return null;
         }
     }
-    // private IEnumerator LoadAddressableSceneWithProgress(string sceneKey, System.Action<float> onProgress)
-    // {
-    //     // 开始加载场景
-    //     // AddressablesLoaderManager.Instance.SwitchScene(sceneKey);
-    //     SceneManager.LoadScene(sceneKey);
-    //     // 设置播放列表
-    //     List<string> myPlaylist = new List<string>();
-    //     foreach (var path in musicPaths)
-    //     {
-    //         var match = System.Text.RegularExpressions.Regex.Match(path, @"[^/]+$");
-    //         if (match.Success)
-    //         {
-    //             myPlaylist.Add(match.Value);
-    //         }
-    //     }
 
-    //     if (myPlaylist.Count > 0)
-    //     {
-    //         AudioManager.Instance.SetPlayList(myPlaylist, myPlaylist[0]);
-    //         System.Random random = new System.Random();
-    //         int randomIndex = random.Next(myPlaylist.Count);
-    //         string randomSong = myPlaylist[randomIndex];
-    //         AudioManager.Instance.StartPlaylist(randomSong);
-    //     }
-    //     yield return null;  // 添加这行代码，确保协程在加载场景后继续执行
-    // }
+    private IEnumerator LoadAddressableResources(System.Action<float> onProgress)
+    {
+        // 获取所有需要加载的Group名称
+        string[] groupNames = { "Group1", "Group2" }; // 这里需要替换为实际的Group名称
+        List<AsyncOperationHandle> loadOperations = new List<AsyncOperationHandle>();
+        float totalProgress = 0f;
+
+        // 为每个Group创建加载操作
+        foreach (var groupName in groupNames)
+        {
+            var loadGroupOperation = Addressables.LoadAssetsAsync<object>(
+                new List<string> { groupName },
+                null,
+                Addressables.MergeMode.Union
+            );
+            loadOperations.Add(loadGroupOperation);
+        }
+
+        // 监控所有加载操作的进度
+        while (!loadOperations.TrueForAll(op => op.IsDone))
+        {
+            totalProgress = 0f;
+            foreach (var operation in loadOperations)
+            {
+                totalProgress += operation.PercentComplete;
+            }
+            
+            float currentProgress = totalProgress / loadOperations.Count;
+            onProgress?.Invoke(currentProgress);
+            yield return null;
+        }
+
+        // // 完成加载后，可以在这里处理加载完的资源
+        // foreach (var operation in loadOperations)
+        // {
+        //     if (operation.Status == AsyncOperationStatus.Succeeded)
+        //     {
+        //         // 可以在这里处理加载成功的资源
+        //         // 比如将资源存储到某个管理器中
+        //     }
+        // }
+    }
 
     private void UpdateProgress(float progress)
     {
