@@ -111,12 +111,17 @@ public class PanelSuccessCondition : MonoBehaviour
                 break;
             case "Score":
                 Transform[] childTransforms = child.GetComponentsInChildren<Transform>();
+                GameObject _player = GameObject.FindGameObjectWithTag("Player");
                 for (int index = 0; index < childTransforms.Length; index++)
                 {
                     GameObject item = childTransforms[index].gameObject; // 获取 GameObject
-                    if (index >= GameDataManager.Instance.playerLives)
+                    if (index >= _player.GetComponent<player>().blood)
                     {
                         item.SetActive(true); // 根据需要处理 item
+                    }
+                    else
+                    {
+                        item.SetActive(false);
                     }
                 }
                 break;

@@ -21,7 +21,7 @@ public class PanelBodyArtCondition : MonoBehaviour
     void Start()
     {
         panelManager = FindObjectOfType<PanelManager>();
-        initNode();
+
     }
     void OnEnable()
     {

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +20,7 @@ public class PanelSkinCondition : MonoBehaviour
     void Start()
     {
         panelManager = FindObjectOfType<PanelManager>();
-        initNode();
+       
     }
     void OnEnable()
     {
@@ -61,16 +62,21 @@ public class PanelSkinCondition : MonoBehaviour
             {
                 ViewSkinItem = item;
             }
-            // 实例化皮肤项
-            GameObject skinItem = Instantiate(SkinItemPrefab, SkinContent.transform);
-            skinItem.SetActive(true);
-            skinItem.transform.Find("LockImage").gameObject.SetActive(!item.isLocked && item.unlockCondition != 0);
-            skinItem.transform.Find("PickImage").gameObject.SetActive(false);
-            // 设置皮肤项的皮肤
-            SetSkin(item.id, skinItem.transform.Find("Player").gameObject);
-            skinItem.name = item.id.ToString();
-            // 添加点击事件监听器
-            skinItem.GetComponent<Button>().onClick.AddListener(() => { OnPrivewClick(item.name); });
+            if (item.id != 401)
+            {
+
+
+                // 实例化皮肤项
+                GameObject skinItem = Instantiate(SkinItemPrefab, SkinContent.transform);
+                skinItem.SetActive(true);
+                skinItem.transform.Find("LockImage").gameObject.SetActive(!item.isLocked && item.unlockCondition != 0);
+                skinItem.transform.Find("PickImage").gameObject.SetActive(false);
+                // 设置皮肤项的皮肤
+                SetSkin(item.id, skinItem.transform.Find("Player").gameObject);
+                skinItem.name = item.id.ToString();
+                // 添加点击事件监听器
+                skinItem.GetComponent<Button>().onClick.AddListener(() => { OnPrivewClick(item.name); });
+            }
         });
         // 设置玩家皮肤
         SetSkin(ViewSkinItem.id, SkinViewPrefab);

@@ -29,6 +29,8 @@ public class MainCondition : MonoBehaviour
     void OnEnable()
     {
         ADManager.Instance.ShowBannerAd();
+        //更新体力
+        DataManager.Instance.gameInfo.player.todayVigour.CalculateAutoRecovery();
     }
     // Update is called once per frame
     void Update()

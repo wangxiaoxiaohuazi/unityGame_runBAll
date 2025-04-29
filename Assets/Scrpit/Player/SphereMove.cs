@@ -12,7 +12,7 @@ public class SphereController : MonoBehaviour
     public float forwardSpeed = 20f; // 前进速度
     public float sideSpeed = 20f; // 左右移动速度
     public bool autoRun = true; // 是否自动行走
-    public Transform Plant ; //地板
+    public Transform Plant; //地板
     private float detectionDistance = 2f; // 设置一个固定的禁止通过检测距离，例如 1.0f
 
     // [Header("冲刺设置")]
@@ -238,50 +238,59 @@ public class SphereController : MonoBehaviour
                 return;
             }
         }
-      
+
         Vector3 newPosition = rb.position + movement * Time.fixedDeltaTime;
-      
-        //超过地板x 范围，则回到最近的地板位置
-   if (Plant != null)
-    {
-        // 精确计算地板边界
-        Vector3 minBound;
-        Vector3 maxBound;
 
-        // 优先使用渲染器边界计算
-        if (Plant.TryGetComponent<Renderer>(out var plantRenderer))
-        {
-            Bounds bounds = plantRenderer.bounds;
-            minBound = bounds.min;
-            maxBound = bounds.max;
-        }
-        else // 没有渲染器时使用Transform参数计算
-        {
-            Vector3 plantPosition = Plant.position;
-            Vector3 plantScale = Plant.lossyScale;
-            minBound = plantPosition - plantScale / 2f;
-            maxBound = plantPosition + plantScale / 2f;
-        }
+        //         //超过地板x 范围，则回到最近的地板位置
+        //    if (Plant != null)
+        //     {
+        //         // 精确计算地板边界
+        //         Vector3 minBound;
+        //         Vector3 maxBound;
 
-        // 动态计算有效范围（考虑边界过渡区）
-        float edgeBuffer = 0.5f; // 根据物体半径调整
-        float clampedX = Mathf.Clamp(
-            newPosition.x, 
-            minBound.x + edgeBuffer, 
-            maxBound.x - edgeBuffer
-        );
+        //         // 优先使用渲染器边界计算
+        //         if (Plant.TryGetComponent<Renderer>(out var plantRenderer))
+        //         {
+        //             Bounds bounds = plantRenderer.bounds;
+        //             minBound = bounds.min;
+        //             maxBound = bounds.max;
+        //         }
+        //         else // 没有渲染器时使用Transform参数计算
+        //         {
+        //             Vector3 plantPosition = Plant.position;
+        //             Vector3 plantScale = Plant.lossyScale;
+        //             minBound = plantPosition - plantScale / 2f;
+        //             maxBound = plantPosition + plantScale / 2f;
+        //         }
 
-        // 添加平滑过界回弹
-        if (Mathf.Abs(newPosition.x - clampedX) > 0.01f)
-        {
-            newPosition.x = Mathf.Lerp(newPosition.x, clampedX, 10f * Time.fixedDeltaTime);
-        }
-        else
-        {
-            newPosition.x = clampedX;
-        }
-    }
-      if (defaultPositionY > 0)
+        //         // 动态计算有效范围（考虑边界过渡区）
+        //         float edgeBuffer = 0.5f; // 根据物体半径调整
+        //         float clampedX = Mathf.Clamp(
+        //             newPosition.x, 
+        //             minBound.x + edgeBuffer, 
+        //             maxBound.x - edgeBuffer
+        //         );
+
+        //         // 添加平滑过界回弹
+        //         if (Mathf.Abs(newPosition.x - clampedX) > 0.01f)
+        //         {
+        //             newPosition.x = Mathf.Lerp(newPosition.x, clampedX, 10f * Time.fixedDeltaTime);
+        //         }
+        //         else
+        //         {
+        //             newPosition.x = clampedX;
+        //         }
+        //     }
+        //移动超出屏幕范围则回到最近的距离
+        Vector3 viewportPoint = Camera.main.WorldToViewportPoint(newPosition);
+        float margin = 0.05f; // 设置一个边距，防止完全贴边
+
+        // 限制x轴在视口范围内
+        viewportPoint.x = Mathf.Clamp(viewportPoint.x, margin, 1 - margin);
+
+        // 将视口坐标转回世界坐标
+        newPosition = Camera.main.ViewportToWorldPoint(viewportPoint);
+        if (defaultPositionY > 0)
         {
             newPosition.y = defaultPositionY;
         }
