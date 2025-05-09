@@ -178,6 +178,13 @@ public class DataManager : MonoBehaviour
         //     todayVigour.reflashTime = DateTime.Today.AddDays(1);
         //     Debug.Log($"执行每日刷新 | 当前时间：{DateTime.Now} | 刷新时间：{todayVigour.reflashTime}");
         // }
+        var vigour = gameInfo.player.todayVigour;
+        if (DateTime.UtcNow.Date > vigour.lastRecoveryTime.Date)
+        {
+            vigour.num = PlayerData.TodayVigour.MaxVigour;
+            vigour.lastRecoveryTime = DateTime.UtcNow;
+            SaveData();
+        }
     }
 
     private void NotifyDataChanged()

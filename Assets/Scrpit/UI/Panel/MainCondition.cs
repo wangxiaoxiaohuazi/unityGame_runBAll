@@ -26,24 +26,31 @@ public class MainCondition : MonoBehaviour
             levelText.text = "第" + RoundInfo.Instance.OnGetCurrentLevel().id + "关";
         }
         ADManager.Instance.ShowBannerAd();
+         UpDataVigourNumber();
     }
     void OnEnable()
     {
         ADManager.Instance.ShowBannerAd();
         //更新体力
         DataManager.Instance.gameInfo.player.todayVigour.CalculateAutoRecovery();
+        UpDataVigourNumber();
+
     }
     // Update is called once per frame
     void Update()
     {
         InitSideNode();
         coinNum.text = _gameData.player.coin.ToString();
+
+
+    }
+    public void UpDataVigourNumber()
+    {
         VigourNumber.text =
-            PlayerInfo.Instance.GetVigourNumber() + "/" + _gameData.player.defaultVigourNumber;
+                  PlayerInfo.Instance.GetVigourNumber() + "/" + _gameData.player.defaultVigourNumber;
         StartGame.Find("Start").gameObject.SetActive(PlayerInfo.Instance.GetVigourNumber() > 0);
         StartGame.Find("End").gameObject.SetActive(PlayerInfo.Instance.GetVigourNumber() < 1);
     }
-
     private void InitScrollviewNode()
     {
         //获取Scenes文件下的所有场景文件 将其添加到scrollview中
@@ -91,10 +98,7 @@ public class MainCondition : MonoBehaviour
         });
     }
 
-    public void OnAddVigourNumber()
-    {
-        PlayerInfo.Instance.AddVigourNumber(5);
-    }
+
     public void OnShowPanelRound()
     {
         PanelManager manager = FindObjectOfType<PanelManager>();
@@ -122,12 +126,11 @@ public class MainCondition : MonoBehaviour
         {
             ADManager.Instance.OnADShow(() =>
             {
-                PlayerInfo.Instance.AddVigourNumber(5);
+                PlayerInfo.Instance.AddVigourNumber(8);
                 manager.HidePanel(PanelManager.PanelName.PanelPop);
-                VigourNumber.text =
-            PlayerInfo.Instance.GetVigourNumber() + "/" + _gameData.player.defaultVigourNumber;
+                UpDataVigourNumber();
             });
-            manager.HidePanel(PanelManager.PanelName.PanelPop);
+
         }, null);
     }
     public void OnShowTTSide()

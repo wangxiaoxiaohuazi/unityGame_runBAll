@@ -49,10 +49,10 @@ public class PlayerInfo : MonoBehaviour
         var vigour = Instance.gameData.player.todayVigour;
 
         // // 先进行自动恢复计算
-        // vigour.CalculateAutoRecovery();
+        vigour.CalculateAutoRecovery();
 
         // // 保存更新后的数据
-        // DataManager.Instance.SaveData();
+        DataManager.Instance.SaveData();
 
         return vigour.num;
     }
@@ -77,7 +77,7 @@ public class PlayerInfo : MonoBehaviour
         vigour.num = Mathf.Clamp(vigour.num + num, 0, PlayerData.TodayVigour.MaxVigour);
 
         // 如果体力有变化则更新时间戳
-        if (vigour.num != oldValue)
+        if (num != 0 &&vigour.num != oldValue)
         {
             vigour.lastRecoveryTime = DateTime.UtcNow;
         }
@@ -96,7 +96,7 @@ public class PlayerInfo : MonoBehaviour
             }, null);
         }
         //临时暂停体力扣除
-        DataManager.Instance.gameInfo.player.todayVigour.num += num;
+        // DataManager.Instance.gameInfo.player.todayVigour.num += num;
         // Debug.Log("体力增加：" + DataManager.Instance.gameInfo.player.todayVigour.num);
 
 
