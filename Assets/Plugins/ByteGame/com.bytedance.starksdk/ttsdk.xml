@@ -5604,6 +5604,8 @@
             取消监听直玩场景内外流的切换
             </summary>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:TTSDK.TT.StoreFeedData(TTSDK.StoreFeedDataParam)" -->
+        <!-- Badly formed XML comment ignored for member "M:TTSDK.TT.GetFeedData(TTSDK.GetFeedDataParam)" -->
         <member name="M:TTSDK.TT.GetLiveManager">
             <summary>
             获取直播间管理器对象
@@ -7898,6 +7900,16 @@
               <para>Writes all modified preferences to disk.</para>
             </summary>
         </member>
+        <member name="F:TTSDK.TTWindowListener.onWindowResize">
+            <summary>
+            监听窗口大小变化。
+            </summary>
+        </member>
+        <member name="T:TTSDK.OnWindowResizeListenerResult">
+            <summary>
+            回调传参
+            </summary>
+        </member>
         <member name="T:TTSDK.GeneralCallbackResult">
             <summary>
             通用结果消息
@@ -8910,6 +8922,26 @@
         <member name="F:TTSDK.FeedStatusEnum.FeedExit">
             <summary>
             从游戏退回到Feed流
+            </summary>
+        </member>
+        <member name="F:TTSDK.StoreFeedDataParam.Fail">
+            <summary>
+            接口调用失败的回调函数
+            </summary>
+        </member>
+        <member name="F:TTSDK.StoreFeedDataParam.Complete">
+            <summary>
+            接口调用结束的回调函数（调用成功、失败都会执行）
+            </summary>
+        </member>
+        <member name="F:TTSDK.GetFeedDataParam.Fail">
+            <summary>
+            接口调用失败的回调函数
+            </summary>
+        </member>
+        <member name="F:TTSDK.GetFeedDataParam.Complete">
+            <summary>
+            接口调用结束的回调函数（调用成功、失败都会执行）
             </summary>
         </member>
         <member name="P:TTSDK.JFieldAttribute.Name">

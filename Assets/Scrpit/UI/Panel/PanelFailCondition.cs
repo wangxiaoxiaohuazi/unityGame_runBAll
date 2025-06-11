@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TTSDK;
+using System.Collections.Generic;
 public class PanelFailCondition : MonoBehaviour
 {
     public Text ProgressNum;
@@ -36,6 +37,14 @@ public class PanelFailCondition : MonoBehaviour
         Action callback = null
     )
     {
+#if UNITY_WEBGL && !UNITY_EDITOR
+
+        TT.ReportAnalytics("UserDie", new Dictionary<string, object>
+                {
+                    { "roundId", DataManager.Instance.gameInfo.roundInfo.currentLevel },
+                    { "deviceId", SystemInfo.deviceUniqueIdentifier }
+                });
+#endif
         // 启动协程
         StartCoroutine(
             FadeInChildrenCoroutine(parentObject.transform, duration, waitTime, callback)
@@ -87,23 +96,69 @@ public class PanelFailCondition : MonoBehaviour
         }
         callback?.Invoke();
     }
-
+    public void OnGiveUp()
+    {
+        Debug.Log("放弃");
+        GameManager manager = new GameManager();
+        manager.OnResetGame(); // 调用重置游戏事件
+    }
     //复活
     public void OnRevive()
     {
         //多倍奖励
         ADManager.Instance.OnADShow(() =>
         {
-            GameDataManager.Instance.goldenCoin += 100;
+#if UNITY_WEBGL && !UNITY_EDITOR
+            TT.ReportAnalytics("UserRevive", new Dictionary<string, object>
+            {
+                { "roundId", DataManager.Instance.gameInfo.roundInfo.currentLevel },
+                { "deviceId", SystemInfo.deviceUniqueIdentifier }
+            });
+#endif
+            Debug.Log("复活成功");
+
+            if (GameDataManager.Instance == null)
+            {
+                Debug.LogError("GameDataManager.Instance 为 null");
+                return;
+            }
+
+            if (GameDataManager.Instance.goldenCoin > 0)
+            {
+                GameDataManager.Instance.goldenCoin += 100;
+            }
+
+            Debug.Log("复活成功1");
             Transform player = GameObject.FindGameObjectWithTag("Player")?.transform;
-            GameDataManager.Instance.ChangePlayerLives(player.GetComponent<player>().defaultBlood);
-            gameObject.SetActive(false);
+            Debug.Log("复活成功2");
+
+            if (player == null)
+            {
+                Debug.LogError("没有找到玩家");
+                return;
+            }
+
+            Debug.Log("复活成功3");
+            var playerComponent = player.GetComponent<player>();
+            if (playerComponent == null)
+            {
+                Debug.LogError("玩家对象没有 player 组件");
+                return;
+            }
+
+            GameDataManager.Instance.ChangePlayerLives(playerComponent.defaultBlood);
+            Debug.Log("复活成功4");
+            // 检查 gameObject 是否有效
+            if (gameObject != null)
+            {
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                Debug.LogError("gameObject 为 null");
+            }
         });
     }
 
-    public void OnExit()
-    {
-        GameManager manager = new GameManager();
-        manager.OnResetGame(); // 调用重置游戏事件
-    }
+
 }

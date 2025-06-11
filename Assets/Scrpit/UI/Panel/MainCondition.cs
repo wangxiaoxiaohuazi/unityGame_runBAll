@@ -1,7 +1,8 @@
-
+using System;
 using TMPro;
 using TTSDK;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MainCondition : MonoBehaviour
@@ -15,7 +16,7 @@ public class MainCondition : MonoBehaviour
     public TextMeshProUGUI levelText = null;
     private PublicGameData _gameData;
     public Transform StartGame = null;
-
+    public GameObject Countdown = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,27 +26,47 @@ public class MainCondition : MonoBehaviour
         {
             levelText.text = "第" + RoundInfo.Instance.OnGetCurrentLevel().id + "关";
         }
-        ADManager.Instance.ShowBannerAd();
-         UpDataVigourNumber();
+        UpDataVigourNumber();
     }
     void OnEnable()
     {
         ADManager.Instance.ShowBannerAd();
-        //更新体力
-        DataManager.Instance.gameInfo.player.todayVigour.CalculateAutoRecovery();
         UpDataVigourNumber();
-
+        InitSideNode();
+    }
+    void OnDisable()
+    {
+        ADManager.Instance.CloseBannerAd();
+    }
+    void OnDestroy()
+    {
+        ADManager.Instance.CloseBannerAd();
     }
     // Update is called once per frame
     void Update()
     {
-        InitSideNode();
-        coinNum.text = _gameData.player.coin.ToString();
 
+        coinNum.text = _gameData.player.coin.ToString();
+        // 计算并更新倒计时
+        UpdateCountdown();
 
     }
     public void UpDataVigourNumber()
     {
+        if (PlayerInfo.Instance == null)
+        {
+            return;
+        }
+        if (VigourNumber == null)
+        {
+            return;
+        }
+        if (_gameData == null || _gameData.player == null)
+        {
+            _gameData = DataManager.Instance.gameInfo;
+            return;
+        }
+
         VigourNumber.text =
                   PlayerInfo.Instance.GetVigourNumber() + "/" + _gameData.player.defaultVigourNumber;
         StartGame.Find("Start").gameObject.SetActive(PlayerInfo.Instance.GetVigourNumber() > 0);
@@ -61,8 +82,8 @@ public class MainCondition : MonoBehaviour
     {
 
         LaunchOption launchOption = TT.GetLaunchOptionsSync();
-        // Debug.Log("场景值" + launchOption.Scene);
-        if (launchOption?.Scene == "021001")
+        Debug.Log("场景值" + launchOption.Scene);
+        if (launchOption?.Scene == "021036")
         {
             sideView.transform.Find("GetReward").gameObject.SetActive(true);
             sideView.transform.Find("NavigateSideButton").gameObject.SetActive(false);
@@ -79,9 +100,11 @@ public class MainCondition : MonoBehaviour
             OnShowADEnergy();
             return;
         }
+        GameManager _gamemanager = new GameManager();
         PanelManager manager = FindObjectOfType<PanelManager>();
         manager.showFight();
         PlayerInfo.Instance.AddVigourNumber(-1);
+
     }
 
     public void OnSideViewVisible()
@@ -91,11 +114,23 @@ public class MainCondition : MonoBehaviour
 
     public void OnGetRwardClick()
     {
+        PanelManager manager = FindObjectOfType<PanelManager>();
+
         //获取300金币
-        PlayerInfo.Instance.SaveCoin(300, () =>
+        if (!DataManager.Instance.gameInfo.player.dailyReward)
         {
-            coinNum.text = _gameData.player.coin.ToString();
-        });
+            PlayerInfo.Instance.SaveCoin(300, () =>
+            {
+                coinNum.text = _gameData.player.coin.ToString();
+                manager?.ShowTips("奖励已发放成功");
+                DataManager.Instance.gameInfo.player.dailyReward = true;
+            });
+        }
+        else
+        {
+            manager?.ShowTips("已领取");
+        }
+
     }
 
 
@@ -126,9 +161,11 @@ public class MainCondition : MonoBehaviour
         {
             ADManager.Instance.OnADShow(() =>
             {
+                Debug.Log("广告播放完成");
                 PlayerInfo.Instance.AddVigourNumber(8);
-                manager.HidePanel(PanelManager.PanelName.PanelPop);
                 UpDataVigourNumber();
+                manager.HidePanel(PanelManager.PanelName.PanelPop);
+
             });
 
         }, null);
@@ -137,5 +174,32 @@ public class MainCondition : MonoBehaviour
     {
         TTFunction ttFunction = new TTFunction();
         ttFunction.NavigateToTTSidebar();
+    }
+    private void UpdateCountdown()
+    {
+        if (PlayerInfo.Instance.GetVigourNumber() < _gameData.player.defaultVigourNumber)
+        {
+            // 计算时间差
+            DateTime nextRecoveryTime = _gameData.player.todayVigour.nextRecoveryTime;
+            TimeSpan timeDiff = nextRecoveryTime - DateTime.UtcNow;
+
+            // 计算剩余时间
+            int totalSeconds = (int)(timeDiff.TotalSeconds);
+            int hours = totalSeconds / 3600;
+            int minutes = (totalSeconds % 3600) / 60;
+            int seconds = totalSeconds % 60;
+
+            // 更新 Countdown 的 Text
+            Text countdownText = Countdown.transform.Find("Text (Legacy)").GetComponent<Text>();
+            countdownText.text = $"{hours:D2}:{minutes:D2}:{seconds:D2}";
+
+            // 显示 Countdown
+            Countdown.SetActive(true);
+        }
+        else
+        {
+            // 隐藏 Countdown
+            Countdown.SetActive(false);
+        }
     }
 }

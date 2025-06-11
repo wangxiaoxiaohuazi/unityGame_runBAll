@@ -152,6 +152,14 @@ public class DataManager : MonoBehaviour
 
 #endif
                 _gameData = JsonUtility.FromJson<PublicGameData>(json);
+                Debug.Log($"加载的 nextRecoveryTimeString: {_gameData.player.todayVigour.nextRecoveryTimeString}");
+
+                // 数据完整性校验
+                if (_gameData.player.todayVigour == null)
+                {
+                    Debug.LogWarning("检测到损坏的体力数据，自动修复");
+                    _gameData.player.todayVigour = new PlayerData.TodayVigour();
+                }
                 MigrateDataIfNeeded();
             }
             else
@@ -172,17 +180,13 @@ public class DataManager : MonoBehaviour
     public void CheckDailyRefresh()
     {
         // 检查是否需要刷新每日数据
-        // if (DateTime.Now >= todayVigour.reflashTime)
-        // {
-        //     todayVigour.num = defaultVigourNumber;
-        //     todayVigour.reflashTime = DateTime.Today.AddDays(1);
-        //     Debug.Log($"执行每日刷新 | 当前时间：{DateTime.Now} | 刷新时间：{todayVigour.reflashTime}");
-        // }
         var vigour = gameInfo.player.todayVigour;
-        if (DateTime.UtcNow.Date > vigour.lastRecoveryTime.Date)
+        Debug.Log("下次恢复体力时间" + vigour.nextRecoveryTime);
+        Debug.Log("当前时间" + DateTime.UtcNow);
+        if (DateTime.UtcNow.Date > gameInfo.player.lastSaveTime.Date)
         {
-            vigour.num = PlayerData.TodayVigour.MaxVigour;
-            vigour.lastRecoveryTime = DateTime.UtcNow;
+            gameInfo.player.lastSaveTime = DateTime.UtcNow;
+            gameInfo.player.dailyReward = false;
             SaveData();
         }
     }

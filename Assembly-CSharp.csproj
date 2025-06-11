@@ -52,7 +52,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.23</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.25</UnityProjectGeneratorVersion>
     <UnityProjectGeneratorStyle>SDK</UnityProjectGeneratorStyle>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebGL:20</UnityBuildTarget>
@@ -65,30 +65,19 @@
   <ItemGroup>
     <Compile Include="Assets\Scrpit\AllowPass\BrotherNodeDiscoloration.cs" />
     <Compile Include="Assets\Scrpit\Bullet\WarningAreaCondition.cs" />
-    <Compile Include="Assets\Scrpit\UI\Panel\PanelSkinCondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
-    <Compile Include="Assets\Scrpit\Player\EndGame.cs" />
     <Compile Include="Assets\Scrpit\Player\AnimationColler.cs" />
     <Compile Include="Assets\Scrpit\UI\Panel\PanelSettingCondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\Scrpit\UI\Panel\PanelSuccessCondition.cs" />
     <Compile Include="Assets\Scrpit\Animation\SpeedLines.cs" />
-    <Compile Include="Assets\Scrpit\Player\Move.cs" />
-    <Compile Include="Assets\Scrpit\Player\CharacterCarousel.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
     <Compile Include="Assets\Scrpit\Player\SphereMove.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
     <Compile Include="Assets\Scrpit\UI\RoundProportionUICondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\Scrpit\PropItems\FragmentMove.cs" />
-    <Compile Include="Assets\Samples\Addressables\1.21.21\Addressables Utility\AddressablesUtility.cs" />
     <Compile Include="Assets\Scrpit\Manager\PanelManager.cs" />
     <Compile Include="Assets\Scrpit\InterFace\PlayerInfo.cs" />
     <Compile Include="Assets\Scrpit\Manager\AudioManager.cs" />
-    <Compile Include="Assets\Scrpit\Camera\CameraFollow.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\Scrpit\PropItems\Single Function\scoreNumberChange.cs" />
     <Compile Include="Assets\Scrpit\Enemy\SetTransparent.cs" />
@@ -96,80 +85,93 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Scrpit\AllowPass\ParentCollisionTreatment.cs" />
-    <Compile Include="Assets\Scrpit\Manager\AddressablesLoaderManager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
-    <Compile Include="Assets\Scrpit\Animation\ObjectController.cs" />
-    <Compile Include="Assets\Scrpit\InterFace\DataModels\PublicGameData.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
     <Compile Include="Assets\Scrpit\UI\Panel\PanelGameCondition.cs" />
-    <Compile Include="Assets\Scrpit\Enemy\EnemAttackCondition.cs" />
     <Compile Include="Assets\Scrpit\PropItems\Single Function\PowerChange.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
-    <Compile Include="Assets\Scrpit\AllowPass\GridObjects.cs" />
-    <Compile Include="Assets\Scrpit\weapon\weaponCondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\Scrpit\UI\BloodUICondition.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\Scrpit\InterFace\DataModels\RoundInfoData.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
-    <Compile Include="Assets\Scrpit\Finish.cs" />
     <Compile Include="Assets\Scrpit\AllowPass\BreakOnCollision.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\Scrpit\Enemy\Boss\BossAttackOne.cs" />
-    <Compile Include="Assets\Scrpit\PropItems\Single Function\HPChange.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\Scrpit\Enemy\EnemyStateCondition.cs" />
-    <Compile Include="Assets\Scrpit\Utils\InitGame.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\Scrpit\UI\Panel\PanelFailCondition.cs" />
     <Compile Include="Assets\Scrpit\PropItems\SpeedChange.cs" />
     <Compile Include="Assets\Scrpit\Bullet\BulletCondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scrpit\ThirdPath\TTFunction.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
-    <Compile Include="Assets\Scrpit\PropItems\PublicItem.cs" />
-    <Compile Include="Assets\Scrpit\InterFace\DataModels\PlayerData.cs" />
     <Compile Include="Assets\Scrpit\InterFace\DataModels\CollectionData.cs" />
-    <Compile Include="Assets\Scrpit\UI\Panel\PanelRoundCondition.cs" />
-    <Compile Include="Assets\Scrpit\InterFace\RoundInfo.cs" />
-    <Compile Include="Assets\Scrpit\InterFace\CollectionInfo.cs" />
     <Compile Include="Assets\Scrpit\PropItems\Single Function\BodyChange.cs" />
     <Compile Include="Assets\Scrpit\Animation\FadeInChildren.cs" />
     <Compile Include="Assets\Scrpit\UI\RoundTitleUICondition.cs" />
+    <Compile Include="Assets\Scrpit\Manager\GameDataManager.cs" />
+    <Compile Include="Assets\Scrpit\weapon\ItemPickup.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
+    <Compile Include="Assets\Scrpit\Manager\ADManager.cs" />
+    <Compile Include="Assets\Scrpit\Manager\GameManager.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\Scrpit\Player\player.cs" />
+    <Compile Include="Assets\Scrpit\UI\Panel\PanelPopCondition.cs" />
+    <Compile Include="Assets\Scrpit\Enemy\RemoveProps.cs" />
+    <Compile Include="Assets\Scrpit\Manager\CollisionVibration.cs" />
+    <Compile Include="Assets\Scrpit\PropItems\Single Function\levelNumberChange.cs" />
+    <Compile Include="Assets\Scrpit\Enemy\EnemyCondition.cs" />
+    <Compile Include="Assets\Scrpit\Enemy\Barrier.cs" />
+    <Compile Include="Assets\Scrpit\UI\Panel\PanelSkinCondition.cs" />
+    <Compile Include="Assets\Scrpit\Player\EndGame.cs" />
+    <Compile Include="Assets\Scrpit\UI\Panel\PanelUIInit.cs" />
+    <Compile Include="Assets\Scrpit\Player\Move.cs" />
+    <Compile Include="Assets\Scrpit\Player\CharacterCarousel.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexColorCycler.cs" />
+    <Compile Include="Assets\Samples\Addressables\1.21.21\Addressables Utility\AddressablesUtility.cs" />
+    <Compile Include="Assets\Scrpit\Camera\CameraFollow.cs" />
+    <Compile Include="Assets\Scrpit\Manager\AddressablesLoaderManager.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
+    <Compile Include="Assets\Scrpit\Animation\ObjectController.cs" />
+    <Compile Include="Assets\Scrpit\InterFace\DataModels\PublicGameData.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
+    <Compile Include="Assets\Scrpit\Enemy\EnemAttackCondition.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
+    <Compile Include="Assets\Scrpit\AllowPass\GridObjects.cs" />
+    <Compile Include="Assets\Scrpit\weapon\weaponCondition.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextConsoleSimulator.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
+    <Compile Include="Assets\Scrpit\Finish.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\Scrpit\PropItems\Single Function\HPChange.cs" />
+    <Compile Include="Assets\Scrpit\Utils\InitGame.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
+    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\Scrpit\PropItems\PublicItem.cs" />
+    <Compile Include="Assets\Scrpit\InterFace\DataModels\PlayerData.cs" />
+    <Compile Include="Assets\Scrpit\UI\Panel\PanelRoundCondition.cs" />
+    <Compile Include="Assets\Scrpit\InterFace\RoundInfo.cs" />
+    <Compile Include="Assets\Scrpit\InterFace\CollectionInfo.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\Scrpit\UI\Panel\PanelTipsCondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\Scrpit\Player\TouchHandler.cs" />
     <Compile Include="Assets\Scrpit\Enemy\EnemySpawner.cs" />
-    <Compile Include="Assets\Scrpit\Manager\GameDataManager.cs" />
     <Compile Include="Assets\Scrpit\UI\Panel\PanelBodyArtCondition.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\Scrpit\UI\Panel\PanelWarningCondition.cs" />
-    <Compile Include="Assets\Scrpit\weapon\ItemPickup.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
-    <Compile Include="Assets\Scrpit\Manager\ADManager.cs" />
+    <Compile Include="Assets\Scrpit\Utils\InitRound.cs" />
     <Compile Include="Assets\Scrpit\PropItems\Single Function\GoldenChange.cs" />
-    <Compile Include="Assets\Scrpit\Manager\GameManager.cs" />
     <Compile Include="Assets\Scrpit\weapon\TargetFollower.cs" />
-    <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Scrpit\Manager\SceneChangeManager.cs" />
     <Compile Include="Assets\Scrpit\Player\DistanceChecker.cs" />
-    <Compile Include="Assets\Scrpit\Player\player.cs" />
     <Compile Include="Assets\Scrpit\Manager\DataManager.cs" />
-    <Compile Include="Assets\Scrpit\UI\Panel\PanelPopCondition.cs" />
     <Compile Include="Assets\Scrpit\AllowPass\ColorChanger.cs" />
-    <Compile Include="Assets\Scrpit\Enemy\RemoveProps.cs" />
-    <Compile Include="Assets\Scrpit\Manager\CollisionVibration.cs" />
     <Compile Include="Assets\Scrpit\Enemy\Boss\BossAttackTwo.cs" />
-    <Compile Include="Assets\Scrpit\PropItems\Single Function\levelNumberChange.cs" />
     <Compile Include="Assets\Scrpit\Utils\SerializationHelper.cs" />
-    <Compile Include="Assets\Scrpit\Enemy\EnemyCondition.cs" />
-    <Compile Include="Assets\Scrpit\Enemy\Barrier.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scrpit\UI\Panel\MainCondition.cs" />
     <Compile Include="Assets\Scrpit\ThirdPath\SkipLogo.cs" />
@@ -182,6 +184,7 @@
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Anton OFL.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+    <None Include="Assets\AddressableAssetsData\link.xml" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
     <None Include="Assets\Prefabs\PickUp\other\Shaders\Standard\PolyRimLightSolid.shader" />
     <None Include="Assets\Shaders\MotionBlur.shader" />
@@ -1054,8 +1057,8 @@
       <HintPath>Library\ScriptAssemblies\Unity.RenderPipelines.ShaderGraph.ShaderGraphLibrary.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.Cursor.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.Cursor.Editor.dll</HintPath>
+    <Reference Include="Unity.Services.Ccd.Management">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Ccd.Management.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.EditorCoroutines.Editor">
@@ -1074,20 +1077,20 @@
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.VisualScripting.Shared.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="Unity.ScriptableBuildPipeline">
       <HintPath>Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.ShaderGraph.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+    <Reference Include="Unity.VisualScripting.Shared.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Shared.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualStudio.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualStudio.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Unity.Services.Core">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.UI">
@@ -1122,12 +1125,16 @@
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.Flow.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.ShaderGraph.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ShaderGraph.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Timeline">
       <HintPath>Library\ScriptAssemblies\Unity.Timeline.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
-      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
+    <Reference Include="Unity.Services.Core.Environments">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Environments.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.VisualScripting.SettingsProvider.Editor">
@@ -1158,6 +1165,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.Addressables.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection">
+      <HintPath>Library\ScriptAssemblies\Unity.TestTools.CodeCoverage.Editor.OpenCover.Mono.Reflection.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.VisualScripting.State.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.Editor.dll</HintPath>
       <Private>False</Private>
@@ -1170,6 +1181,10 @@
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Services.Core.Analytics">
+      <HintPath>Library\ScriptAssemblies\Unity.Services.Core.Analytics.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Searcher.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.Searcher.Editor.dll</HintPath>
       <Private>False</Private>
@@ -1178,23 +1193,30 @@
       <HintPath>Library\ScriptAssemblies\Unity.VisualScripting.State.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.ScriptableBuildPipeline.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>Library\ScriptAssemblies\Unity.VSCode.Editor.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="Unity.ScriptableBuildPipeline.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.ScriptableBuildPipeline.Editor.dll</HintPath>
+    <Reference Include="Unity.Profiling.Core">
+      <HintPath>Library\ScriptAssemblies\Unity.Profiling.Core.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Unity.Addressables">
       <HintPath>Library\ScriptAssemblies\Unity.Addressables.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Unity.Cursor.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.Cursor.Editor.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="TTWebGL.csproj" />
     <ProjectReference Include="com.bytedance.ttsdk-editor.csproj" />
-    <ProjectReference Include="ReferenceViewer.csproj" />
     <ProjectReference Include="TTLitJson.csproj" />
     <ProjectReference Include="com.bytedance.ttsdk.ref.csproj" />
   </ItemGroup>

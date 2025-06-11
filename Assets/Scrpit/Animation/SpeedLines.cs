@@ -97,6 +97,20 @@ public class SpeedLines : MonoBehaviour
     void LateUpdate() //has to happen after camera position is updated
     {
         //将粒子的位置设置为相机的位置
+        if (transform == null)
+        {
+            return;
+        }
+        // 检查camera是否为空
+        if (camera == null)
+        {
+            // 尝试重新获取主相机
+            camera = Camera.main?.transform;
+            if (camera == null)
+            {
+                return;
+            }
+        }
         transform.position = camera.position;
 
         //如果粒子系统没有初始化

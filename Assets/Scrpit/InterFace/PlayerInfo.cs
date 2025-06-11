@@ -50,10 +50,6 @@ public class PlayerInfo : MonoBehaviour
 
         // // 先进行自动恢复计算
         vigour.CalculateAutoRecovery();
-
-        // // 保存更新后的数据
-        DataManager.Instance.SaveData();
-
         return vigour.num;
     }
 
@@ -73,14 +69,6 @@ public class PlayerInfo : MonoBehaviour
         // 体力变化前记录旧值
         int oldValue = vigour.num;
 
-        // 应用变化并限制范围
-        vigour.num = Mathf.Clamp(vigour.num + num, 0, PlayerData.TodayVigour.MaxVigour);
-
-        // 如果体力有变化则更新时间戳
-        if (num != 0 &&vigour.num != oldValue)
-        {
-            vigour.lastRecoveryTime = DateTime.UtcNow;
-        }
         //体力小于1，则弹出体力不足提示
         if (num < 0 && DataManager.Instance.gameInfo.player.todayVigour.num < 1)
         {
@@ -90,16 +78,23 @@ public class PlayerInfo : MonoBehaviour
                 ADManager.Instance.OnADShow(() =>
                 {
                     Debug.Log("广告播放完成");
-                    PlayerInfo.Instance.AddVigourNumber(5);
+                    PlayerInfo.Instance.AddVigourNumber(DataManager.Instance.gameInfo.player.defaultVigourNumber);
                     manager.HidePanel(PanelManager.PanelName.PanelPop);
                 });
             }, null);
         }
-        //临时暂停体力扣除
-        // DataManager.Instance.gameInfo.player.todayVigour.num += num;
-        // Debug.Log("体力增加：" + DataManager.Instance.gameInfo.player.todayVigour.num);
-
-
+        // 应用变化并限制范围
+        vigour.num = Mathf.Clamp(vigour.num + num, 0, PlayerData.TodayVigour.MaxVigour);
+        // 如果体力有变化则更新时间戳
+        if (num < 0)
+        {
+            Debug.Log("体力减少");
+            Debug.Log($"设置前 nextRecoveryTimeString: {vigour.nextRecoveryTimeString}");
+            Debug.Log($"设置前 nextRecoveryTime: {vigour.nextRecoveryTime}");
+            vigour.nextRecoveryTime = DateTime.UtcNow.AddHours(PlayerData.TodayVigour.RecoveryIntervalHours);
+            Debug.Log($"设置后 nextRecoveryTimeString: {vigour.nextRecoveryTimeString}");
+            Debug.Log($"设置后 nextRecoveryTime: {vigour.nextRecoveryTime}");
+        }
         DataManager.Instance.SaveData();
         callback?.Invoke();
     }

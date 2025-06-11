@@ -44,6 +44,10 @@ public class EnemySpawner : MonoBehaviour
                 Debug.Log("生成敌人");
                 if (isWarn)
                 {
+                    if (panelManager == null)
+                    {
+                        panelManager = FindObjectOfType<PanelManager>();
+                    }
                     panelManager.ShowPanel(PanelManager.PanelName.PanelWarn);
                     StartCoroutine(HideWarningPanelAfterDelay());
                 }

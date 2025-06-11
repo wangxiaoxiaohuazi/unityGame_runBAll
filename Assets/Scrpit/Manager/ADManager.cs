@@ -8,14 +8,17 @@ using UnityEngine.SceneManagement;
 public class ADManager : MonoBehaviour
 {
     private static ADManager _instance;
-    //糖果
-    private string BannerAdId = "57jm2c8nd5nd80nj36";
-    private string InterstitialAdId = "5g5lic64666h50f5fh";
-    private string RewardedAdId = "1hlk2c7emm4e3el75i";
+    // //糖果
+    // private string BannerAdId = "57jm2c8nd5nd80nj36";
+    // private string InterstitialAdId = "5g5lic64666h50f5fh";
+    // private string RewardedAdId = "1hlk2c7emm4e3el75i";
     //球球
-    //   private string BannerAdId = "";
-    //     private string InterstitialAdId = "5g5lic64666h50f5fh";
-    //     private string RewardedAdId = "";
+    private string BannerAdId = "r2gmf5ye8j6t9g6m0h";
+    private string InterstitialAdId = "fjokdmrfljdgk4kkl4";
+    private string RewardedAdId = "3i388l5k9n492i8gne";
+    private float lastADShowTime = 0f; // 添加一个字段来存储上次调用时间
+    private float lastInterstitialShowTime = 0f; // 添加一个字段来存储上次插屏广告展示时间
+    private Action _currentCallback;
     public static ADManager Instance
     {
         get
@@ -55,7 +58,7 @@ public class ADManager : MonoBehaviour
     {
         RewardADCreat();
         InterstitialADCreate();
-        BannerADCreat();
+        // BannerADCreat();
     }
     public void BannerADCreat()
     {
@@ -70,70 +73,114 @@ public class ADManager : MonoBehaviour
         };
         m_bannerAdIns = TT.CreateBannerAd(param);
         m_bannerAdIns.OnError += (errorCode, errorMessage) => Debug.Log($"Banner加载失败 errorCode: {errorCode} errorMessage: {errorMessage}");
-        m_bannerAdIns.OnClose += () => Debug.Log($"Banner关闭 ");
         m_bannerAdIns.OnLoad += () => Debug.Log($"Banner加载成功 ");
-        Debug.Log("Banner加载中");
     }
 
     void InterstitialADCreate()
     {
         var param = new CreateInterstitialAdParam { InterstitialAdId = InterstitialAdId };
         m_InterAdIns = TT.CreateInterstitialAd(param);
-        m_InterAdIns.OnClose += () => Debug.Log("插屏广告关闭");
         m_InterAdIns.OnLoad += () => Debug.Log("插屏广告加载");
         m_InterAdIns.OnError += (code, message) => Debug.Log($"插屏错误 ： {code}  {message}");
     }
     //展示
     public void ShowBannerAd()
     {
-        Debug.Log("展示banner");
-        m_bannerAdIns.Show();
+        // Debug.Log("展示banner");
+        // if (m_bannerAdIns != null)
+        // {
+        //     m_bannerAdIns.Show();
+        // }
+        // else
+        // {
+        //     BannerADCreat();
+        //     m_bannerAdIns.Show();
+        // }
+    }
+    //关闭
+    public void CloseBannerAd()
+    {
+        // Debug.Log("关闭banner");
+        // m_bannerAdIns.Hide();
     }
     public void RewardADCreat()
     {
         string videoAdId = RewardedAdId;
         var param = new CreateRewardedVideoAdParam { AdUnitId = videoAdId };
         RewardedVideoAd = TT.CreateRewardedVideoAd(param);
-        RewardedVideoAd.OnClose += (ended, count) => Debug.Log($"激励视频关闭 ended: {ended}, count: {count}");
         RewardedVideoAd.OnError += (errorCode, errorMessage) => Debug.Log($"激励视频错误 errorCode: {errorCode}");
     }
 
     //下一关
     public void OnADShow(Action callback = null)
     {
+        if (Time.time - lastADShowTime < 2f)
+        {
+            Debug.Log("防抖中，无法再次调用OnADShow");
+            return;
+        }
+
+        lastADShowTime = Time.time;
         try
         {
 #if UNITY_WEBGL && !UNITY_EDITOR
-            RewardedVideoAd.Show();
-            RewardedVideoAd.OnClose += (ended, count) =>
+            if (RewardedVideoAd == null)
             {
-                if (ended)
-                {
-                    //增加观看次数
-                    DataManager.Instance.gameInfo.player.adWatchTime++;
-                    DataManager.Instance.SaveData();
-                    //广告回调
-                    callback?.Invoke();
-                }
-            };
+                RewardADCreat();
+            }
+
+            RewardedVideoAd.OnClose -= HandleRewardedAdClose;
+            _currentCallback = callback;
+            RewardedVideoAd.OnClose += HandleRewardedAdClose;
+            
+            RewardedVideoAd.Show();
 #else
-            //非抖音小游戏环境直接执行回调
             DataManager.Instance.gameInfo.player.adWatchTime++;
             DataManager.Instance.SaveData();
             callback?.Invoke();
 #endif
-
-
         }
         catch (Exception e)
         {
-            Debug.Log(e);
+            Debug.LogError($"广告展示错误: {e.Message}");
+            _currentCallback = null;
         }
     }
+
+
+
+    private void HandleRewardedAdClose(bool ended, int count)
+    {
+        if (ended)
+        {
+            DataManager.Instance.gameInfo.player.adWatchTime++;
+            DataManager.Instance.SaveData();
+            _currentCallback?.Invoke();
+        }
+        else
+        {
+            Debug.Log($"观看不完整: {count}");
+        }
+        _currentCallback = null;
+    }
+
     public void OnIInterstitialADShow()
     {
+        // 检查是否在防抖时间内 抖音要求30秒内展示一次
+        if (Time.time - lastInterstitialShowTime < 30f) // 30秒的防抖时间
+        {
+            Debug.Log("防抖中，无法再次调用OnIInterstitialADShow");
+            return;
+        }
+        lastInterstitialShowTime = Time.time; // 更新上次展示时间
+
         if (m_InterAdIns != null)
         {
+            m_InterAdIns.Show();
+        }
+        else
+        {
+            InterstitialADCreate();
             m_InterAdIns.Show();
         }
     }

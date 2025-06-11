@@ -1,5 +1,6 @@
 #if TUANJIE_1_5_OR_NEWER
 using UnityEditor;
+using UnityEditor.Build;
 using UnityEditor.Build.Profile;
 using UnityEngine;
 
@@ -43,7 +44,7 @@ namespace TTSDK.Tool
             if (buildProfile.HasOverrridePlayersettings())
                 playerSettings = buildProfile.playerSettings; // Override PlayerSettings
 
-            if (!IsBuildSettingsValid(douYinMiniGameSettings))
+            if (!IsBuildSettingsValid(douYinMiniGameSettings, playerSettings))
             {
                 return BuildMiniGameError.InvalidInput;
             }
@@ -78,7 +79,7 @@ namespace TTSDK.Tool
         /// <summary>
         /// 构建参数校验
         /// </summary>
-        private static bool IsBuildSettingsValid(DouYinMiniGameSettings settings)
+        private static bool IsBuildSettingsValid(DouYinMiniGameSettings settings, PlayerSettings playerSettings)
         {
             if (!settings.needCompress)
             {
@@ -93,6 +94,13 @@ namespace TTSDK.Tool
             if (settings.urlCacheList.Length == 0 || (settings.urlCacheList.Length == 1 && string.IsNullOrEmpty(settings.urlCacheList[0])))
             {
                 Debug.LogWarning("警告：当前未配置「缓存资源域名」，可能影响游戏启动速度。");
+            }
+
+            var scriptingBackend = PlayerSettings.GetScriptingBackend_Internal(playerSettings, NamedBuildTarget.MiniGame);
+            if (scriptingBackend != ScriptingImplementation.IL2CPP)
+            {
+                Debug.LogError($"Scripting Backend {scriptingBackend}(.Net 8) 暂不支持，请选择为 IL2CPP 后重试构建。");
+                return false;
             }
             
             return true;

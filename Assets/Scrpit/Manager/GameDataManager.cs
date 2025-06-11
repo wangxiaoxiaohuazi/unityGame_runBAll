@@ -1,4 +1,5 @@
 using System.Collections;
+using TTSDK;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -97,7 +98,7 @@ public class GameDataManager : MonoBehaviour
     public void ChangePlayerLives(float change)
     {
         // 如果玩家处于无敌状态，则不改变生命值
-
+        _player = GameObject.FindGameObjectWithTag("Player");
 
         if (_player == null)
         {
@@ -142,30 +143,28 @@ public class GameDataManager : MonoBehaviour
                 panelManager.ShowPanel(PanelManager.PanelName.PanelHurt);
                 StartCoroutine(HidePanelCoroutine());
                 Debug.Log("玩家生命值：" + playerLives);
-                // 震动手机
-                // Handheld.Vibrate();
+
+                // 更新上次处理伤害的时间
+                lastDamageTime = currentTime;
             }
 
-            // 更新上次处理伤害的时间
-            lastDamageTime = currentTime;
-        }
-
-        // 更新 UI
-        PanelGameCondition panel = FindObjectOfType<PanelGameCondition>();
-        if (panel != null)
-        {
-            panel.UpdatePlayerLives();
-        }
-        if (playerLives <= 0)
-        {
-            // 游戏结束逻辑
-            EndGame endGame = FindObjectOfType<EndGame>();
-            if (endGame != null)
+            // 更新 UI
+            PanelGameCondition panel = FindObjectOfType<PanelGameCondition>();
+            if (panel != null)
             {
-                endGame.endGame();
-                endGameVisible = true;
+                panel.UpdatePlayerLives();
             }
-            return;
+            if (playerLives <= 0)
+            {
+                // 游戏结束逻辑
+                EndGame endGame = FindObjectOfType<EndGame>();
+                if (endGame != null)
+                {
+                    endGame.endGame();
+                    endGameVisible = true;
+                }
+                return;
+            }
         }
     }
 

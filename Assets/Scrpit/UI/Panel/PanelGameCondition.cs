@@ -52,7 +52,10 @@ public class PanelGameCondition : MonoBehaviour
         // 初始化显示玩家生命值
         UpdatePlayerLives();
     }
-
+    void OnEnable()
+    {
+        UpdatePlayerLives();
+    }
     // Update is called once per frame
     void Update()
     {
@@ -94,7 +97,6 @@ public class PanelGameCondition : MonoBehaviour
             {
                 totalHearts = playerComponent.defaultBlood;
             }
-
         }
 
         //清除所有子对象

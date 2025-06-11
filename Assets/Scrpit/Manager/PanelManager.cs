@@ -57,6 +57,7 @@ public class PanelManager : MonoBehaviour
         });
 
         HideAllPanels();
+        showHome(); // 默认显示主界面
     }
 
     // 显示指定的面板

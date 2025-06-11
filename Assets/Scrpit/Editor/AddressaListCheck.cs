@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class AddressableKeyLister : MonoBehaviour
 {
-    [MenuItem("Tools/List Addressable Keys")]
+    [MenuItem("Tools/检索并打印Addressables包含的Key")]
     public static void ListAllAddressableKeys()
     {
         AddressableAssetSettings settings = AddressableAssetSettingsDefaultObject.Settings;

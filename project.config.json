@@ -1,9 +1,9 @@
 {
-    "appid": "tta20ad4b73d02289c07",
+    "appid": "ttcfe5b95850ee7bb607",
     "projectname": "球球大暴走",
     "unity": {
         "build": {
-            "webgl": "E:\\project\\Unity\\BulidTT\\webgl_package-20250507_153950.zip",
+            "webgl": "E:\\project\\Unity\\BulidTT\\webgl_package-20250611_110852.zip",
             "native": {
                 "il2cpp": "",
                 "apk": "",
@@ -19,5 +19,21 @@
     },
     "setting": {
         "urlCheck": false
+    },
+    "condition": {
+        "game": {
+            "current": -1,
+            "list": [
+                {
+                    "id": 1749107763684,
+                    "name": "1",
+                    "query": "",
+                    "scene": "021036",
+                    "launchFrom": "game_room",
+                    "location": "game_list",
+                    "mockUpdateType": "Noupdate"
+                }
+            ]
+        }
     }
 }

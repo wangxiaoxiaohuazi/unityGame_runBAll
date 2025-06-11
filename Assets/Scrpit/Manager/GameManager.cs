@@ -50,13 +50,13 @@ public class GameManager : MonoBehaviour
             {
                 return;
             }
-            // 检测输入
-            if (Input.anyKey || Input.touchCount > 0)
-            {
-                // 有输入，重置无输入时间
-                idleTime = 0f;
-                Time.timeScale = 1; // 恢复游戏
-            }
+            // // 检测输入
+            // if (Input.anyKey || Input.touchCount > 0)
+            // {
+            //     // 有输入，重置无输入时间
+            //     idleTime = 0f;
+            //     Time.timeScale = 1; // 恢复游戏
+            // }
             // else
             // {
             //     // 没有输入，增加无输入时间
@@ -87,13 +87,15 @@ public class GameManager : MonoBehaviour
         // 再加载场景
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Debug.Log("重开场景");
+        //找到InitRound组件
+        InitRound initRound = FindObjectOfType<InitRound>();
+        initRound.CreateRound();
     }
 
-    private void OnResetSceneLoaded(Scene scene, LoadSceneMode mode)
+    public void OnResetSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         // 确保只执行一次
         SceneManager.sceneLoaded -= OnResetSceneLoaded;
-
         // 重置玩家数据
         var playerObj = GameObject.Find("Player");
         if (playerObj != null && playerObj.TryGetComponent<player>(out var playerComponent))

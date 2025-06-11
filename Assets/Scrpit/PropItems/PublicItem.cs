@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TTSDK;
 public class PublicItem : MonoBehaviour
 {
     [Header("BodyChange")]
@@ -40,6 +40,11 @@ public class PublicItem : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+                        // 震动手机
+#if UNITY_WEBGL && !UNITY_EDITOR
+                long[] pattern = { 600 };
+                TT.Vibrate(pattern);
+#endif
             if (IsBodyChange)
             {
                 BodyChange bodyChange = new BodyChange();

@@ -16,9 +16,13 @@ public class PanelSuccessCondition : MonoBehaviour
         GameDataManager.Instance.isPause = true;
         AudioManager.Instance.PlaySFX("success");
         //随机展示插屏广告
-        if (RoundInfo.Instance.OnGetCurrentLevel().id > 3)
+        if (RoundInfo.Instance.OnGetCurrentLevel().id > 2)
         {
-            ADManager.Instance.OnIInterstitialADShow();
+            float random = UnityEngine.Random.value; // 生成一个0到1之间的随机浮点数
+            if (random < 0.8f) // 判断随机数是否小于0.8
+            {
+                ADManager.Instance.OnIInterstitialADShow(); // 展示插页广告
+            }
         }
     }
     void OnDisable()
@@ -60,7 +64,6 @@ public class PanelSuccessCondition : MonoBehaviour
                 // 如果子物体没有 CanvasGroup 组件，则添加一个
                 canvasGroup = child.gameObject.AddComponent<CanvasGroup>();
             }
-
             // 设置初始透明度为 0
             canvasGroup.alpha = 0;
             canvasGroup.interactable = false; // 禁用交互
@@ -135,26 +138,23 @@ public class PanelSuccessCondition : MonoBehaviour
         RoundInfo.Instance.OnNextRound(() =>
         {
             PublicGameData gameData = DataManager.Instance.gameInfo;
+            Debug.Log("当前场景" + RoundInfo.Instance.OnGetCurrentLevel().id);
             string scenePath = gameData
                 .roundInfo.levelSceneList.FirstOrDefault(x =>
-                    x.id - 1 == RoundInfo.Instance.OnGetCurrentLevel().id
+                    x.id == RoundInfo.Instance.OnGetCurrentLevel().id
                 ) // 使用FirstOrDefault
                 ?.scenePath; // 使用空条件运算符以防止空引用异常
             if (scenePath != null)
             {
-                // AddressablesLoaderManager.Instance.SwitchScene(scenePath);
-                SceneManager.LoadScene(scenePath);
+                GameManager manager = new GameManager();
+                manager.OnResetGame(); // 调用重置游戏事件
             }
-            else
-            {
-                // AddressablesLoaderManager.Instance.ReloadCurrentScene(
-                //     progress =>
-                //     {
-                //         Debug.Log($"重载进度: {progress:P0}");
-                //         // 这里可以更新UI进度条
-                //     });
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+            // else
+            // {
+            //     //找到InitRound组件
+            //     InitRound initRound = FindObjectOfType<InitRound>();
+            //     initRound.CreateRound();
+            // }
         });
     }
 
@@ -163,6 +163,12 @@ public class PanelSuccessCondition : MonoBehaviour
         //多倍奖励
         ADManager.Instance.OnADShow(() =>
         {
+            PanelManager manager = FindObjectOfType<PanelManager>();
+            if (manager != null)
+            {
+                manager?.ShowTips("奖励已发放");
+            }
+            Debug.Log("奖励已发放");
             GameDataManager.Instance.goldenCoin = GameDataManager.Instance.goldenCoin * 3;
             NextScene();
         });

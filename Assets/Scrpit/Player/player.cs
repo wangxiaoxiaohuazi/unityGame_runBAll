@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+using TTSDK;
 public class player : MonoBehaviour
 {
     private Rigidbody rb;
@@ -31,11 +31,9 @@ public class player : MonoBehaviour
         InitDefaultArt(); //初始化默认艺术
         Debug.Log("当前总获得金币：" + DataManager.Instance.gameInfo.player.coin);
         GameDataManager.Instance.isPause = false;
-        PanelManager manager = FindObjectOfType<PanelManager>();
-        manager.showHome(); //显示主界面
         defaultBlood = blood;
-        //随机播放背景音乐
- 
+        GameDataManager.Instance.ChangePlayerLives(blood);//初始化血量
+        GameDataManager.Instance.goldenCoin = 0; //重置金币
     }
 
     void Update()
@@ -164,7 +162,7 @@ public class player : MonoBehaviour
         if (levelNumberTransform != null)
         {
             GameObject gameObject = levelNumberTransform.gameObject; // 获取 GameObject
-            gameObject.GetComponent<TextMeshPro>().text = "LV " + levelNumber;
+            gameObject.GetComponent<TextMeshPro>().text = "等级:" + levelNumber;
         }
         else
         {
@@ -219,15 +217,9 @@ public class player : MonoBehaviour
             // 应用力
             // 力的大小可以根据需要调整
             rb.AddForce(forceDirection * forceMagnitude, ForceMode.Impulse);
+
         }
-        //如果碰撞到的物体不是墙体则震动手机
-        if (collision.gameObject.tag != "Wall" && Application.isMobilePlatform)
-        {
-            // 震动手机
-            // vibrationManager.VibrateLightly();
-            // 震动手机
-            // Handheld.Vibrate();
-        }
+
     }
 
     public void Quit()

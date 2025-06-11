@@ -11,10 +11,10 @@ public class InitGame : MonoBehaviour
     public GameObject Progress;
     public Text ProgressText; // 进度文本引用
     [Header("加载配置")]
-    [SerializeField][Range(0, 1)] private float addressableLoadWeight = 0.6f;  // Addressable加载权重
-    [SerializeField][Range(0, 1)] private float audioLoadWeight = 0.3f;  // 音频加载权重
-    [SerializeField][Range(0, 1)] private float sceneLoadWeight = 0.3f;  // 场景加载权重
-                                                                         // 存储加载句柄
+    [SerializeField][Range(0, 1)] private float addressableLoadWeight = 0.5f;  // Addressable加载权重
+    [SerializeField][Range(0, 1)] private float audioLoadWeight = 0.25f;  // 音频加载权重
+    [SerializeField][Range(0, 1)] private float sceneLoadWeight = 0.25f;  // 场景加载权重
+                                                                          // 存储加载句柄
     private AsyncOperationHandle<SceneInstance> _sceneLoadHandle;
     // 需要加载的音频路径配置
     private readonly string[] musicPaths =
@@ -32,7 +32,7 @@ public class InitGame : MonoBehaviour
         "Music/SFX/click",
         "Music/SFX/success"
     };
-
+    private string[] groupNames = { "ResourceLabel" }; // 这里需要替换为实际的Group名称
     void Start()
     {
         _Init();
@@ -48,6 +48,7 @@ public class InitGame : MonoBehaviour
                 break;
             }
         }
+        DataManager.Instance.gameInfo.roundInfo.pickLevel = DataManager.Instance.gameInfo.roundInfo.currentLevel; // 初始化当前关卡
     }
 
     private IEnumerator LoadAllContent(string sceneKey)
@@ -125,7 +126,7 @@ public class InitGame : MonoBehaviour
 
     private IEnumerator LoadSceneWithProgress(string scenePath, System.Action<float> onProgress)
     {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(scenePath);
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
         List<string> myPlaylist = new List<string>();
 
         foreach (var path in musicPaths)
@@ -147,6 +148,10 @@ public class InitGame : MonoBehaviour
                 AudioManager.Instance.StartPlaylist(randomSong);
             }
         }
+        string roundName = RoundInfo.Instance.OnGetCurrentLevel().scenePath;
+        var loadGroupOperation = Addressables.LoadAssetAsync<GameObject>(
+                 roundName
+              );
         asyncLoad.allowSceneActivation = false;
         // 第一阶段：0-0.9的加载
         while (asyncLoad.progress < 0.9f)
@@ -168,20 +173,23 @@ public class InitGame : MonoBehaviour
     private IEnumerator LoadAddressableResources(System.Action<float> onProgress)
     {
         // 获取所有需要加载的Group名称
-        string[] groupNames = { "Group1", "Group2" }; // 这里需要替换为实际的Group名称
+
         List<AsyncOperationHandle> loadOperations = new List<AsyncOperationHandle>();
         float totalProgress = 0f;
-
-        // 为每个Group创建加载操作
-        foreach (var groupName in groupNames)
+        Addressables.InitializeAsync().Completed += op =>
         {
-            var loadGroupOperation = Addressables.LoadAssetsAsync<object>(
-                new List<string> { groupName },
-                null,
-                Addressables.MergeMode.Union
-            );
-            loadOperations.Add(loadGroupOperation);
-        }
+            foreach (var groupName in groupNames)
+            {
+                var loadGroupOperation = Addressables.LoadAssetsAsync<GameObject>(
+                   groupName,
+                   null,
+                   Addressables.MergeMode.Intersection
+                );
+                loadOperations.Add(loadGroupOperation);
+            }
+        };
+        // 为每个Group创建加载操作
+
 
         // 监控所有加载操作的进度
         while (!loadOperations.TrueForAll(op => op.IsDone))
@@ -191,7 +199,7 @@ public class InitGame : MonoBehaviour
             {
                 totalProgress += operation.PercentComplete;
             }
-            
+
             float currentProgress = totalProgress / loadOperations.Count;
             onProgress?.Invoke(currentProgress);
             yield return null;
@@ -210,6 +218,7 @@ public class InitGame : MonoBehaviour
 
     private void UpdateProgress(float progress)
     {
+        progress = Mathf.Clamp01(progress); // 确保进度在0-1之间
         Progress.GetComponent<Scrollbar>().size = progress;
         ProgressText.text = $"资源加载中... {progress * 100:0}%";
     }

@@ -52,7 +52,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <UnityProjectGenerator>Package</UnityProjectGenerator>
-    <UnityProjectGeneratorVersion>2.0.23</UnityProjectGeneratorVersion>
+    <UnityProjectGeneratorVersion>2.0.25</UnityProjectGeneratorVersion>
     <UnityProjectGeneratorStyle>SDK</UnityProjectGeneratorStyle>
     <UnityProjectType>Game:1</UnityProjectType>
     <UnityBuildTarget>WebGL:20</UnityBuildTarget>
@@ -63,24 +63,24 @@
     <Analyzer Include="D:\software\Unity\2022.3.40f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\FileSystem\TTFileSystemManagerWebGL.cs" />
-    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\FileSystem\TTFileSystemManager.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\Input\TTPCInputHandler.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\TTWebGLInterface.cs" />
-    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\TTVersionAttribute.cs" />
-    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\Input\Input.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\TTStorageManager.cs" />
-    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\Compatibility\UnityCacheCompatibility.cs" />
-    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\AssetBundle\TTAssetBundleRequest.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\AssetBundle\DownloadHandlerTTAssetBundle.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\Compatibility\UnityWebRequestCompatibility.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\TTModel.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\Network\TTUDPSocketHandler.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\FileSystem\TTFileSystemManagerDefault.cs" />
-    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\TTCallbackHandler.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\AssetBundle\TTAssetBundleExtensions.cs" />
-    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\Graphics\TTGraphics.cs" />
     <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\AssetBundle\TTAssetBundle.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\FileSystem\TTFileSystemManagerWebGL.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\FileSystem\TTFileSystemManager.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\TTVersionAttribute.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\Input\Input.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\Compatibility\UnityCacheCompatibility.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\AssetBundle\TTAssetBundleRequest.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\TTCallbackHandler.cs" />
+    <Compile Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\Graphics\TTGraphics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Plugins\ByteGame\com.bytedance.starksdk\WebGL\AssetBundle\TTAssetBundleProviders.cs.txt" />

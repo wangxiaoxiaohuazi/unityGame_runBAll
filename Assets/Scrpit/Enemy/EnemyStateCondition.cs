@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
+using TTSDK;
 /**
  *@brief 怪物状态
  */
@@ -113,6 +113,11 @@ public class EnemyStateCondition : MonoBehaviour
                 // 调用GameDataManager脚本的ChangePlayerLives方法，参数为伤害值
                 GameDataManager.Instance.ChangePlayerLives(-attack);
             }
+            // 震动手机
+#if UNITY_WEBGL && !UNITY_EDITOR
+                long[] pattern = { 600 };
+                TT.Vibrate(pattern);
+#endif
         }
     }
 

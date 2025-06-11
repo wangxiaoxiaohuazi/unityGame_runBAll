@@ -20,7 +20,7 @@ public class PanelSkinCondition : MonoBehaviour
     void Start()
     {
         panelManager = FindObjectOfType<PanelManager>();
-       
+
     }
     void OnEnable()
     {
@@ -165,6 +165,16 @@ public class PanelSkinCondition : MonoBehaviour
         if (ViewSkinItem.unlockCondition == 0 || ViewSkinItem.isLocked == true)
         {
             useButton.gameObject.SetActive(true);
+            if (DataManager.Instance.gameInfo.player.skinId == ViewSkinItem.id)
+            {
+                useButton.GetComponentInChildren<Text>().text = "已配置";
+                useButton.GetComponent<Button>().interactable = false;
+            }
+            else
+            {
+                useButton.GetComponentInChildren<Text>().text = "使用";
+                useButton.GetComponent<Button>().interactable = true;
+            }
         }
         if (!ViewSkinItem.isLocked && ViewSkinItem.unlockCondition != 0)
         {
