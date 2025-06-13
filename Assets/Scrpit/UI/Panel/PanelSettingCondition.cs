@@ -52,6 +52,7 @@ public class PanelSettingCondition : MonoBehaviour
         }
         else
         {
+            Debug.Log("暂停音乐");
             AudioManager.Instance.StopMusic();
         }
     }

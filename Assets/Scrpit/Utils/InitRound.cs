@@ -41,6 +41,7 @@ public class InitRound : MonoBehaviour
         await ClearScene();
         await LoadAndInstantiateRound();
         await PreloadNextRound();
+        await UnloadPreviousRound();
         //随机渲染天空盒
 
     }
@@ -102,6 +103,15 @@ public class InitRound : MonoBehaviour
         catch (Exception e)
         {
             Debug.LogError($"预加载下一关时发生错误: {e.Message}");
+        }
+    }
+    //卸载前一个关卡预制体
+    private async Task UnloadPreviousRound()
+    {
+        string prevRoundName = RoundInfo.Instance.GetPreLevel()?.scenePath;
+        if (!string.IsNullOrEmpty(prevRoundName))
+        {
+            await Task.Run(() => Addressables.Release(prevRoundName));
         }
     }
 }

@@ -118,17 +118,7 @@ public class AudioManager : MonoBehaviour
         {
             PlayNextMusic();
         }
-        Debug.Log("音乐源是否存在：" + musicSource);
-        if (musicSource?.clip != null && musicSource.isPlaying)
-        {
-            // 音乐正在播放
-            Debug.Log("音乐正在播放：" + musicSource.clip.name);
-        }
-        else
-        {
-            Debug.Log("音乐未播放" + musicSource?.clip?.name);
-            Debug.Log("音乐未播放" + musicSource?.isPlaying);
-        }
+
     }
     /// <summary>
     /// 设置播放列表
@@ -412,5 +402,23 @@ public class AudioManager : MonoBehaviour
         // 加载保存的音量设置
         musicVolume = PlayerPrefs.GetFloat("MusicVolume", 1f);
         sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
+    }
+
+    private void ReinitializeAudioSource()
+    {
+        if (musicSource == null)
+        {
+            musicSource = gameObject.AddComponent<AudioSource>();
+            if (musicSource != null)
+            {
+                musicSource.loop = true;
+                musicSource.playOnAwake = false;
+                Debug.Log("AudioSource 重新初始化成功");
+            }
+            else
+            {
+                Debug.LogError("AudioSource 重新初始化失败");
+            }
+        }
     }
 }

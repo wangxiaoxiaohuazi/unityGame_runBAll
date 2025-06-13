@@ -56,6 +56,10 @@ public class MainCondition : MonoBehaviour
         _gameData.player.todayVigour.nextRecoveryTime = DateTime.Now.AddHours(-3);
         DataManager.Instance.SaveData();
     }
+    public void PlayMusicTest()
+    {
+        AudioManager.Instance.PlayMusic("music1");
+    }
     public void UpDataVigourNumber()
     {
         if (PlayerInfo.Instance == null)
@@ -186,8 +190,7 @@ public class MainCondition : MonoBehaviour
         var timeDiff = nextRecoveryTime - DateTime.UtcNow;
 
         // 如果时间差小于等于0或体力已满，直接隐藏倒计时
-        if (timeDiff <= TimeSpan.Zero ||
-    PlayerInfo.Instance?.GetVigourNumber() >= _gameData.player.defaultVigourNumber)
+        if (timeDiff <= TimeSpan.Zero)
         {
             Countdown.SetActive(false);
             if (timeDiff <= TimeSpan.Zero)  // 修改这里，处理所有小于等于0的情况
@@ -199,7 +202,6 @@ public class MainCondition : MonoBehaviour
             }
             return;
         }
-
         try
         {
             // 计算剩余时间

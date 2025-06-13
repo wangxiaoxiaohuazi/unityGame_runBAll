@@ -43,7 +43,7 @@ public class RoundInfo : MonoBehaviour
     {
         PublicGameData _gameInfo = DataManager.Instance.gameInfo;
         _gameInfo.player.coin += GameDataManager.Instance.goldenCoin;
-        
+
         if (_gameInfo.roundInfo.levelSceneList.Count > _gameInfo.roundInfo.currentLevel)
         {
             //正常通过下一关
@@ -105,5 +105,26 @@ public class RoundInfo : MonoBehaviour
         }
 
         return null;
+    }
+    // 获取上一关信息
+    public LevelList GetPreLevel()
+    {
+        //获取当前场景
+        int currentSceneId = DataManager.Instance.gameInfo.roundInfo.pickLevel;
+        PublicGameData _gameInfo = DataManager.Instance.gameInfo;
+
+        // 遍历关卡列表找到当前关卡
+        for (int i = 0; i < _gameInfo.roundInfo.levelSceneList.Count; i++)
+        {
+            if (currentSceneId == _gameInfo.roundInfo.levelSceneList[i].id)
+            {
+                if (i > 0)
+                {
+                    return _gameInfo.roundInfo.levelSceneList[i - 1];
+                }
+            }
+           
+        }
+         return null;
     }
 }

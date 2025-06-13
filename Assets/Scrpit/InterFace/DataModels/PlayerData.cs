@@ -30,31 +30,31 @@ public class PlayerData
         // 新增自动恢复计算方法
         public void CalculateAutoRecovery()
         {
+            var _nextRecoveryTime = DataManager.Instance.gameInfo.player.todayVigour.nextRecoveryTime; // 恢复间隔，单位为小时
             // 如果nextRecoveryTime未设置，初始化为当前时间
-            if (string.IsNullOrEmpty(nextRecoveryTimeString) || num >= MaxVigour)
+            if (string.IsNullOrEmpty(nextRecoveryTimeString))
             {
-                DataManager.Instance.gameInfo.player.todayVigour.nextRecoveryTime = DateTime.UtcNow;
-                return;
+                _nextRecoveryTime = DateTime.UtcNow;
             }
             // 计算距离上次恢复时间过去了多久
-            TimeSpan timeSinceLast = nextRecoveryTime - DateTime.UtcNow;
+            TimeSpan timeSinceLast = _nextRecoveryTime - DateTime.UtcNow;
 
             // 如果已经超过恢复时间
             if (timeSinceLast <= TimeSpan.Zero)
             {
                 // 计算应该恢复的体力值
-                int recoveryCycles = (int)(timeSinceLast.TotalHours / RecoveryIntervalHours);
+                int recoveryCycles = (int)(timeSinceLast.TotalHours / RecoveryIntervalHours) + 1;
                 // 更新下一次恢复时间
                 if (recoveryCycles >= MaxVigour)
                 {
-                    nextRecoveryTime = DateTime.UtcNow;
+                    _nextRecoveryTime = DateTime.UtcNow;
                 }
                 else
                 {
                     Debug.Log("Next recovery time: " + nextRecoveryTime);
-                    nextRecoveryTime = DateTime.UtcNow.AddHours((MaxVigour - recoveryCycles) * RecoveryIntervalHours);
+                    _nextRecoveryTime = DateTime.UtcNow.AddHours((MaxVigour - recoveryCycles) * RecoveryIntervalHours);
                 }
-                DataManager.Instance.gameInfo.player.todayVigour.nextRecoveryTime = nextRecoveryTime;
+                DataManager.Instance.gameInfo.player.todayVigour.nextRecoveryTime = _nextRecoveryTime;
                 PlayerInfo.Instance.AddVigourNumber(recoveryCycles);
             }
         }
