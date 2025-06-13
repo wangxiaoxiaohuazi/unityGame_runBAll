@@ -8,13 +8,16 @@ using UnityEngine.UI;
 public class PanelSuccessCondition : MonoBehaviour
 {
     public GameObject Ribbon;
-
+    private float showStartTime; // 添加显示开始时间
+    private bool hasReported = false; // 添加是否已上报标志
 
     void OnEnable()
     {
         ToFadeInChildren(gameObject, 0.2f); // 直接调用静态方法
         GameDataManager.Instance.isPause = true;
         AudioManager.Instance.PlaySFX("success");
+        showStartTime = Time.time; // 记录显示开始时间
+        hasReported = false; // 重置上报状态
         //随机展示插屏广告
         if (RoundInfo.Instance.OnGetCurrentLevel().id > 2)
         {
@@ -25,6 +28,17 @@ public class PanelSuccessCondition : MonoBehaviour
             }
         }
     }
+
+    void Update()
+    {
+        // 检查是否已经显示超过3秒且未上报
+        if (!hasReported && Time.time - showStartTime >= 3f)
+        {
+            AnalyticsManager.Instance.ReportFirstClearance(DataManager.Instance.gameInfo.roundInfo.currentLevel);
+            hasReported = true;
+        }
+    }
+
     void OnDisable()
     {
         GameDataManager.Instance.isPause = false;
@@ -144,11 +158,14 @@ public class PanelSuccessCondition : MonoBehaviour
                     x.id == RoundInfo.Instance.OnGetCurrentLevel().id
                 ) // 使用FirstOrDefault
                 ?.scenePath; // 使用空条件运算符以防止空引用异常
-            if (scenePath != null)
-            {
-                GameManager manager = new GameManager();
-                manager.OnResetGame(); // 调用重置游戏事件
-            }
+                             // if (scenePath != null)
+                             // {
+                             //关闭当前pannel
+
+            GameManager manager = new GameManager();
+            manager.OnResetGame(); // 调用重置游戏事件
+            gameObject.SetActive(false);
+            // }
             // else
             // {
             //     //找到InitRound组件

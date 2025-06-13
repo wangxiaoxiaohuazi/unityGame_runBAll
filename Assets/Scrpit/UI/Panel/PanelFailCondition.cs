@@ -9,6 +9,8 @@ public class PanelFailCondition : MonoBehaviour
     public Text ProgressNum;
     public Text CoinNum;
     public GameObject ProgressBar;
+    private float showStartTime; // 添加显示开始时间
+    private bool hasReported = false; // 添加是否已上报标志
 
     void OnEnable()
     {
@@ -16,6 +18,8 @@ public class PanelFailCondition : MonoBehaviour
         ProgressNum.text = "已完成" + proportion + "%";
         ToFadeInChildren(gameObject, 0.2f); // 直接调用静态方法
         GameDataManager.Instance.isPause = true;
+        showStartTime = Time.time; // 记录显示开始时间
+        hasReported = false; // 重置上报状态
     }
     void OnDisable()
     {
@@ -29,6 +33,13 @@ public class PanelFailCondition : MonoBehaviour
     void Update()
     {
         CoinNum.text = '*' + (GameDataManager.Instance.goldenCoin + 100).ToString();
+        
+        // 检查是否已经显示超过3秒且未上报
+        if (!hasReported && Time.time - showStartTime >= 3f)
+        {
+            AnalyticsManager.Instance.ReportUserDie(DataManager.Instance.gameInfo.roundInfo.currentLevel);
+            hasReported = true;
+        }
     }
     public void ToFadeInChildren(
         GameObject parentObject,
@@ -37,14 +48,6 @@ public class PanelFailCondition : MonoBehaviour
         Action callback = null
     )
     {
-#if UNITY_WEBGL && !UNITY_EDITOR
-
-        TT.ReportAnalytics("UserDie", new Dictionary<string, object>
-                {
-                    { "roundId", DataManager.Instance.gameInfo.roundInfo.currentLevel },
-                    { "deviceId", SystemInfo.deviceUniqueIdentifier }
-                });
-#endif
         // 启动协程
         StartCoroutine(
             FadeInChildrenCoroutine(parentObject.transform, duration, waitTime, callback)
@@ -108,13 +111,7 @@ public class PanelFailCondition : MonoBehaviour
         //多倍奖励
         ADManager.Instance.OnADShow(() =>
         {
-#if UNITY_WEBGL && !UNITY_EDITOR
-            TT.ReportAnalytics("UserRevive", new Dictionary<string, object>
-            {
-                { "roundId", DataManager.Instance.gameInfo.roundInfo.currentLevel },
-                { "deviceId", SystemInfo.deviceUniqueIdentifier }
-            });
-#endif
+            AnalyticsManager.Instance.ReportUserRevive(DataManager.Instance.gameInfo.roundInfo.currentLevel);
             Debug.Log("复活成功");
 
             if (GameDataManager.Instance == null)

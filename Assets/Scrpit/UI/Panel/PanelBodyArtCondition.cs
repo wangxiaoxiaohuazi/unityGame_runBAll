@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class PanelBodyArtCondition : MonoBehaviour
 {
@@ -14,7 +16,7 @@ public class PanelBodyArtCondition : MonoBehaviour
     private PanelManager panelManager;
     private SkinItem ViewSkinItem = null;
     private List<SkinItem> SkinData;
-    private string artSSkinPath = "VFX/";
+    private string artSSkinPath = "Assets/ResourcesMove/VFX/";
     private int lastPickId = 0;
 
     // Start is called before the first frame update
@@ -103,29 +105,35 @@ public class PanelBodyArtCondition : MonoBehaviour
         });
         if (skinInfo != null)
         {
-            // 加载预制体
-            GameObject skinPrefab = Resources.Load<GameObject>($"{artSSkinPath}{skinInfo.name}");
-            if (skinPrefab != null)
+            // 使用 Addressables 异步加载预制体Assets/ResourcesMove/VFX/GlowingOrb_4.prefab
+            Addressables.LoadAssetAsync<GameObject>($"{artSSkinPath}{skinInfo.name}.prefab").Completed += (AsyncOperationHandle<GameObject> handle) =>
             {
-                // 实例化预制体
-                GameObject instantiatedSkin = Instantiate(skinPrefab, Target.transform); // parentTransform 是您希望将预制体放置的父物体
-                                                                                         // 设置层级为 Shop
-                SetLayerRecursively(instantiatedSkin, LayerMask.NameToLayer("Shop"));
-                // 进行其他操作，例如设置位置、旋转等
-                instantiatedSkin.transform.localPosition = Vector3.zero; // 根据需要设置位置
-                if (SkinViewPrefab == Target)
+                if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    instantiatedSkin.transform.localScale = instantiatedSkin.transform.localScale * 111;
+                    GameObject skinPrefab = handle.Result;
+                    if (skinPrefab != null)
+                    {
+                        // 实例化预制体
+                        GameObject instantiatedSkin = Instantiate(skinPrefab, Target.transform); // parentTransform 是您希望将预制体放置的父物体
+                                                                                                 // 设置层级为 Shop
+                        SetLayerRecursively(instantiatedSkin, LayerMask.NameToLayer("Shop"));
+                        // 进行其他操作，例如设置位置、旋转等
+                        instantiatedSkin.transform.localPosition = Vector3.zero; // 根据需要设置位置
+                        if (SkinViewPrefab == Target)
+                        {
+                            instantiatedSkin.transform.localScale = instantiatedSkin.transform.localScale * 111;
+                        }
+                        else
+                        {
+                            instantiatedSkin.transform.localScale = instantiatedSkin.transform.localScale * 56;
+                        }
+                    }
                 }
                 else
                 {
-                    instantiatedSkin.transform.localScale = instantiatedSkin.transform.localScale * 56;
+                    Debug.LogError($"加载特效预制体失败: {handle.OperationException}");
                 }
-            }
-            else
-            {
-                Debug.LogWarning($"未找到预制体: {artSSkinPath}{skinInfo.name}");
-            }
+            };
         }
         else
         {

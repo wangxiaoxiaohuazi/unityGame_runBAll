@@ -5,16 +5,29 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 using System;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class InitRound : MonoBehaviour
 {
     public AssetReference roundPref;
-    // public AssetReference skyboxPref; // 添加天空盒引用
+    public AssetReference[] skyboxPrefs; // 天空盒材质数组
 
     // Start is called before the first frame update
     void Start()
     {
         CreateRound();
+        // 随机选择一个天空盒
+        if (skyboxPrefs != null && skyboxPrefs.Length > 0)
+        {
+            int randomIndex = UnityEngine.Random.Range(0, skyboxPrefs.Length);
+            skyboxPrefs[randomIndex].LoadAssetAsync<Material>().Completed += (handle) =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
+                {
+                    RenderSettings.skybox = handle.Result;
+                }
+            };
+        }
     }
 
     // Update is called once per frame
@@ -28,6 +41,8 @@ public class InitRound : MonoBehaviour
         await ClearScene();
         await LoadAndInstantiateRound();
         await PreloadNextRound();
+        //随机渲染天空盒
+
     }
 
     private Task ClearScene()
@@ -46,31 +61,28 @@ public class InitRound : MonoBehaviour
 
     private async Task LoadAndInstantiateRound()
     {
-        try
-        {
-            GameObject roundPrefab;
-            if (roundPref != null && roundPref.RuntimeKeyIsValid())
-            {
-                roundPrefab = await LoadRoundPrefabAsync(roundPref);
-            }
-            else
-            {
-                string roundName = RoundInfo.Instance.OnGetCurrentLevel().scenePath;
-                roundPrefab = await LoadRoundPrefabAsync(roundName);
-            }
 
-            if (roundPrefab != null)
-            {
-                Instantiate(roundPrefab, transform.parent);
-            }
-            else
-            {
-                Debug.LogError("加载关卡预制体失败");
-            }
-        }
-        catch (Exception e)
+        GameObject roundPrefab;
+        if (roundPref != null && roundPref.RuntimeKeyIsValid())
         {
-            Debug.LogError($"加载关卡时发生错误: {e.Message}");
+            roundPrefab = await LoadRoundPrefabAsync(roundPref);
+            Debug.Log("加载预制体成功1");
+        }
+        else
+        {
+            string roundName = RoundInfo.Instance.OnGetCurrentLevel().scenePath;
+            roundPrefab = await LoadRoundPrefabAsync(roundName);
+            Debug.Log("加载预制体成功2");
+        }
+
+        if (roundPrefab != null)
+        {
+            Instantiate(roundPrefab, transform.parent);
+            Debug.Log("实例化预制体成功");
+        }
+        else
+        {
+            Debug.LogError("加载关卡预制体失败");
         }
     }
 

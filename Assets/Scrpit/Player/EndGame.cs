@@ -21,7 +21,7 @@ public class EndGame : MonoBehaviour
         {
             Debug.Log("碰撞对象被忽略: ");
             endGame();
-            
+
         }
 
     }
@@ -33,14 +33,11 @@ public class EndGame : MonoBehaviour
         PanelManager panelManager = FindObjectOfType<PanelManager>(); // 获取 PanelManager 组件
         if (panelManager != null)
         {
-            if (GameDataManager.Instance.playerLives > 0)
+            if (GameDataManager.Instance.playerLives > 0 )
             {
                 panelManager.ShowPanel(PanelManager.PanelName.PanelSuccess); // 显示 PanelSuccess 面板
             }
-            else
-            {
-                panelManager.ShowPanel(PanelManager.PanelName.PanelFail); // 显示 PanelFail 面板
-            }
+
         }
     }
 }

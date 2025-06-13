@@ -71,7 +71,7 @@ Transform:
   - {fileID: 8477750546777558894}
   - {fileID: 5999080897729701647}
   - {fileID: 216293278500745662}
-  - {fileID: 4162830954082690582}
+  - {fileID: 6676182095106383426}
   m_Father: {fileID: 3328608895025599606}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8285183848182930490
@@ -1264,7 +1264,7 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 76e78651081082049b143537c3108357, type: 3}
---- !u!4 &4162830954082690582 stripped
+--- !u!4 &6676182095106383426 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7305903524896503895, guid: 76e78651081082049b143537c3108357, type: 3}
   m_PrefabInstance: {fileID: 4162830954082690581}
@@ -1962,6 +1962,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5493802774070051770}
     m_Modifications:
+    - target: {fileID: 1775786719614829952, guid: 0975d2758489acb469783d33b5a249e4, type: 3}
+      propertyPath: selfRotationSpeed
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 3935422561668283471, guid: 0975d2758489acb469783d33b5a249e4, type: 3}
+      propertyPath: selfRotationSpeed
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 4146884098109901052, guid: 0975d2758489acb469783d33b5a249e4, type: 3}
       propertyPath: m_Name
       value: Group-F-06-2 (1)

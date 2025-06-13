@@ -43,6 +43,7 @@ public class RoundInfo : MonoBehaviour
     {
         PublicGameData _gameInfo = DataManager.Instance.gameInfo;
         _gameInfo.player.coin += GameDataManager.Instance.goldenCoin;
+        
         if (_gameInfo.roundInfo.levelSceneList.Count > _gameInfo.roundInfo.currentLevel)
         {
             //正常通过下一关
@@ -50,13 +51,6 @@ public class RoundInfo : MonoBehaviour
             {
                 _gameInfo.roundInfo.currentLevel++;
                 _gameInfo.roundInfo.pickLevel = _gameInfo.roundInfo.currentLevel;
-#if UNITY_WEBGL && !UNITY_EDITOR
-                TT.ReportAnalytics("FirstClearance", new Dictionary<string, object>
-                {
-                    { "roundID", _gameInfo.roundInfo.currentLevel - 1 },
-                    { "deviceId", SystemInfo.deviceUniqueIdentifier }
-                });
-#endif
 
             }
             else

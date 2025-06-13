@@ -89,6 +89,7 @@ public class AudioManager : MonoBehaviour
     {
         if (!audioClips.ContainsKey(name))
         {
+            Debug.Log("添加音乐" + name);
             audioClips.Add(name, clip);
         }
     }
@@ -117,6 +118,17 @@ public class AudioManager : MonoBehaviour
         {
             PlayNextMusic();
         }
+        Debug.Log("音乐源是否存在：" + musicSource);
+        if (musicSource?.clip != null && musicSource.isPlaying)
+        {
+            // 音乐正在播放
+            Debug.Log("音乐正在播放：" + musicSource.clip.name);
+        }
+        else
+        {
+            Debug.Log("音乐未播放" + musicSource?.clip?.name);
+            Debug.Log("音乐未播放" + musicSource?.isPlaying);
+        }
     }
     /// <summary>
     /// 设置播放列表
@@ -142,7 +154,7 @@ public class AudioManager : MonoBehaviour
     /// </summary>
     public void StartPlaylist(string startBGM)
     {
-        if (playList.Count == 0||DataManager.Instance.gameInfo.player.musicVisible==false)
+        if (playList.Count == 0 || DataManager.Instance.gameInfo.player.musicVisible == false)
         {
             Debug.LogWarning("播放列表为空");
             return;
@@ -157,6 +169,7 @@ public class AudioManager : MonoBehaviour
         currentMusicIndex = startIndex;
         musicSource.loop = false;
         musicSource.Stop(); // 确保从干净状态开始
+        Debug.Log($"开始播放背景音乐列表，起始音乐{playList[currentMusicIndex]}");
         PlayMusicDirectly(playList[currentMusicIndex]);
         if (musicMonitorCoroutine != null)
             StopCoroutine(musicMonitorCoroutine);
@@ -219,6 +232,11 @@ public class AudioManager : MonoBehaviour
         {
             musicSource.clip = clip;
             musicSource.Play();
+            Debug.Log("播放音乐" + musicName);
+        }
+        else
+        {
+            Debug.Log("找不到音乐" + musicName);
         }
     }
     // 背景音乐控制

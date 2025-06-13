@@ -12,7 +12,7 @@ public class RemoveProps : MonoBehaviour
     {
 
     }
-    void Update()
+    void FixedUpdate()
     {
 
         gameObject.GetComponent<Rigidbody>().isKinematic = true;

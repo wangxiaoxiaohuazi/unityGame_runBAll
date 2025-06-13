@@ -47,7 +47,7 @@ public class BossAttackOne : MonoBehaviour
             BallisticMissileList.Add(Instantiate(BallisticMissilePrefab));//初始化弹道
         }
     }
-    void Update()
+    void FixedUpdate()
     {
         //处理弹道
         changeBallisticMissilePosition();

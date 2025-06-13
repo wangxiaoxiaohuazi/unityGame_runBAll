@@ -12,6 +12,7 @@ public class PanelSettingCondition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("PanelSettingCondition Start" + DataManager.Instance.gameInfo.player.soundVisible);
         PanelManager panelManager = FindObjectOfType<PanelManager>();
         // 修复3：使用回调锁定模式初始化Toggle状态
         SetToggleStateWithoutNotify(MusicToggle, DataManager.Instance.gameInfo.player.musicVisible);
@@ -21,6 +22,7 @@ public class PanelSettingCondition : MonoBehaviour
 
     void OnEnable()
     {
+        Debug.Log("PanelSettingCondition Start" + DataManager.Instance.gameInfo.player.soundVisible);
         // 修复3：使用回调锁定模式初始化Toggle状态
         SetToggleStateWithoutNotify(MusicToggle, DataManager.Instance.gameInfo.player.musicVisible);
         SetToggleStateWithoutNotify(SoundToggle, DataManager.Instance.gameInfo.player.soundVisible);
@@ -55,15 +57,15 @@ public class PanelSettingCondition : MonoBehaviour
     }
     public void onSoundChange(bool isOn)
     {
-        DataManager.Instance.gameInfo.player.soundVisible = !DataManager.Instance.gameInfo.player.musicVisible;
+        DataManager.Instance.gameInfo.player.soundVisible = !DataManager.Instance.gameInfo.player.soundVisible;
         DataManager.Instance.SaveData();
-        Debug.Log("Sound: " + DataManager.Instance.gameInfo.player.musicVisible);
+        Debug.Log("Sound: " + DataManager.Instance.gameInfo.player.soundVisible);
     }
     public void onVibratioChangen(bool isOn)
     {
-        DataManager.Instance.gameInfo.player.vibrationVisible = !DataManager.Instance.gameInfo.player.musicVisible;
+        DataManager.Instance.gameInfo.player.vibrationVisible = !DataManager.Instance.gameInfo.player.vibrationVisible;
         DataManager.Instance.SaveData();
-        Debug.Log("Vibration: " + DataManager.Instance.gameInfo.player.musicVisible);
+        Debug.Log("Vibration: " + DataManager.Instance.gameInfo.player.vibrationVisible);
 
     }
 }

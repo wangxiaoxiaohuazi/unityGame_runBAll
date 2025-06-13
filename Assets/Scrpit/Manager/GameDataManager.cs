@@ -124,6 +124,7 @@ public class GameDataManager : MonoBehaviour
         // 检查是否超过防抖时间
         if (currentTime - lastDamageTime >= damageDebounceTime)
         {
+            PanelManager panelManager = FindObjectOfType<PanelManager>();
             if (change < 0)
             {
                 // 处理伤害逻辑
@@ -139,7 +140,7 @@ public class GameDataManager : MonoBehaviour
                     Mathf.Round(_player.GetComponent<player>().scoreNumber * 0.8f * 100) / 100; // 保留两位小数
 
                 // 显示受伤特效面板
-                PanelManager panelManager = FindObjectOfType<PanelManager>();
+
                 panelManager.ShowPanel(PanelManager.PanelName.PanelHurt);
                 StartCoroutine(HidePanelCoroutine());
                 Debug.Log("玩家生命值：" + playerLives);
@@ -154,18 +155,15 @@ public class GameDataManager : MonoBehaviour
             {
                 panel.UpdatePlayerLives();
             }
-            if (playerLives <= 0)
+            if (playerLives <= 0 && panelManager != null )
             {
                 // 游戏结束逻辑
-                EndGame endGame = FindObjectOfType<EndGame>();
-                if (endGame != null)
-                {
-                    endGame.endGame();
-                    endGameVisible = true;
-                }
-                return;
+                panelManager.ShowPanel(PanelManager.PanelName.PanelFail); // 显示 PanelFail 面板
+                endGameVisible = true;
             }
+
         }
+
     }
 
     public void ChangePlayerEnergy(float change)

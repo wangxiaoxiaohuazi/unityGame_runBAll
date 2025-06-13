@@ -47,7 +47,6 @@ public class PlayerInfo : MonoBehaviour
         }
 
         var vigour = Instance.gameData.player.todayVigour;
-
         // // 先进行自动恢复计算
         vigour.CalculateAutoRecovery();
         return vigour.num;
@@ -60,15 +59,10 @@ public class PlayerInfo : MonoBehaviour
             Debug.LogError("PlayerInfo 数据未初始化!");
             return;
         }
-
         var vigour = Instance.gameData.player.todayVigour;
-
-        // 自动恢复计算
-        vigour.CalculateAutoRecovery();
 
         // 体力变化前记录旧值
         int oldValue = vigour.num;
-
         //体力小于1，则弹出体力不足提示
         if (num < 0 && DataManager.Instance.gameInfo.player.todayVigour.num < 1)
         {
@@ -86,23 +80,20 @@ public class PlayerInfo : MonoBehaviour
         // 应用变化并限制范围
         vigour.num = Mathf.Clamp(vigour.num + num, 0, PlayerData.TodayVigour.MaxVigour);
         // 如果体力有变化则更新时间戳
-        if (num < 0)
+        if (num < 0 && DateTime.UtcNow > vigour.nextRecoveryTime)
         {
-            Debug.Log("体力减少");
-            Debug.Log($"设置前 nextRecoveryTimeString: {vigour.nextRecoveryTimeString}");
-            Debug.Log($"设置前 nextRecoveryTime: {vigour.nextRecoveryTime}");
+            Debug.Log("体力不足，自动恢复体力");
             vigour.nextRecoveryTime = DateTime.UtcNow.AddHours(PlayerData.TodayVigour.RecoveryIntervalHours);
-            Debug.Log($"设置后 nextRecoveryTimeString: {vigour.nextRecoveryTimeString}");
-            Debug.Log($"设置后 nextRecoveryTime: {vigour.nextRecoveryTime}");
         }
         DataManager.Instance.SaveData();
+        // 自动恢复计算
+        vigour.CalculateAutoRecovery();
         callback?.Invoke();
     }
     // 保存金币
     public void SaveCoin(int num, Action callback = null)
     {
         // 打印金币增加的日志
-        Debug.Log("金币增加：" + DataManager.Instance.gameInfo.player.coin);
         // 如果实例为空或者游戏数据中的玩家信息为空，则打印错误日志
         if (Instance == null || Instance.gameData?.player?.todayVigour == null)
         {

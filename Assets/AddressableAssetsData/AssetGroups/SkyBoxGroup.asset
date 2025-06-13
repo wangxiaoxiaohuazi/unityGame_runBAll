@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: SkyBoxGroup
+  m_EditorClassIdentifier: 
+  m_GroupName: SkyBoxGroup
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 900102a19d62ffe4d90e8b6b583287ba
+  m_SerializeEntries:
+  - m_GUID: 49f1c1f6ffad7ef418d7dd2fe33dbf4c
+    m_Address: Assets/SkyBox/Skybox_Textures/Skybox_1.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: be8cc780d430549feab2f343c5579f40
+    m_Address: Assets/SkyBox/Space Planet C/Space Planet C 6Sided.mat
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 6d2b485e95c77944cab5b11832bb49f6, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 1136c50b9d9f51540ad7b685a540139f, type: 2}
+    - {fileID: 11400000, guid: b0e5ae915f61e0d4da73889bf6f37b37, type: 2}

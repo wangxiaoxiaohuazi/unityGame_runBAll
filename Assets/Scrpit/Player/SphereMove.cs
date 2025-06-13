@@ -48,6 +48,7 @@ public class SphereController : MonoBehaviour
         // 赋值
         defaultPositionY = transform.position.y;
     }
+    
 
     void FixedUpdate()
     {

@@ -25,7 +25,7 @@ public class Move : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         OnPlayerMoveing(); // 调用移动事件

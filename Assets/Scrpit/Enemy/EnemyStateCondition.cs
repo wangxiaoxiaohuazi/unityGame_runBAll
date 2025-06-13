@@ -64,7 +64,7 @@ public class EnemyStateCondition : MonoBehaviour
 
         BloodMax = hp;
     }
-    void Update()
+    void FixedUpdate()
     {
         if (BloodScroll != null)
         {

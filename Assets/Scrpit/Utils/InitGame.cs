@@ -16,23 +16,23 @@ public class InitGame : MonoBehaviour
     [SerializeField][Range(0, 1)] private float sceneLoadWeight = 0.25f;  // 场景加载权重
                                                                           // 存储加载句柄
     private AsyncOperationHandle<SceneInstance> _sceneLoadHandle;
-    // 需要加载的音频路径配置
+    // 需要加载的音频路径配置Assets/Origin/Music/music1.mp3
     private readonly string[] musicPaths =
     {
-        "Music/music1",
-        "Music/music2",
-        "Music/music3",
-        "Music/music4",
-        "Music/music5",
-        "Music/music6",
+        "Assets/Origin/Music/music1",
+        "Assets/Origin/Music/music2",
+        "Assets/Origin/Music/music3",
+        "Assets/Origin/Music/music4",
+        "Assets/Origin/Music/music5",
+        "Assets/Origin/Music/music6",
     };
 
     private readonly string[] sfxPaths =
     {
-        "Music/SFX/click",
-        "Music/SFX/success"
+        "Assets/Origin/Music/SFX/click",
+        "Assets/Origin/Music/SFX/success"
     };
-    private string[] groupNames = { "ResourceLabel" }; // 这里需要替换为实际的Group名称
+    private string[] groupNames = { }; // 这里需要替换为实际的Group名称
     void Start()
     {
         _Init();
@@ -82,7 +82,7 @@ public class InitGame : MonoBehaviour
 
     private IEnumerator LoadAudioResources(System.Action<float> onProgress)
     {
-        List<ResourceRequest> requests = new List<ResourceRequest>();
+        List<AsyncOperationHandle<AudioClip>> requests = new List<AsyncOperationHandle<AudioClip>>();
         int totalCount = musicPaths.Length + sfxPaths.Length;
         int completedCount = 0;
         float currentProgress = 0f;
@@ -90,11 +90,11 @@ public class InitGame : MonoBehaviour
         // 开始加载所有音频
         foreach (var path in musicPaths)
         {
-            requests.Add(Resources.LoadAsync<AudioClip>(path));
+            requests.Add(Addressables.LoadAssetAsync<AudioClip>(path + ".mp3"));
         }
         foreach (var path in sfxPaths)
         {
-            requests.Add(Resources.LoadAsync<AudioClip>(path));
+            requests.Add(Addressables.LoadAssetAsync<AudioClip>(path + ".mp3"));
         }
 
         // 监控加载进度
@@ -105,8 +105,8 @@ public class InitGame : MonoBehaviour
 
             foreach (var req in requests)
             {
-                if (req.isDone) completedCount++;
-                totalProgress += req.progress;
+                if (req.IsDone) completedCount++;
+                totalProgress += req.PercentComplete;
             }
 
             currentProgress = totalProgress / totalCount;
@@ -117,10 +117,20 @@ public class InitGame : MonoBehaviour
         // 将加载的资源注册到AudioManager
         foreach (var req in requests)
         {
-            if (req.asset is AudioClip clip)
+            if (req.Status == AsyncOperationStatus.Succeeded)
             {
+                AudioClip clip = req.Result;
+                Debug.Log("加载音乐: " + clip.name);
                 AudioManager.Instance.AddAudioClip(clip.name, clip);
+            }else{
+                Debug.LogError("加载音乐失败: " + req.Result.name);
             }
+        }
+
+        // 释放加载句柄
+        foreach (var req in requests)
+        {
+            Addressables.Release(req);
         }
     }
 
@@ -220,6 +230,14 @@ public class InitGame : MonoBehaviour
     {
         progress = Mathf.Clamp01(progress); // 确保进度在0-1之间
         Progress.GetComponent<Scrollbar>().size = progress;
-        ProgressText.text = $"资源加载中... {progress * 100:0}%";
+        if (progress == 1)
+        {
+            ProgressText.text = $"正在进入游戏...";
+
+        }
+        else
+        {
+            ProgressText.text = $"资源加载中... {progress * 100:0}%";
+        }
     }
 }

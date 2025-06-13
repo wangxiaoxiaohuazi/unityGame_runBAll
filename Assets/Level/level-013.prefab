@@ -72,7 +72,7 @@ Transform:
   - {fileID: 7063750465354844514}
   - {fileID: 6069438332425818659}
   - {fileID: 3894582023218041840}
-  - {fileID: 538911679759409221}
+  - {fileID: 7345567640784058388}
   m_Father: {fileID: 7037886195980922505}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3368755785779226692
@@ -1099,7 +1099,7 @@ PrefabInstance:
       addedObject: {fileID: 854759906794256295}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 101848906608aaf42884aa3fa22f5131, type: 3}
---- !u!4 &538911679759409221 stripped
+--- !u!4 &7345567640784058388 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8128525273911289040, guid: 101848906608aaf42884aa3fa22f5131, type: 3}
   m_PrefabInstance: {fileID: 1530907706633608388}
@@ -2858,9 +2858,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4190836995776618892}
     m_Modifications:
+    - target: {fileID: 1377099980641901546, guid: cf8f7e6c960f1984cb67ab30cd60814e, type: 3}
+      propertyPath: selfRotationSpeed
+      value: 180
+      objectReference: {fileID: 0}
     - target: {fileID: 4146884098109901052, guid: cf8f7e6c960f1984cb67ab30cd60814e, type: 3}
       propertyPath: m_Name
       value: Group-F-06-5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6108062230465466415, guid: cf8f7e6c960f1984cb67ab30cd60814e, type: 3}
+      propertyPath: selfRotationSpeed
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 7170836232488745431, guid: cf8f7e6c960f1984cb67ab30cd60814e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2901,6 +2909,10 @@ PrefabInstance:
     - target: {fileID: 7170836232488745431, guid: cf8f7e6c960f1984cb67ab30cd60814e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866934478532153124, guid: cf8f7e6c960f1984cb67ab30cd60814e, type: 3}
+      propertyPath: selfRotationSpeed
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3395,7 +3407,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 538911679759409221}
+    m_TransformParent: {fileID: 7345567640784058388}
     m_Modifications:
     - target: {fileID: 4815467601981157629, guid: e0c12d60e8556624da06edc9052f885c, type: 3}
       propertyPath: m_Name

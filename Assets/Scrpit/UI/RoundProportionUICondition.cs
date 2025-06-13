@@ -27,7 +27,7 @@ public class RoundProportionUICondition : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (DefaultDistance != 0 && RoundProportion != 100)
         {

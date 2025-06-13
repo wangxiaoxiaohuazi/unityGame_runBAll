@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TTSDK;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 public class player : MonoBehaviour
 {
     private Rigidbody rb;
@@ -21,6 +23,18 @@ public class player : MonoBehaviour
     private int priveAttactNodeID;
 
     public float defaultBlood = 4;
+    //资源类型不统一导致    
+    private static readonly HashSet<string> jpgSkinNames = new HashSet<string> {
+        "b-skin7",
+        "Y-ball-05",
+        "Y-ball-06",
+        "Y-ball-07",
+        "Y-ball-16",
+        "Y-ball-19",
+        "Y-ball-21",
+        "Y-ball-22"
+    };
+
     void Start()
     {
         //初始化基础赋值
@@ -82,24 +96,35 @@ public class player : MonoBehaviour
             });
             if (ViewSkinItem != null)
             {
-                Texture2D newTexture = Resources.Load<Texture2D>($"Materials/PlayerSkin/{ViewSkinItem.name}");
-                if (newTexture != null)
+                string extension = jpgSkinNames.Contains(ViewSkinItem.name) ? ".jpg" : ".png";
+                // 使用 Addressables 异步加载纹理
+                Addressables.LoadAssetAsync<Texture2D>($"Assets/ResourcesMove/Materials/PlayerSkin/{ViewSkinItem.name}{extension}").Completed += (AsyncOperationHandle<Texture2D> handle) =>
                 {
-                    // 如果需要将图片应用到材质上，可以创建一个新的材质并设置其主纹理
-                    Material newMat = new Material(Shader.Find("Standard")); // 使用标准着色器
-                    newMat.mainTexture = newTexture;
-
-                    Renderer renderer = NewPlayer.GetComponent<Renderer>();
-                    if (renderer != null)
+                    if (handle.Status == AsyncOperationStatus.Succeeded)
                     {
-                        // 创建材质实例避免修改原始材质
-                        renderer.material = newMat;
+                        Texture2D newTexture = handle.Result;
+                        if (newTexture != null && NewPlayer != null)
+                        {
+                            // 创建新的材质并设置主纹理
+                            Material newMat = new Material(Shader.Find("Standard"));
+                            newMat.mainTexture = newTexture;
+
+                            Renderer renderer = NewPlayer.GetComponent<Renderer>();
+                            if (renderer != null)
+                            {
+                                renderer.material = newMat;
+                            }
+                            else
+                            {
+                                Debug.Log("没有找到材质");
+                            }
+                        }
                     }
                     else
                     {
-                        Debug.Log("没有找到材质");
+                        Debug.LogError($"加载皮肤纹理失败: {handle.OperationException}");
                     }
-                }
+                };
             }
         }
         setLevelNode(0);
@@ -135,13 +160,23 @@ public class player : MonoBehaviour
             });
             if (ViewSkinItem != null)
             {
-                // 加载预制体
-                GameObject skinPrefab = Resources.Load<GameObject>($"VFX/{ViewSkinItem.name}");
-                if (skinPrefab != null)
+                // 使用 Addressables 异步加载预制体Assets/ResourcesMove/VFX/GlowingOrb_4.prefab
+                Addressables.LoadAssetAsync<GameObject>($"Assets/ResourcesMove/VFX/{ViewSkinItem.name}.prefab").Completed += (AsyncOperationHandle<GameObject> handle) =>
                 {
-                    // 实例化预制体
-                    GameObject instantiatedSkin = Instantiate(skinPrefab, bodyComponent.transform); // parentTransform 是您希望将预制体放置的父物体
-                }
+                    if (handle.Status == AsyncOperationStatus.Succeeded)
+                    {
+                        GameObject skinPrefab = handle.Result;
+                        if (skinPrefab != null)
+                        {
+                            // 实例化预制体
+                            GameObject instantiatedSkin = Instantiate(skinPrefab, bodyComponent.transform);
+                        }
+                    }
+                    else
+                    {
+                        Debug.LogError($"加载特效预制体失败: {handle.OperationException}");
+                    }
+                };
             }
         }
     }

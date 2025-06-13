@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class PanelSkinCondition : MonoBehaviour
 {
@@ -14,8 +16,22 @@ public class PanelSkinCondition : MonoBehaviour
     private PanelManager panelManager;
     private SkinItem ViewSkinItem;
     private List<SkinItem> SkinData;
-    private string skinImagePath = "Materials/PlayerSkin/";
+    private string skinImagePath = "Assets/ResourcesMove/Materials/PlayerSkin/";
     private int lastPickId = 0;
+    //资源类型不统一导致
+    private static readonly HashSet<string> jpgSkinNames = new HashSet<string> {
+                "b-skin7",
+                "Y-ball-05",
+                "Y-ball-06",
+                "Y-ball-07",
+                "Y-ball-16",
+                "Y-ball-19",
+                "Y-ball-21",
+                "Y-ball-22"
+            };
+    // 添加纹理缓存字典
+    private Dictionary<string, Texture2D> textureCache = new Dictionary<string, Texture2D>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,41 +106,71 @@ public class PanelSkinCondition : MonoBehaviour
     }
     void SetSkin(int id, GameObject Target)
     {
-        SkinItem skinInfo = SkinData.Find(x =>
-        {
-            return x.id == id;
-        });
+        SkinItem skinInfo = SkinData.Find(x => x.id == id);
         if (skinInfo != null)
         {
-            // 加载图片
-            Texture2D newTexture = Resources.Load<Texture2D>($"{skinImagePath}{skinInfo.name}");
-            if (newTexture != null)
-            {
-                // 如果需要将图片应用到材质上，可以创建一个新的材质并设置其主纹理
-                Material newMat = new Material(Shader.Find("Standard")); // 使用标准着色器
-                newMat.mainTexture = newTexture;
 
-                Renderer renderer = Target.GetComponent<Renderer>();
-                if (renderer != null)
+
+            string extension = jpgSkinNames.Contains(skinInfo.name) ? ".jpg" : ".png";
+            string textureKey = $"{skinImagePath}{skinInfo.name}{extension}";
+
+            // 检查缓存
+            if (textureCache.TryGetValue(textureKey, out Texture2D cachedTexture))
+            {
+                ApplyTextureToMaterial(cachedTexture, Target);
+                return;
+            }
+
+            // 使用 Addressable 加载
+            Addressables.LoadAssetAsync<Texture2D>(textureKey).Completed += (AsyncOperationHandle<Texture2D> handle) =>
+            {
+                if (handle.Status == AsyncOperationStatus.Succeeded)
                 {
-                    // 创建材质实例避免修改原始材质
-                    renderer.material = newMat;
+                    Texture2D newTexture = handle.Result;
+                    textureCache[textureKey] = newTexture;
+                    ApplyTextureToMaterial(newTexture, Target);
                 }
                 else
                 {
-                    Debug.Log("没有找到材质");
+                    Debug.LogWarning($"加载图片失败: {textureKey}");
                 }
-            }
-            else
-            {
-                Debug.LogWarning($"未找到图片: Materials/PlayerSkin/{skinInfo.name}");
-            }
+            };
         }
         else
         {
             Debug.Log("没有找到皮肤");
         }
     }
+
+    private void ApplyTextureToMaterial(Texture2D texture, GameObject target)
+    {
+        Material newMat = new Material(Shader.Find("Standard"));
+        newMat.mainTexture = texture;
+
+        Renderer renderer = target.GetComponent<Renderer>();
+        if (renderer != null)
+        {
+            renderer.material = newMat;
+        }
+        else
+        {
+            Debug.Log("没有找到材质");
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // 清理缓存的纹理
+        foreach (var texture in textureCache.Values)
+        {
+            if (texture != null)
+            {
+                Addressables.Release(texture);
+            }
+        }
+        textureCache.Clear();
+    }
+
     // 点击预览按钮时调用
     public void OnPrivewClick(string skinName)
     {
@@ -262,3 +308,4 @@ public class PanelSkinCondition : MonoBehaviour
         });
     }
 }
+

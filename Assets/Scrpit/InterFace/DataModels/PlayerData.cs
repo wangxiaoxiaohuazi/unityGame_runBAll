@@ -30,31 +30,32 @@ public class PlayerData
         // 新增自动恢复计算方法
         public void CalculateAutoRecovery()
         {
-            if (nextRecoveryTime == null)
+            // 如果nextRecoveryTime未设置，初始化为当前时间
+            if (string.IsNullOrEmpty(nextRecoveryTimeString) || num >= MaxVigour)
             {
-                nextRecoveryTime = DateTime.UtcNow; // 初始化为当前时间
+                DataManager.Instance.gameInfo.player.todayVigour.nextRecoveryTime = DateTime.UtcNow;
+                return;
             }
-            TimeSpan timeSinceLast = DateTime.UtcNow - nextRecoveryTime;
-            int recoveryCycles = Mathf.FloorToInt((float)timeSinceLast.TotalHours / RecoveryIntervalHours);
-            // Debug.Log("时间差: " + recoveryCycles);
-            // Debug.Log("更新时间: " + timeSinceLast.TotalHours);
-            // Debug.Log("上次更新时间: " + nextRecoveryTime);
-            if (recoveryCycles > 0)
+            // 计算距离上次恢复时间过去了多久
+            TimeSpan timeSinceLast = nextRecoveryTime - DateTime.UtcNow;
+
+            // 如果已经超过恢复时间
+            if (timeSinceLast <= TimeSpan.Zero)
             {
-                // Debug.Log("修改nextRecoveryTime" + nextRecoveryTime);
-                num = Mathf.Min(num + recoveryCycles, MaxVigour);
-                // 更新最后恢复时间（保留余数时间）
-                // nextRecoveryTime = nextRecoveryTime.AddHours(recoveryCycles * RecoveryIntervalHours);
-                // 如果达到上限则更新时间戳到未来
-                if (num >= MaxVigour)
+                // 计算应该恢复的体力值
+                int recoveryCycles = (int)(timeSinceLast.TotalHours / RecoveryIntervalHours);
+                // 更新下一次恢复时间
+                if (recoveryCycles >= MaxVigour)
                 {
                     nextRecoveryTime = DateTime.UtcNow;
                 }
                 else
                 {
-                    // 如果没有达到最大值，继续增加恢复时间
-                    nextRecoveryTime = nextRecoveryTime.AddHours(RecoveryIntervalHours); // 增加恢复时间
+                    Debug.Log("Next recovery time: " + nextRecoveryTime);
+                    nextRecoveryTime = DateTime.UtcNow.AddHours((MaxVigour - recoveryCycles) * RecoveryIntervalHours);
                 }
+                DataManager.Instance.gameInfo.player.todayVigour.nextRecoveryTime = nextRecoveryTime;
+                PlayerInfo.Instance.AddVigourNumber(recoveryCycles);
             }
         }
     }

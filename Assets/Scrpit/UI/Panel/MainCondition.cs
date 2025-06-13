@@ -51,6 +51,11 @@ public class MainCondition : MonoBehaviour
         UpdateCountdown();
 
     }
+    public void ResetTime()
+    {
+        _gameData.player.todayVigour.nextRecoveryTime = DateTime.Now.AddHours(-3);
+        DataManager.Instance.SaveData();
+    }
     public void UpDataVigourNumber()
     {
         if (PlayerInfo.Instance == null)
@@ -63,7 +68,6 @@ public class MainCondition : MonoBehaviour
         }
         if (_gameData == null || _gameData.player == null)
         {
-            _gameData = DataManager.Instance.gameInfo;
             return;
         }
 
@@ -80,7 +84,6 @@ public class MainCondition : MonoBehaviour
 
     private void InitSideNode()
     {
-
         LaunchOption launchOption = TT.GetLaunchOptionsSync();
         Debug.Log("场景值" + launchOption.Scene);
         if (launchOption?.Scene == "021036")
@@ -104,7 +107,6 @@ public class MainCondition : MonoBehaviour
         PanelManager manager = FindObjectOfType<PanelManager>();
         manager.showFight();
         PlayerInfo.Instance.AddVigourNumber(-1);
-
     }
 
     public void OnSideViewVisible()
@@ -115,7 +117,6 @@ public class MainCondition : MonoBehaviour
     public void OnGetRwardClick()
     {
         PanelManager manager = FindObjectOfType<PanelManager>();
-
         //获取300金币
         if (!DataManager.Instance.gameInfo.player.dailyReward)
         {
@@ -130,7 +131,6 @@ public class MainCondition : MonoBehaviour
         {
             manager?.ShowTips("已领取");
         }
-
     }
 
 
@@ -177,28 +177,48 @@ public class MainCondition : MonoBehaviour
     }
     private void UpdateCountdown()
     {
-        if (PlayerInfo.Instance.GetVigourNumber() < _gameData.player.defaultVigourNumber)
+        if (Countdown == null || _gameData?.player?.todayVigour == null)
         {
-            // 计算时间差
-            DateTime nextRecoveryTime = _gameData.player.todayVigour.nextRecoveryTime;
-            TimeSpan timeDiff = nextRecoveryTime - DateTime.UtcNow;
-
-            // 计算剩余时间
-            int totalSeconds = (int)(timeDiff.TotalSeconds);
-            int hours = totalSeconds / 3600;
-            int minutes = (totalSeconds % 3600) / 60;
-            int seconds = totalSeconds % 60;
-
-            // 更新 Countdown 的 Text
-            Text countdownText = Countdown.transform.Find("Text (Legacy)").GetComponent<Text>();
-            countdownText.text = $"{hours:D2}:{minutes:D2}:{seconds:D2}";
-
-            // 显示 Countdown
-            Countdown.SetActive(true);
+            return;
         }
-        else
+
+        var nextRecoveryTime = _gameData.player.todayVigour.nextRecoveryTime;
+        var timeDiff = nextRecoveryTime - DateTime.UtcNow;
+
+        // 如果时间差小于等于0或体力已满，直接隐藏倒计时
+        if (timeDiff <= TimeSpan.Zero ||
+    PlayerInfo.Instance?.GetVigourNumber() >= _gameData.player.defaultVigourNumber)
         {
-            // 隐藏 Countdown
+            Countdown.SetActive(false);
+            if (timeDiff <= TimeSpan.Zero)  // 修改这里，处理所有小于等于0的情况
+            {
+                PlayerInfo.Instance.AddVigourNumber(1, () =>
+                {
+                    UpDataVigourNumber();
+                });
+            }
+            return;
+        }
+
+        try
+        {
+            // 计算剩余时间
+            var totalSeconds = (int)timeDiff.TotalSeconds;
+            var hours = totalSeconds / 3600;
+            var minutes = (totalSeconds % 3600) / 60;
+            var seconds = totalSeconds % 60;
+
+            // 更新倒计时文本
+            var countdownText = Countdown.transform.Find("Text (Legacy)")?.GetComponent<Text>();
+            if (countdownText != null)
+            {
+                countdownText.text = $"{hours:D2}:{minutes:D2}:{seconds:D2}";
+                Countdown.SetActive(true);
+            }
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"更新倒计时时发生错误: {e.Message}");
             Countdown.SetActive(false);
         }
     }
