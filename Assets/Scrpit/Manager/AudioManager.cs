@@ -89,8 +89,9 @@ public class AudioManager : MonoBehaviour
     {
         if (!audioClips.ContainsKey(name))
         {
-            Debug.Log("添加音乐" + name);
             audioClips.Add(name, clip);
+            Debug.Log("Added audio clip: " + name);
+            Debug.Log("Total audio clips: " + audioClips.Count);
         }
     }
     void Update()
@@ -118,7 +119,6 @@ public class AudioManager : MonoBehaviour
         {
             PlayNextMusic();
         }
-
     }
     /// <summary>
     /// 设置播放列表
@@ -159,7 +159,6 @@ public class AudioManager : MonoBehaviour
         currentMusicIndex = startIndex;
         musicSource.loop = false;
         musicSource.Stop(); // 确保从干净状态开始
-        Debug.Log($"开始播放背景音乐列表，起始音乐{playList[currentMusicIndex]}");
         PlayMusicDirectly(playList[currentMusicIndex]);
         if (musicMonitorCoroutine != null)
             StopCoroutine(musicMonitorCoroutine);
@@ -182,7 +181,6 @@ public class AudioManager : MonoBehaviour
         }
 
         string nextMusic = playList[currentMusicIndex];
-        Debug.Log("播放下一首音乐：" + nextMusic);
         PlayMusicDirectly(nextMusic);
 
         // 启动播放监控协程
@@ -218,11 +216,11 @@ public class AudioManager : MonoBehaviour
     }
     private void PlayMusicDirectly(string musicName)
     {
+
         if (audioClips.TryGetValue(musicName, out AudioClip clip))
         {
             musicSource.clip = clip;
             musicSource.Play();
-            Debug.Log("播放音乐" + musicName);
         }
         else
         {
@@ -404,21 +402,4 @@ public class AudioManager : MonoBehaviour
         sfxVolume = PlayerPrefs.GetFloat("SFXVolume", 1f);
     }
 
-    private void ReinitializeAudioSource()
-    {
-        if (musicSource == null)
-        {
-            musicSource = gameObject.AddComponent<AudioSource>();
-            if (musicSource != null)
-            {
-                musicSource.loop = true;
-                musicSource.playOnAwake = false;
-                Debug.Log("AudioSource 重新初始化成功");
-            }
-            else
-            {
-                Debug.LogError("AudioSource 重新初始化失败");
-            }
-        }
-    }
 }

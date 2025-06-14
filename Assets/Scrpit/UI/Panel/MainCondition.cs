@@ -17,6 +17,7 @@ public class MainCondition : MonoBehaviour
     private PublicGameData _gameData;
     public Transform StartGame = null;
     public GameObject Countdown = null;
+    private int IntVigourNumber = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -74,11 +75,11 @@ public class MainCondition : MonoBehaviour
         {
             return;
         }
-
+        IntVigourNumber = PlayerInfo.Instance.GetVigourNumber();
         VigourNumber.text =
-                  PlayerInfo.Instance.GetVigourNumber() + "/" + _gameData.player.defaultVigourNumber;
-        StartGame.Find("Start").gameObject.SetActive(PlayerInfo.Instance.GetVigourNumber() > 0);
-        StartGame.Find("End").gameObject.SetActive(PlayerInfo.Instance.GetVigourNumber() < 1);
+                  IntVigourNumber + "/" + _gameData.player.defaultVigourNumber;
+        StartGame.Find("Start").gameObject.SetActive(IntVigourNumber > 0);
+        StartGame.Find("End").gameObject.SetActive(IntVigourNumber < 1);
     }
     private void InitScrollviewNode()
     {
@@ -190,7 +191,7 @@ public class MainCondition : MonoBehaviour
         var timeDiff = nextRecoveryTime - DateTime.UtcNow;
 
         // 如果时间差小于等于0或体力已满，直接隐藏倒计时
-        if (timeDiff <= TimeSpan.Zero)
+        if (timeDiff <= TimeSpan.Zero || IntVigourNumber == _gameData.player.defaultVigourNumber)
         {
             Countdown.SetActive(false);
             if (timeDiff <= TimeSpan.Zero)  // 修改这里，处理所有小于等于0的情况

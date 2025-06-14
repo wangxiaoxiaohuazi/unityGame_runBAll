@@ -52,10 +52,15 @@ public class PlayerData
                 else
                 {
                     Debug.Log("Next recovery time: " + nextRecoveryTime);
-                    _nextRecoveryTime = DateTime.UtcNow.AddHours((MaxVigour - recoveryCycles) * RecoveryIntervalHours);
+
+                    _nextRecoveryTime = DateTime.UtcNow.AddHours(RecoveryIntervalHours);
+                }
+                if (DataManager.Instance.gameInfo.player.todayVigour.num >= MaxVigour)
+                {
+                    _nextRecoveryTime = DateTime.UtcNow;
                 }
                 DataManager.Instance.gameInfo.player.todayVigour.nextRecoveryTime = _nextRecoveryTime;
-                PlayerInfo.Instance.AddVigourNumber(recoveryCycles);
+                DataManager.Instance.gameInfo.player.todayVigour.num = recoveryCycles;
             }
         }
     }

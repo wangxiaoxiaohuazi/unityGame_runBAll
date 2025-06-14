@@ -17,21 +17,51 @@ public class InitGame : MonoBehaviour
                                                                           // 存储加载句柄
     private AsyncOperationHandle<SceneInstance> _sceneLoadHandle;
     // 需要加载的音频路径配置Assets/Origin/Music/music1.mp3
+    // private readonly string[] musicPaths =
+    // {
+    //     "Assets/Origin/Music/music1",
+    //     "Assets/Origin/Music/music2",
+    //     "Assets/Origin/Music/music3",
+    //     "Assets/Origin/Music/music4",
+    //     "Assets/Origin/Music/music5",
+    //     "Assets/Origin/Music/music6",
+    // };
+
+    // private readonly string[] sfxPaths =
+    // {
+    //     "Assets/Origin/Music/SFX/click",
+    //     "Assets/Origin/Music/SFX/success"
+    // };
     private readonly string[] musicPaths =
-    {
-        "Assets/Origin/Music/music1",
-        "Assets/Origin/Music/music2",
-        "Assets/Origin/Music/music3",
-        "Assets/Origin/Music/music4",
-        "Assets/Origin/Music/music5",
-        "Assets/Origin/Music/music6",
+  {
+        "Assets/Origin/Music/music1.mp3",
+        "Assets/Origin/Music/music2.mp3",
+        "Assets/Origin/Music/music3.mp3",
+        "Assets/Origin/Music/music4.mp3",
+        "Assets/Origin/Music/music5.mp3",
+        "Assets/Origin/Music/music6.mp3",
     };
 
     private readonly string[] sfxPaths =
     {
-        "Assets/Origin/Music/SFX/click",
-        "Assets/Origin/Music/SFX/success"
+        // "Assets/Origin/Music/SFX/click.mp3",
+        // "Assets/Origin/Music/SFX/success.mp3"
     };
+    //     private readonly string[] musicPaths =
+    //   {
+    //         "Music/music1",
+    //         "Music/music2",
+    //         "Music/music3",
+    //         "Music/music4",
+    //         "Music/music5",
+    //         "Music/music6",
+    //     };
+
+    //     private readonly string[] sfxPaths =
+    //     {
+    //         "Music/SFX/click",
+    //         "Music/SFX/success"
+    //     };
     private string[] groupNames = { }; // 这里需要替换为实际的Group名称
     void Start()
     {
@@ -49,6 +79,7 @@ public class InitGame : MonoBehaviour
             }
         }
         DataManager.Instance.gameInfo.roundInfo.pickLevel = DataManager.Instance.gameInfo.roundInfo.currentLevel; // 初始化当前关卡
+
     }
 
     private IEnumerator LoadAllContent(string sceneKey)
@@ -80,6 +111,7 @@ public class InitGame : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
     }
 
+    //Addressable资源加载
     private IEnumerator LoadAudioResources(System.Action<float> onProgress)
     {
         List<AsyncOperationHandle<AudioClip>> requests = new List<AsyncOperationHandle<AudioClip>>();
@@ -90,11 +122,13 @@ public class InitGame : MonoBehaviour
         // 开始加载所有音频
         foreach (var path in musicPaths)
         {
-            requests.Add(Addressables.LoadAssetAsync<AudioClip>(path + ".mp3"));
+            // requests.Add(Addressables.LoadAssetAsync<AudioClip>(path + ".mp3"));
+            requests.Add(Addressables.LoadAssetAsync<AudioClip>(path));
         }
         foreach (var path in sfxPaths)
         {
-            requests.Add(Addressables.LoadAssetAsync<AudioClip>(path + ".mp3"));
+            // requests.Add(Addressables.LoadAssetAsync<AudioClip>(path + ".mp3"));
+            requests.Add(Addressables.LoadAssetAsync<AudioClip>(path));
         }
 
         // 监控加载进度
@@ -120,20 +154,66 @@ public class InitGame : MonoBehaviour
             if (req.Status == AsyncOperationStatus.Succeeded)
             {
                 AudioClip clip = req.Result;
-                Debug.Log("加载音乐: " + clip.name);
+                clip.LoadAudioData();
                 AudioManager.Instance.AddAudioClip(clip.name, clip);
-            }else{
+            }
+            else
+            {
                 Debug.LogError("加载音乐失败: " + req.Result.name);
             }
         }
 
-        // 释放加载句柄
-        foreach (var req in requests)
-        {
-            Addressables.Release(req);
-        }
+        // // 释放加载句柄
+        // foreach (var req in requests)
+        // {
+        //     Addressables.Release(req);
+        // }
     }
 
+    //Resource资源加载
+    // private IEnumerator LoadAudioResources(System.Action<float> onProgress)
+    // {
+    //     List<ResourceRequest> requests = new List<ResourceRequest>();
+    //     int totalCount = musicPaths.Length + sfxPaths.Length;
+    //     int completedCount = 0;
+    //     float currentProgress = 0f;
+
+    //     // 开始加载所有音频
+    //     foreach (var path in musicPaths)
+    //     {
+    //         requests.Add(Resources.LoadAsync<AudioClip>(path));
+    //     }
+    //     foreach (var path in sfxPaths)
+    //     {
+    //         requests.Add(Resources.LoadAsync<AudioClip>(path));
+    //     }
+
+    //     // 监控加载进度
+    //     while (completedCount < totalCount)
+    //     {
+    //         completedCount = 0;
+    //         float totalProgress = 0f;
+
+    //         foreach (var req in requests)
+    //         {
+    //             if (req.isDone) completedCount++;
+    //             totalProgress += req.progress;
+    //         }
+
+    //         currentProgress = totalProgress / totalCount;
+    //         onProgress?.Invoke(currentProgress);
+    //         yield return null;
+    //     }
+
+    //     // 将加载的资源注册到AudioManager
+    //     foreach (var req in requests)
+    //     {
+    //         if (req.asset is AudioClip clip)
+    //         {
+    //             AudioManager.Instance.AddAudioClip(clip.name, clip);
+    //         }
+    //     }
+    // }
     private IEnumerator LoadSceneWithProgress(string scenePath, System.Action<float> onProgress)
     {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("GameScene");
@@ -141,7 +221,11 @@ public class InitGame : MonoBehaviour
 
         foreach (var path in musicPaths)
         {
-            var match = System.Text.RegularExpressions.Regex.Match(path, @"[^/]+$"); // 使用正则表达式提取最后一个斜杠后的字符串
+            // 提取最后一个斜杠后的字符串，并去掉文件扩展名
+            Debug.Log("提取的名字1：" + path);
+            // var match = System.Text.RegularExpressions.Regex.Match(path, @"[^/]+$"); // 使用正则表达式提取最后一个斜杠后的字符串
+            var match = System.Text.RegularExpressions.Regex.Match(path, @"[^/]+(?=\.[^/.]+$)");
+            Debug.Log("提取的名字2：" + match.Value);
             if (match.Success)
             {
                 myPlaylist.Add(match.Value); // 添加到 myPlaylist
