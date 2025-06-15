@@ -7,7 +7,12 @@ public class PlayerData
     [Serializable]
     public class TodayVigour
     {
-        public int num = 8;
+        private int _num = 8;
+        public int num
+        {
+            get => _num;
+            set => _num = Mathf.Abs(value); // 确保值始终为正数
+        }
         // 额外的属性和方法
         public DateTime nextRecoveryTime
         {
@@ -31,36 +36,21 @@ public class PlayerData
         public void CalculateAutoRecovery()
         {
             var _nextRecoveryTime = DataManager.Instance.gameInfo.player.todayVigour.nextRecoveryTime; // 恢复间隔，单位为小时
-            // 如果nextRecoveryTime未设置，初始化为当前时间
-            if (string.IsNullOrEmpty(nextRecoveryTimeString))
+            if (_nextRecoveryTime < DateTime.UtcNow && DataManager.Instance.gameInfo.player.todayVigour.num < MaxVigour)
             {
-                _nextRecoveryTime = DateTime.UtcNow;
-            }
-            // 计算距离上次恢复时间过去了多久
-            TimeSpan timeSinceLast = _nextRecoveryTime - DateTime.UtcNow;
-
-            // 如果已经超过恢复时间
-            if (timeSinceLast <= TimeSpan.Zero)
-            {
-                // 计算应该恢复的体力值
-                int recoveryCycles = (int)(timeSinceLast.TotalHours / RecoveryIntervalHours) + 1;
-                // 更新下一次恢复时间
-                if (recoveryCycles >= MaxVigour)
+                var hours = (DateTime.UtcNow - _nextRecoveryTime).TotalHours;
+                Debug.Log("体力恢复" + hours);
+                var recoveryAmount = Mathf.FloorToInt((float)(hours / RecoveryIntervalHours));
+                if (recoveryAmount < 0)
                 {
-                    _nextRecoveryTime = DateTime.UtcNow;
+                    recoveryAmount = -recoveryAmount;
                 }
-                else
+                num += recoveryAmount + 1;
+                if (num > MaxVigour)
                 {
-                    Debug.Log("Next recovery time: " + nextRecoveryTime);
-
-                    _nextRecoveryTime = DateTime.UtcNow.AddHours(RecoveryIntervalHours);
+                    num = MaxVigour;
                 }
-                if (DataManager.Instance.gameInfo.player.todayVigour.num >= MaxVigour)
-                {
-                    _nextRecoveryTime = DateTime.UtcNow;
-                }
-                DataManager.Instance.gameInfo.player.todayVigour.nextRecoveryTime = _nextRecoveryTime;
-                DataManager.Instance.gameInfo.player.todayVigour.num = recoveryCycles;
+                DataManager.Instance.gameInfo.player.todayVigour.num = num; // 更新体力值
             }
         }
     }
@@ -86,14 +76,7 @@ public class PlayerData
         get => string.IsNullOrEmpty(lastSaveTimeString) ? DateTime.UtcNow : DateTime.Parse(lastSaveTimeString);
         set => lastSaveTimeString = value.ToString("o"); // 转换为字符串
     }
-    // public void CheckDailyRefresh()
-    // {
-    //     if (DateTime.UtcNow >= todayVigour.reflashTime)
-    //     {
-    //         todayVigour = new TodayVigour(defaultVigourNumber);
-    //         Debug.Log($"执行每日刷新 | UTC时间：{DateTime.UtcNow}");
-    //     }
-    // }
+
 
     public TodayVigour todayVigour = new TodayVigour();
 

@@ -191,16 +191,16 @@ public class MainCondition : MonoBehaviour
         var timeDiff = nextRecoveryTime - DateTime.UtcNow;
 
         // 如果时间差小于等于0或体力已满，直接隐藏倒计时
-        if (timeDiff <= TimeSpan.Zero || IntVigourNumber == _gameData.player.defaultVigourNumber)
+        if (timeDiff <= TimeSpan.Zero || DataManager.Instance.gameInfo.player.todayVigour.num == _gameData.player.defaultVigourNumber)
         {
             Countdown.SetActive(false);
-            if (timeDiff <= TimeSpan.Zero)  // 修改这里，处理所有小于等于0的情况
-            {
-                PlayerInfo.Instance.AddVigourNumber(1, () =>
-                {
-                    UpDataVigourNumber();
-                });
-            }
+            // if (timeDiff <= TimeSpan.Zero)  // 修改这里，处理所有小于等于0的情况
+            // {
+            //     PlayerInfo.Instance.AddVigourNumber(1, () =>
+            //     {
+            //         UpDataVigourNumber();
+            //     });
+            // }
             return;
         }
         try

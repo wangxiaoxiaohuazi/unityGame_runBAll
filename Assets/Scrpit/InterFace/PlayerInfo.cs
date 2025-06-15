@@ -85,9 +85,9 @@ public class PlayerInfo : MonoBehaviour
             Debug.Log("体力不足，自动恢复体力");
             vigour.nextRecoveryTime = DateTime.UtcNow.AddHours(PlayerData.TodayVigour.RecoveryIntervalHours);
         }
-        DataManager.Instance.SaveData();
         // 自动恢复计算
         vigour.CalculateAutoRecovery();
+        DataManager.Instance.SaveData();
         callback?.Invoke();
     }
     // 保存金币
